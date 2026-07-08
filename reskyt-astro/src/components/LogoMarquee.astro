@@ -1,0 +1,73 @@
+---
+interface Logo {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  logos: Logo[];
+  direction?: 'up' | 'down';
+  duration?: string;
+}
+
+const { logos, direction = 'up', duration = '40s' } = Astro.props;
+---
+
+<div class="marquee" data-direction={direction} style={`--duration: ${duration}`}>
+  <div class="marquee-track">
+    {logos.map(({ src, alt }) => <img src={src} alt={alt} loading="lazy" width="120" height="120" />)}
+    {logos.map(({ src, alt }) => <img src={src} alt="" aria-hidden="true" loading="lazy" width="120" height="120" />)}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    height: 100%;
+    mask-image: linear-gradient(transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(transparent, black 12%, black 88%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: fit-content;
+    animation: scroll-up var(--duration) linear infinite;
+  }
+
+  .marquee[data-direction='down'] .marquee-track {
+    animation-name: scroll-down;
+  }
+
+  .marquee img {
+    width: 7.5rem;
+    height: auto;
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 16px rgba(22, 22, 26, 0.08);
+  }
+
+  @keyframes scroll-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes scroll-down {
+    from {
+      transform: translateY(-50%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .marquee img {
+      width: 5.5rem;
+    }
+  }
+</style>

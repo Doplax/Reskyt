@@ -1,0 +1,111 @@
+---
+import LogoMarquee from './LogoMarquee.astro';
+
+const column1 = [
+  { src: '/images/brands/mascoteros.webp', alt: 'Logo Mascoteros' },
+  { src: '/images/brands/la-sirena.webp', alt: 'Logo La Sirena' },
+  { src: '/images/brands/farmaciasdirect.webp', alt: 'Logo Farmacias Direct' },
+  { src: '/images/brands/pc-componentes.webp', alt: 'Logo PC Componentes' },
+  { src: '/images/brands/perfumeria-julia.webp', alt: 'Logo Perfumería Júlia' },
+  { src: '/images/brands/power-planet.webp', alt: 'Logo PowerPlanet' },
+  { src: '/images/brands/casa-del-libro.webp', alt: 'Logo Casa del Libro' },
+  { src: '/images/brands/sprinter.webp', alt: 'Logo Sprinter' },
+  { src: '/images/brands/motocard.webp', alt: 'Logo Motocard' },
+];
+
+const column2 = [
+  { src: '/images/brands/atrapalo.webp', alt: 'Logo Atrápalo' },
+  { src: '/images/brands/maria-pascual.webp', alt: 'Logo María Pascual' },
+  { src: '/images/brands/atida-mifarma.webp', alt: 'Logo Atida Mifarma' },
+  { src: '/images/brands/deporvillage.webp', alt: 'Logo Deporvillage' },
+  { src: '/images/brands/allzone.webp', alt: 'Logo Allzone' },
+  { src: '/images/brands/decimas.webp', alt: 'Logo Décimas' },
+  { src: '/images/brands/226ers.webp', alt: 'Logo 226ERS' },
+  { src: '/images/brands/petsonic.webp', alt: 'Logo Petsonic' },
+  { src: '/images/brands/inside.webp', alt: 'Logo Inside' },
+];
+
+const column3 = [
+  { src: '/images/brands/ledkia.webp', alt: 'Logo Ledkia' },
+  { src: '/images/brands/douglas.webp', alt: 'Logo Douglas' },
+  { src: '/images/brands/xti.webp', alt: 'Logo Xti' },
+  { src: '/images/brands/polin-et-moi.avif', alt: 'Logo Polin et Moi' },
+  { src: '/images/brands/casas.png', alt: 'Logo Casas Zapatos' },
+  { src: '/images/brands/galileo-farma.webp', alt: 'Logo Galileo Farma' },
+  { src: '/images/brands/pedro-miralles.webp', alt: 'Logo Pedro Miralles' },
+  { src: '/images/brands/yellow-shop.png', alt: 'Logo Yellow Shop' },
+];
+---
+
+<section class="section hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <h1 class="hero-title">Lanza tu App en solo <span class="red">4 semanas</span></h1>
+      <p class="hero-subtitle">
+        Multiplica las ventas de tu eCommerce con una app nativa 100% personalizable, conectada y
+        lista para convertirse.
+      </p>
+      <div class="hero-buttons">
+        <a href="/solicitar-una-demo" class="btn-primary">Pide tu demo</a>
+        <a href="https://www.appselling.com/" target="_blank" rel="noopener" class="btn-secondary">
+          Calcula tu ROI
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-marquees" aria-label="Marcas que confían en Reskyt">
+      <LogoMarquee logos={column1} direction="down" duration="45s" />
+      <LogoMarquee logos={column2} direction="up" duration="50s" />
+      <LogoMarquee logos={column3} direction="down" duration="42s" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 34rem;
+  }
+
+  .hero-buttons {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero-marquees {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    height: 34rem;
+  }
+
+  @media (max-width: 60rem) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-marquees {
+      height: 22rem;
+    }
+  }
+</style>

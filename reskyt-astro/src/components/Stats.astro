@@ -1,0 +1,69 @@
+---
+// Cifras de la sección "Nuestros números". Ajustar a los datos reales de la web original.
+const stats = [
+  { value: '+600', label: 'Apps publicadas' },
+  { value: 'x3', label: 'Tasa de conversión vs. web móvil' },
+  { value: '+25%', label: 'Ticket medio en app' },
+  { value: '4 semanas', label: 'Tiempo medio de lanzamiento' },
+];
+---
+
+<section class="section stats">
+  <div class="container">
+    <h2 class="stats-title">Nuestros <span class="red">números</span></h2>
+    <div class="stats-grid">
+      {
+        stats.map(({ value, label }) => (
+          <div class="stat">
+            <p class="stat-value">{value}</p>
+            <p class="stat-label">{label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats {
+    background-color: var(--color-text);
+    color: #fff;
+  }
+
+  .stats-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    letter-spacing: -0.02em;
+  }
+
+  .stats-grid {
+    margin-top: 3.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
+    font-weight: 700;
+    color: var(--color-red);
+    line-height: 1;
+  }
+
+  .stat-label {
+    margin-top: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 60rem) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
