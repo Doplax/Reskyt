@@ -1,0 +1,102 @@
+---
+const techs = [
+  { src: '/images/tech/doofinder.webp', name: 'Doofinder' },
+  { src: '/images/tech/bizum.webp', name: 'Bizum' },
+  { src: '/images/tech/sequra.webp', name: 'Sequra' },
+  { src: '/images/tech/shopify.webp', name: 'Shopify' },
+  { src: '/images/tech/connectif.webp', name: 'Connectif' },
+  { src: '/images/tech/prestashop.webp', name: 'Prestashop' },
+  { src: '/images/tech/paypal.webp', name: 'Paypal' },
+];
+---
+
+<section class="section tech">
+  <div class="container">
+    <div class="tech-heading">
+      <h2>
+        <span class="red">Compatibilidad extendida</span> con las mejores tecnologías del mercado
+      </h2>
+      <p>
+        Podemos crear la App de cualquier plataforma o CMS: Shopify, Magento, Prestashop, Vtex,
+        Logicommerce, Woocommerce, Salesforce, etc.<br />
+        Compatibilidad con los mejores buscadores avanzados, herramientas de Chat, tecnologías web,
+        checkouts, todas las tecnologías más punteras del mercado son compatibles con Reskyt.
+      </p>
+    </div>
+  </div>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      {
+        [...techs, ...techs].map(({ src, name }, i) => (
+          <div class="tech-card" aria-hidden={i >= techs.length ? 'true' : undefined}>
+            <img src={src} alt={`Logo ${name}`} loading="lazy" width="48" height="48" />
+            <p>{name}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .tech-heading h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+    max-width: 46rem;
+  }
+
+  .tech-heading p {
+    margin-top: 1.25rem;
+    color: var(--color-text-muted);
+    max-width: 52rem;
+  }
+
+  .marquee {
+    margin-top: 3rem;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 1.25rem;
+    width: fit-content;
+    animation: scroll-left 40s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .tech-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg);
+    white-space: nowrap;
+  }
+
+  .tech-card img {
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+  }
+
+  .tech-card p {
+    font-weight: 600;
+  }
+
+  @keyframes scroll-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

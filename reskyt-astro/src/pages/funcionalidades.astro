@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import TechMarquee from '../components/TechMarquee.astro';
+import FeatureCards from '../components/FeatureCards.astro';
+import Maximiza from '../components/Maximiza.astro';
+import DemoCta from '../components/DemoCta.astro';
+import Footer from '../components/Footer.astro';
+
+const conversionCards = [
+  {
+    title: 'Checkout en un click',
+    text: 'Integración con cualquiera de los checkouts de última generación: Paypal, Amazon Pay, Apple Pay, Klarna, Aplazame...',
+  },
+  {
+    title: 'Inicio de sesión social',
+    text: 'Incrementa las conversiones en ventas gracias a la rapidez de inicio de sesión con Facebook, Google, Amazon o Apple.',
+  },
+  {
+    title: 'Buscadores avanzados',
+    text: 'Buscadores avanzados como Doofinder, APISearch, Empathy, directamente integrados dentro de la app',
+  },
+  {
+    title: 'Chatbots',
+    text: 'Ten el mismo contacto con el cliente utilizando el mismo chatbot que tienes en el eCommerce, ya que estará dentro de la app',
+  },
+  {
+    title: 'Lector de QR/EAN nativo en app',
+    text: 'Tus clientes podrán escanear tus productos desde cualquier lugar, ¡acelerando así el proceso de compra!',
+  },
+  {
+    title: 'Promociones exclusivas para la app',
+    text: 'El eCommerce con un simple desarrollo podrá generar promociones exclusivas para la app',
+  },
+  {
+    title: 'Posicionamiento de Marca',
+    text: 'Fortalece tu marca. Con una App vas a generar más impacto a tus clientes. Mayor comunicación, más feeling y más ventas.',
+  },
+  {
+    title: 'Google Analytics/GA4',
+    text: 'Todas las visitas a la app, estarán en tu Google Analytics, ya que automáticamente Google Analytics detectará un nuevo medio por el cual entran visitas.',
+  },
+];
+
+const pushCards = [
+  {
+    title: 'API Push',
+    text: 'Vincula nuestra API para el envío de notificaciones push y personaliza las notificaciones para tus usuarios, información logística el envío de paquetes, descuentos en función de los productos que el cliente compra, etc.',
+  },
+  {
+    title: 'Carritos Abandonados',
+    text: 'Notifica a tus usuarios cuando se dejen elementos en el carrito, para que continúen su compra, ofreciéndoles descuentos, promociones, etc.',
+  },
+  {
+    title: 'Geolocalización',
+    text: 'Envía notificaciones push delimitadas por una zona, mediante geolocalización procedente de las entradas en la app',
+  },
+  {
+    title: 'Formulario de Segmentación',
+    text: 'Genera un formulario in-app, para saber qué intereses tienen en tus productos, para poder aportarles información más importante a tus usuarios',
+  },
+  {
+    title: 'País',
+    text: 'Apps con múltiples países se benefician de poder segmentar las notificaciones en función del país de uso de la app',
+  },
+  {
+    title: 'Aperturas',
+    text: 'Envia una notificación push en función de que usuarios han abierto una notificación anterior',
+  },
+  {
+    title: 'Bienvenida',
+    text: 'Envía notificación push con un descuento a cada usuario, por descargarse la app',
+  },
+  {
+    title: 'Dispositivo de pruebas',
+    text: 'Prueba todas las notificaciones push antes de enviarlas, para asegurarte de que todo está correcto',
+  },
+];
+---
+
+<Layout
+  title="Funcionalidades clave para apps móviles eCommerce | Reskyt"
+  description="Conoce todas las funcionalidades que puede tener tu app eCommerce: notificaciones push, integración en tiempo real, filtros, login y más"
+>
+  <Header />
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <h1 class="hero-title">
+          La <span class="red">solución No-Code</span> diseñada para el crecimiento
+        </h1>
+        <p class="hero-subtitle">
+          Todas las herramientas al alcance de tu mano para crear una app intuitiva que hará
+          disparar las ventas de tu eCommerce
+        </p>
+      </div>
+    </section>
+
+    <TechMarquee />
+
+    <FeatureCards cards={conversionCards}>
+      Soluciones para <span class="red">incrementar la conversión</span> de tu tienda
+    </FeatureCards>
+
+    <Maximiza />
+
+    <FeatureCards cards={pushCards}>
+      Segmentación avanzada para tus <span class="red">notificaciones push</span>
+    </FeatureCards>
+
+    <DemoCta />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.02em;
+    max-width: 48rem;
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 38rem;
+  }
+</style>

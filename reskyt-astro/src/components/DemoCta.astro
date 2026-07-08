@@ -1,0 +1,117 @@
+---
+const features = [
+  {
+    title: '100% Personalizada',
+    text: 'Adaptada a tus necesidades y customizable sin necesidad de conocimientos técnicos.',
+  },
+  {
+    title: 'Siempre Actualizada',
+    text: 'Sincronizada con tu eCommerce para actualizaciones en tiempo real y siempre optimizada para iOS y Android',
+  },
+];
+---
+
+<section class="section demo-cta">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-content">
+        <h2 class="cta-title">Tu app lista en <span class="highlight">4 semanas</span> con Reskyt</h2>
+        <div class="cta-features">
+          {
+            features.map(({ title, text }) => (
+              <div class="cta-feature">
+                <p class="cta-feature-title">{title}</p>
+                <p class="cta-feature-text">{text}</p>
+              </div>
+            ))
+          }
+        </div>
+        <a href="/solicitar-una-demo" class="btn-light">Pide tu demo</a>
+      </div>
+      <div class="cta-image-wrap">
+        <img src="/images/demo-mbl.avif" alt="App móvil creada con Reskyt" loading="lazy" width="420" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-card {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: center;
+    gap: 2rem;
+    padding: 3.5rem;
+    border-radius: 1.5rem;
+    background-color: var(--color-red);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .cta-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    letter-spacing: -0.02em;
+  }
+
+  .highlight {
+    text-decoration: underline;
+    text-underline-offset: 0.35rem;
+  }
+
+  .cta-features {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .cta-feature-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .cta-feature-text {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .btn-light {
+    display: inline-block;
+    margin-top: 2.25rem;
+    padding: 0.8rem 1.75rem;
+    border-radius: 999px;
+    background-color: #fff;
+    color: var(--color-red);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-light:hover {
+    transform: translateY(-2px);
+  }
+
+  .cta-image-wrap {
+    display: flex;
+    justify-content: center;
+    align-self: end;
+  }
+
+  .cta-image-wrap img {
+    margin-bottom: -3.5rem;
+    max-width: 100%;
+  }
+
+  @media (max-width: 60rem) {
+    .cta-card {
+      grid-template-columns: 1fr;
+      padding: 2rem;
+    }
+
+    .cta-features {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
