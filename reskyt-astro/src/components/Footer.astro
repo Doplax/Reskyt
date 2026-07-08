@@ -1,0 +1,200 @@
+---
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'Plataforma',
+    links: [
+      { label: 'Funcionalidades', href: '/funcionalidades' },
+      { label: 'Precio', href: '/precios' },
+      { label: 'Calculadora ROI', href: '/roi-calculator' },
+      { label: 'Login', href: 'https://administracion.reskyt.com/admin/login', external: true },
+    ],
+  },
+  {
+    title: 'Empresa',
+    links: [
+      { label: 'Sobre nosotros', href: '/agencia-desarrollo-apps/nosotros-v2' },
+      { label: 'Casos de éxito', href: '/casos-de-exito-app' },
+    ],
+  },
+  {
+    title: 'Ayuda',
+    links: [{ label: 'Contacto', href: '/contacta' }],
+  },
+];
+
+const legalLinks = [
+  { label: 'Condiciones Generales', href: '/condiciones-generales' },
+  { label: 'Política de Cookies', href: '/legal/politica-de-cookies' },
+  { label: 'Aviso Legal', href: '/legal/aviso-legal' },
+];
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-row">
+        <a href="/" aria-label="Reskyt – Inicio">
+          <img src="/images/logo-reskyt.svg" alt="Reskyt" width="143" height="32" loading="lazy" />
+        </a>
+        <div class="divider" aria-hidden="true"></div>
+        <a
+          href="https://www.linkedin.com/company/reskyt-theappsellingcompany/"
+          target="_blank"
+          rel="noopener"
+          class="social-link"
+          aria-label="Reskyt en LinkedIn"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M5.78381 4.16669C5.78351 4.84528 5.37181 5.45593 4.74286 5.71069C4.11391 5.96546 3.39331 5.81346 2.92083 5.32637C2.44836 4.83928 2.31837 4.11437 2.59216 3.49347C2.86596 2.87257 3.48886 2.47966 4.16715 2.50002C5.06804 2.52706 5.78422 3.26539 5.78381 4.16669ZM5.83381 7.06669H2.50048V17.5H5.83381V7.06669ZM11.1005 7.06669H7.78381V17.5H11.0672V12.025C11.0672 8.975 15.0422 8.69166 15.0422 12.025V17.5H18.3338V10.8917C18.3338 5.75002 12.4505 5.94169 11.0672 8.46666L11.1005 7.06669Z"
+              fill="currentColor"></path>
+          </svg>
+        </a>
+      </div>
+      <div class="footer-collab">
+        <p>con colaboración de</p>
+        <a href="https://www.accio.gencat.cat/ca/inici" target="_blank" rel="noopener">
+          <img src="/images/logo-accio.png" alt="ACCIÓ – Generalitat de Catalunya" width="120" loading="lazy" />
+        </a>
+      </div>
+    </div>
+
+    {
+      columns.map(({ title, links }) => (
+        <nav class="footer-column" aria-label={title}>
+          <p class="footer-title">{title}</p>
+          <ul>
+            {links.map(({ label, href, external }) => (
+              <li>
+                <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+  </div>
+
+  <div class="container footer-legal">
+    <div class="footer-legal-links">
+      {
+        legalLinks.map(({ label, href }, i) => (
+          <>
+            {i > 0 && <div class="divider" aria-hidden="true" />}
+            <a href={href}>{label}</a>
+          </>
+        ))
+      }
+    </div>
+    <p>©{year} Reskyt Online SL - All Rights Reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding-block: 4rem 2rem;
+    background-color: var(--color-bg-soft);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .footer-brand-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .divider {
+    width: 1px;
+    height: 1.25rem;
+    background-color: var(--color-border);
+  }
+
+  .social-link {
+    display: inline-flex;
+    color: var(--color-text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .social-link:hover {
+    color: var(--color-red);
+  }
+
+  .footer-collab {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .footer-collab p {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .footer-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .footer-column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-column a {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+  }
+
+  .footer-column a:hover {
+    color: var(--color-red);
+  }
+
+  .footer-legal {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .footer-legal-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .footer-legal-links a {
+    transition: color 0.2s ease;
+  }
+
+  .footer-legal-links a:hover {
+    color: var(--color-red);
+  }
+
+  @media (max-width: 60rem) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

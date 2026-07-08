@@ -1,0 +1,113 @@
+:root {
+  --color-red: #d51521;
+  --color-red-dark: #b01019;
+  --color-text: #16161a;
+  --color-text-muted: #5a5a63;
+  --color-bg: #ffffff;
+  --color-bg-soft: #f6f6f8;
+  --color-border: #e6e6ea;
+  --font-heading: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --container-width: 75rem;
+  --radius: 1rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.section {
+  padding-block: 5rem;
+}
+
+.red {
+  color: var(--color-red);
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-block;
+  padding: 0.8rem 1.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-red);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-red-dark);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
