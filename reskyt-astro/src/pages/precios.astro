@@ -1,0 +1,446 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import DemoCta from '../components/DemoCta.astro';
+import Footer from '../components/Footer.astro';
+
+const plans = [
+  {
+    name: 'ESSENTIAL',
+    badge: '40K/mes Notificaciones',
+    priceMonth: '499€',
+    priceYear: '4.500€',
+    yearNote: 'Coste pago mensualizado 375€',
+    description:
+      'El plan perfecto para pequeños comercios que quieren dar el salto a vender a través de su propia App',
+    features: [
+      'Desarrollo de App nativa iOS + Android',
+      'Contenidos personalizados en la app',
+      'Personalización de la experiencia de usuario (UX)',
+      'Multi-idioma',
+      'Integración Google Analytics 4',
+      'Posibilidad de integraciones con SDKs de terceros (Kit de desarrollo básico para conectar con otras herramientas)',
+    ],
+    push: [
+      'Hasta 40.000 notificaciones push/mes. Paquetes extra disponibles bajo petición',
+      'Segmentación básica de BBDD para envíos masivos',
+      'Push de recordatorio de carrito abandonado y push bienvenida/onboarding',
+      'Envío de Notificaciones via API (integración con CRMs y/o ERPs)',
+    ],
+    featured: false,
+    dark: false,
+  },
+  {
+    name: 'PRO',
+    badge: '300K/mes Notificaciones',
+    priceMonth: '999€',
+    priceYear: '9.700€',
+    yearNote: 'Coste pago mensualizado 808€',
+    description:
+      'Ideal para empresas en expansión que necesitan fidelizar y crear un nuevo canal de ventas.',
+    featuresTitle: 'Todo en ESSENTIAL +',
+    features: [
+      'Búsqueda por código de barras (EAN) y/o QR',
+      'Deep links (Enlaces directos dentro de la App)',
+      'Banners y Popups configurables nativos en la App',
+      'Multi-país',
+      'Social login (Inicio de sesión via Google, Facebook, etc)',
+    ],
+    push: [
+      'Hasta 300.000 notificaciones push/mes. Paquetes extra disponibles bajo petición',
+      'Servicios Push incluidos en Essential',
+      'Segmentación de BBDD para envíos masivos y/o por tipología de clientes',
+      'Envío de Notificaciones por país',
+    ],
+    featured: true,
+    dark: false,
+  },
+  {
+    name: 'MASTER SUITE',
+    badge: 'Notificaciones Ilimitadas',
+    priceMonth: 'Custom',
+    priceYear: 'Custom',
+    yearNote: '',
+    description: 'Pensado para grandes compañías que quieren una solución a medida y soporte total.',
+    featuresTitle: 'Todo en PRO +',
+    features: [
+      'Account Manager dedicado',
+      'Entorno de pruebas para desarrolladores (App Developer Test)',
+      'Soporte Técnico y de Negocio prioritario',
+      'Migración de CMS incluida (trasladamos tu web o tienda online a la app)',
+      'Desarrollo a medida',
+    ],
+    push: ['Ilimitadas', 'Servicios Push incluidos en Pro'],
+    featured: false,
+    dark: true,
+  },
+];
+---
+
+<Layout
+  title="Precios y planes para crear tu app eCommerce | Reskyt"
+  description="Consulta nuestros planes y tarifas para desarrollar una app móvil personalizada para tu eCommerce con todas las funcionalidades que necesitas"
+>
+  <Header />
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <h1 class="hero-title">Precios fijos y predecibles <span class="red">sin sorpresas</span></h1>
+        <p class="hero-subtitle">Crece sin enredos: simple, claro y enfocado en tus ingresos.</p>
+      </div>
+    </section>
+
+    <section class="section pricing" id="pricing">
+      <div class="container">
+        <div class="toggle-wrapper">
+          <span class="toggle-label">Pago Mensual</span>
+          <button
+            type="button"
+            class="toggle"
+            id="billing-toggle"
+            role="switch"
+            aria-checked="true"
+            aria-label="Cambiar entre pago mensual y anual"
+          >
+            <span class="toggle-circle"></span>
+            <span class="toggle-badge">Ahorra hasta 25%</span>
+          </button>
+          <span class="toggle-label">Pago Anual</span>
+        </div>
+
+        <div class="plans">
+          {
+            plans.map((plan) => (
+              <article class:list={['plan', { featured: plan.featured, dark: plan.dark }]}>
+                <div class="plan-header">
+                  <p class="plan-name">{plan.name}</p>
+                  <span class="plan-badge">{plan.badge}</span>
+                </div>
+
+                <div class="plan-price">
+                  <p class="price price-month">
+                    <span class="price-number">{plan.priceMonth}</span>
+                    {plan.priceMonth !== 'Custom' && <span class="price-cadence">/mes</span>}
+                  </p>
+                  <p class="price price-year">
+                    <span class="price-number">{plan.priceYear}</span>
+                    {plan.priceYear !== 'Custom' && <span class="price-cadence">/año</span>}
+                  </p>
+                  {plan.yearNote && <p class="price-note price-year">{plan.yearNote}</p>}
+                  {plan.priceYear !== 'Custom' && <p class="price-note">Imp. excl.</p>}
+                  <p class="plan-description">{plan.description}</p>
+                </div>
+
+                <div class="plan-features">
+                  {plan.featuresTitle && <p class="features-title">{plan.featuresTitle}</p>}
+                  <ul>
+                    {plan.features.map((feature) => (
+                      <li>{feature}</li>
+                    ))}
+                  </ul>
+                  <p class="features-title">Notificaciones Push</p>
+                  <ul>
+                    {plan.push.map((feature) => (
+                      <li>{feature}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <a
+                  href="/solicitar-una-demo"
+                  class:list={[plan.featured ? 'btn-primary' : 'btn-plan-secondary']}
+                >
+                  Pide una demo
+                </a>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="out-control">
+          <p class="out-control-title">Suscripciones fuera del control de Reskyt</p>
+          <p>Apple ($99/año) + Google Play ($25 pago único)</p>
+        </div>
+      </div>
+    </section>
+
+    <DemoCta />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.02em;
+    max-width: 48rem;
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+  }
+
+  .toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .toggle-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .toggle {
+    position: relative;
+    width: 3.5rem;
+    height: 1.9rem;
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--color-red);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .toggle-circle {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.3rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: transform 0.25s ease;
+  }
+
+  .pricing[data-billing='year'] .toggle-circle {
+    transform: translateX(1.5rem);
+  }
+
+  .toggle-badge {
+    position: absolute;
+    top: -1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    background-color: var(--color-red);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .plan {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg-soft);
+  }
+
+  .plan.featured {
+    border-color: var(--color-red);
+    box-shadow: 0 8px 32px rgba(213, 21, 33, 0.12);
+  }
+
+  .plan.dark {
+    background-color: var(--color-text);
+    border-color: var(--color-text);
+    color: #fff;
+  }
+
+  .plan-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .plan-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .plan-badge {
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    background-color: var(--color-red);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .plan-price {
+    margin-top: 1.5rem;
+  }
+
+  /* El toggle mensual/anual muestra u oculta cada bloque de precio */
+  .price-month {
+    display: none;
+  }
+
+  .pricing[data-billing='month'] .price-month {
+    display: block;
+  }
+
+  .pricing[data-billing='month'] .price.price-year,
+  .pricing[data-billing='month'] .price-note.price-year {
+    display: none;
+  }
+
+  .price-number {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    font-weight: 700;
+  }
+
+  .price-cadence {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .plan.dark .price-cadence {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .price-note {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .plan.dark .price-note {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .plan-description {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    min-height: 3.5rem;
+  }
+
+  .plan.dark .plan-description {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .plan-features {
+    margin-top: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .features-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .plan-features ul {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .plan-features li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .plan.dark .plan-features li {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .plan-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-red);
+    font-weight: 700;
+  }
+
+  .plan.dark .plan-features li::before {
+    color: #fff;
+  }
+
+  .plan .btn-primary,
+  .btn-plan-secondary {
+    text-align: center;
+  }
+
+  .btn-plan-secondary {
+    display: inline-block;
+    padding: 0.8rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid currentColor;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .btn-plan-secondary:hover {
+    background-color: var(--color-text);
+    color: #fff;
+  }
+
+  .plan.dark .btn-plan-secondary:hover {
+    background-color: #fff;
+    color: var(--color-text);
+  }
+
+  .out-control {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .out-control-title {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 60rem) {
+    .plans {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const pricing = document.getElementById('pricing');
+  const toggle = document.getElementById('billing-toggle');
+
+  // Anual por defecto, como en la web original
+  pricing?.setAttribute('data-billing', 'year');
+
+  toggle?.addEventListener('click', () => {
+    const isYear = pricing?.getAttribute('data-billing') === 'year';
+    pricing?.setAttribute('data-billing', isYear ? 'month' : 'year');
+    toggle.setAttribute('aria-checked', String(!isYear));
+  });
+</script>
