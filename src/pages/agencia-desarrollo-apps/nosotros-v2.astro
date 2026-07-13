@@ -1,0 +1,499 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const valores = [
+  {
+    title: 'Innovación',
+    text: 'La innovación es el motor que impulsa nuestro crecimiento y el éxito de nuestros clientes.',
+  },
+  {
+    title: 'Servicio',
+    text: 'Nuestro objetivo es ofrecer un servicio excepcional para cada cliente, basado en la rapidez y la eficiencia.',
+  },
+  {
+    title: 'Equipo',
+    text: 'Nos encanta el trabajo en equipo, mezclando la experiencia y la creatividad para conseguir lo mejor de cada uno.',
+  },
+];
+
+type TimelineEntry = { badge?: string; text?: string };
+
+const timeline: { year: string; entries: TimelineEntry[] }[] = [
+  {
+    year: '2013',
+    entries: [
+      { text: 'Creación de la empresa Reskyt e inicio de la programación de la plataforma de creación de apps.' },
+    ],
+  },
+  {
+    year: '2014',
+    entries: [
+      { text: 'Seguimos evolucionando la plataforma Reskyt, para una mejor y más sencilla interacción.' },
+    ],
+  },
+  {
+    year: '2015',
+    entries: [
+      { badge: '🚀 Creación de la primera app para ecommerce' },
+      {
+        text: 'Automatización de la Plataforma para la creación de Apps y reducir el time to market de la creación de las apps.',
+      },
+    ],
+  },
+  {
+    year: '2016',
+    entries: [
+      { badge: '🚀 Lanzamiento App plus' },
+      { text: 'Adaptación de la plataforma para webs corporativas: gimnasios, restaurantes, ayuntamientos, etc.' },
+      { badge: '🏆 eAwards mejor agencia creación de apps 2016' },
+    ],
+  },
+  {
+    year: '2017',
+    entries: [
+      { badge: '🚀 Primeras apps para ecommerce de alto rendimiento' },
+      {
+        text: 'Incorporación de las primeras funcionalidades nativas en la Plataforma. Especialización en Apps para eCommerce. Creación de API Notificaciones Push. Integración con las plataformas de eCommerce Prestashop, Magento, osCommerce y Woocommerce.',
+      },
+      { badge: '🏆 eAwards mejor agencia creación de apps 2017' },
+    ],
+  },
+  {
+    year: '2018',
+    entries: [
+      { badge: '🚀 Lanzamiento App Enterprise' },
+      {
+        text: 'Nuevo diseño UX en la Plataforma. Integración con las plataformas de eCommerce, VTEX, Salesforce y Logicommerce.',
+      },
+      { badge: '🏆 eAwards mejor agencia creación de apps 2018' },
+    ],
+  },
+  {
+    year: '2019',
+    entries: [
+      {
+        text: 'Instalación de Servidores en Amazon. Aumento de capacidades para el envío masivo de millones de Notificaciones Push.',
+      },
+    ],
+  },
+  {
+    year: '2020',
+    entries: [
+      { badge: '🚀 Posibilidad de incorporación de SDK nativo' },
+      { text: 'Adaptación de la plataforma para poder instalar SDK a medida de forma nativa.' },
+      {
+        text: 'Comienzo del desarrollo para el envío de notificaciones push a carritos abandonados. Integración con Shopify.',
+      },
+    ],
+  },
+  {
+    year: '2021',
+    entries: [
+      {
+        text: 'Comienzo del desarrollo del Módulo de Integración para una customización automatizada del contenido del eCommerce y así conseguir una mejor integración con la App.',
+      },
+      {
+        text: 'Incorporación en la plataforma de herramientas de integración con terceros como buscadores, chatbots y pasarelas de pago.',
+      },
+    ],
+  },
+  {
+    year: '2022',
+    entries: [
+      { badge: '🚀 Lanzamiento del módulo de integración' },
+      {
+        text: 'Programación e incorporación en la Plataforma del Módulo de Segmentación. Integración con todas las plataformas de eCommerce actuales.',
+      },
+    ],
+  },
+  {
+    year: '2023',
+    entries: [
+      {
+        text: 'Evolución importante en la Plataforma Reskyt con la incorporación de nuevas prestaciones para los eCommerce más exigentes.',
+      },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Somos especialistas en apps eCommerce para agencias | Reskyt"
+  description="Conoce al equipo que desarrolla apps nativas para tiendas online, su experiencia con agencias y cómo colaboramos para lograr éxito en el canal app"
+>
+  <Header />
+  <main>
+    <section class="section about">
+      <div class="container">
+        <h1 class="about-title">
+          La Agencia Nº1 en desarrollo de <span class="red">Aplicaciones móviles</span> en España para eCommerce
+        </h1>
+        <p class="about-lead">
+          En 2013 nace Reskyt con sus 3 fundadores, apasionados del mundo del software e internet.
+          Iniciaron este viaje fruto de la pasión por el eCommerce, tras ver la necesidad que tenían
+          las tiendas online de poder vender a través de aplicaciones móviles.
+        </p>
+
+        <div class="about-grid">
+          <div class="about-gallery">
+            <img
+              src="/images/about/conferencia.webp"
+              alt="Descubre la historia de Reskyt, agencia de desarrollo de apps líder"
+              loading="lazy"
+              width="1199"
+            />
+            <div class="about-gallery-row">
+              <img
+                src="/images/about/premio-ecommerce-tools.jpg"
+                alt="Ganadores a la mejor plataforma para eCommerce en la gala eCommerce Tools"
+                loading="lazy"
+                width="600"
+              />
+              <img
+                src="/images/about/premio-eawards.webp"
+                alt="Ganadores de los premios eAwards a la mejor agencia de creación de apps"
+                loading="lazy"
+                width="600"
+              />
+              <img
+                class="about-gallery-wide"
+                src="/images/about/feria-eshow.webp"
+                alt="El equipo de Reskyt en la feria eShow de Barcelona"
+                loading="lazy"
+                width="760"
+              />
+            </div>
+          </div>
+
+          <div class="about-description">
+            <p>
+              Su objetivo iba más allá de poder crear Apps, querían que cualquier eCommerce manager o
+              Responsable de marketing de un eCommerce pudiera personalizar su App o realizar cambios en
+              el momento que quisieran. Así nació la primera plataforma de creación de Apps para
+              eCommerce, B2B y marketplace de España.
+            </p>
+            <p>
+              Reskyt creó una de las primeras plataformas de Europa que permite adaptarse a cualquier
+              plataforma de eCommerce (Shopify, Magento, Prestashop, Vtex, Woocommerce, Logicommerce,
+              etc.) siendo su factor diferenciador el poder crear Apps totalmente a medida, sin
+              plantillas, combinando las mejores partes de un eCommerce con nuevas funcionalidades
+              nativas, consiguiendo, como resultado, Apps que mejoran con diferencia la conversión de
+              venta respecto a la Web mobile.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-closing">
+          <p>
+            Actualmente, Reskyt cuenta con más de 600 Apps y se ha consolidado como una de las
+            plataformas más sólidas del mercado. Contamos con un equipo altamente experimentado para
+            seguir creciendo e innovando en el mundo de las Apps.
+          </p>
+          <p>
+            <strong>
+              En Reskyt, hemos creado Apps para todo tipo de eCommerce, desde los más pequeños hasta
+              los eCommerce más exigentes, con 21 millones de visitas mensuales.
+            </strong>
+          </p>
+          <p>
+            Durante tres años consecutivos nuestra plataforma obtuvo el premio eAwards como mejor
+            Agencia de creación de Apps y ha obtenido el Premio a la mejor plataforma de España en la
+            Gala eCommerce Tools.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section values">
+      <div class="container">
+        <h2 class="values-title">Nuestros valores siempre están presentes</h2>
+        <div class="values-grid">
+          {
+            valores.map(({ title, text }) => (
+              <div class="value">
+                <h3 class="value-title">{title}</h3>
+                <p class="value-text">{text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section goals">
+      <div class="container">
+        <h2 class="goals-title">Nuestros <span class="red">Objetivos</span></h2>
+        <p class="goals-text">
+          Crear Apps para cualquier tipo de eCommerce, sea cual sea su plataforma (Shopify, Magento,
+          Prestashop, Logicommerce, Vtex, Salesforce, etc.). Gracias al largo recorrido y experiencia
+          adquirida después de la realización de más de 580 Apps, hoy es una de las plataformas más
+          sólidas del mercado, pudiendo dar soporte simultáneo a los mejores eCommerce de Europa.
+        </p>
+      </div>
+    </section>
+
+    <section class="section evolution">
+      <div class="container">
+        <h2 class="evolution-title">Evolución <span class="red">Reskyt</span></h2>
+
+        <div class="timeline" id="timeline">
+          <div class="timeline-track" aria-hidden="true">
+            <div class="timeline-fill" id="timeline-fill"></div>
+          </div>
+          {
+            timeline.map(({ year, entries }) => (
+              <div class="timeline-item">
+                <p class="timeline-year">{year}</p>
+                <div class="timeline-dot" aria-hidden="true" />
+                <div class="timeline-content">
+                  {entries.map(({ badge, text }) =>
+                    badge ? <p class="timeline-badge">{badge}</p> : <p class="timeline-text">{text}</p>
+                  )}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .about {
+    background-color: var(--color-bg-soft);
+  }
+
+  .about-title {
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    letter-spacing: -0.02em;
+    max-width: 52rem;
+  }
+
+  .about-lead {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 44rem;
+  }
+
+  .about-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .about-gallery img {
+    border-radius: var(--radius);
+    width: 100%;
+  }
+
+  .about-gallery-row {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .about-gallery-wide {
+    grid-column: 1 / -1;
+  }
+
+  .about-description {
+    display: grid;
+    gap: 1.25rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .about-closing {
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 1.25rem;
+    max-width: 52rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .about-closing strong {
+    color: var(--color-text);
+  }
+
+  .values {
+    background-color: var(--color-text);
+    color: #fff;
+  }
+
+  .values-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+    max-width: 32rem;
+  }
+
+  .values-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .value-title {
+    font-size: 1.35rem;
+    color: var(--color-red);
+  }
+
+  .value-text {
+    margin-top: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .goals-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .goals-text {
+    margin-top: 1.25rem;
+    max-width: 52rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+  }
+
+  .evolution {
+    background-color: var(--color-bg-soft);
+  }
+
+  .evolution-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.4375rem;
+    width: 2px;
+    background-color: var(--color-border);
+  }
+
+  .timeline-fill {
+    width: 100%;
+    height: 0%;
+    background-color: var(--color-red);
+    transition: height 0.15s linear;
+  }
+
+  .timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding-left: 2.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--color-red);
+    box-shadow: 0 0 0 4px rgba(213, 21, 33, 0.15);
+  }
+
+  .timeline-year {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .timeline-content {
+    display: grid;
+    gap: 0.85rem;
+    justify-items: start;
+  }
+
+  .timeline-badge {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background-color: rgba(213, 21, 33, 0.08);
+    border: 1px solid rgba(213, 21, 33, 0.25);
+    color: var(--color-red);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .timeline-text {
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 60rem) {
+    .about-grid {
+      grid-template-columns: 1.15fr 1fr;
+      gap: 4rem;
+    }
+
+    .values-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .timeline-track {
+      left: calc(8rem + 0.4375rem);
+    }
+
+    .timeline-item {
+      grid-template-columns: 6rem 1fr;
+      gap: 0 4.5rem;
+      padding-left: 0;
+    }
+
+    .timeline-dot {
+      left: 8rem;
+    }
+
+    .timeline-year {
+      text-align: right;
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // La línea de la cronología se va rellenando en rojo a medida que se hace scroll.
+  const timeline = document.getElementById('timeline');
+  const fill = document.getElementById('timeline-fill');
+
+  function updateFill() {
+    if (!timeline || !fill) return;
+    const rect = timeline.getBoundingClientRect();
+    const viewportAnchor = window.innerHeight * 0.6;
+    const progress = Math.min(Math.max((viewportAnchor - rect.top) / rect.height, 0), 1);
+    fill.style.height = `${progress * 100}%`;
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    fill?.style.setProperty('height', '100%');
+  } else {
+    updateFill();
+    window.addEventListener('scroll', updateFill, { passive: true });
+    window.addEventListener('resize', updateFill, { passive: true });
+  }
+</script>
