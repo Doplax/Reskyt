@@ -1,8 +1,9 @@
 ---
 import LogoMarquee from './LogoMarquee.astro';
-import { getDict } from '../i18n';
+import { getDict, localizeHref, isLocale, DEFAULT_LOCALE } from '../i18n';
 
-const t = getDict(Astro.currentLocale);
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = getDict(currentLocale);
 
 const column1 = [
   { src: '/images/brands/mascoteros.webp', alt: 'Logo Mascoteros' },
@@ -46,7 +47,7 @@ const column3 = [
       <h1 class="hero-title">{t.hero.titleStart}<span class="red">{t.hero.titleHighlight}</span></h1>
       <p class="hero-subtitle">{t.hero.subtitle}</p>
       <div class="hero-buttons">
-        <a href="/solicitar-una-demo" class="btn-primary">{t.hero.demo}</a>
+        <a href={localizeHref('/solicitar-una-demo', currentLocale)} class="btn-primary">{t.hero.demo}</a>
         <a href="/roi-calculator" class="btn-secondary">
           {t.hero.roi}
         </a>

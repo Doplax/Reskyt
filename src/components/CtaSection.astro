@@ -1,7 +1,8 @@
 ---
-import { getDict } from '../i18n';
+import { getDict, localizeHref, isLocale, DEFAULT_LOCALE } from '../i18n';
 
-const t = getDict(Astro.currentLocale);
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = getDict(currentLocale);
 ---
 
 <section class="section cta">
@@ -11,8 +12,8 @@ const t = getDict(Astro.currentLocale);
     </h2>
     <p class="cta-text">{t.cta.text}</p>
     <div class="cta-buttons">
-      <a href="/solicitar-una-demo" class="btn-primary">{t.hero.demo}</a>
-      <a href="/contacta" class="btn-secondary">{t.nav.contacta}</a>
+      <a href={localizeHref('/solicitar-una-demo', currentLocale)} class="btn-primary">{t.hero.demo}</a>
+      <a href={localizeHref('/contacta', currentLocale)} class="btn-secondary">{t.nav.contacta}</a>
     </div>
   </div>
 </section>

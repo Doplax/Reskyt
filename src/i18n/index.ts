@@ -28,6 +28,23 @@ export function localizePath(pathname: string, locale: Locale): string {
   return `/${locale}${target === '/' ? '/' : target}`;
 }
 
+/**
+ * Como localizePath, pero para enlaces de navegación: si el destino no está
+ * traducido devuelve la página en castellano (que sí existe) en lugar de
+ * mandar a la portada del idioma. Así la navegación conserva el idioma en
+ * cuanto la página destino tenga traducción.
+ */
+export function localizeHref(href: string, locale: Locale): string {
+  const path = stripLocale(href);
+  if (locale === DEFAULT_LOCALE || !TRANSLATED_PATHS.has(path)) return path;
+  return `/${locale}${path === '/' ? '/' : path}`;
+}
+
+/** Idiomas en los que existe traducción de `pathname` (todos o ninguno). */
+export function hasTranslation(pathname: string): boolean {
+  return TRANSLATED_PATHS.has(stripLocale(pathname));
+}
+
 const es = {
   meta: {
     title: 'Desarrollo de app móvil sin código para tu eCommerce | Reskyt',

@@ -1,14 +1,14 @@
 ---
-import { getDict, localizePath, LOCALES, isLocale, DEFAULT_LOCALE } from '../i18n';
+import { getDict, localizePath, localizeHref, LOCALES, isLocale, DEFAULT_LOCALE } from '../i18n';
 
 const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
 const t = getDict(currentLocale);
 
 const navLinks = [
-  { label: t.nav.funcionalidades, href: '/funcionalidades' },
-  { label: t.nav.casosDeExito, href: '/casos-de-exito-app' },
-  { label: t.nav.precios, href: '/precios' },
-  { label: t.nav.blog, href: '/noticias-ecommerce-app' },
+  { label: t.nav.funcionalidades, href: localizeHref('/funcionalidades', currentLocale) },
+  { label: t.nav.casosDeExito, href: localizeHref('/casos-de-exito-app', currentLocale) },
+  { label: t.nav.precios, href: localizeHref('/precios', currentLocale) },
+  { label: t.nav.blog, href: localizeHref('/noticias-ecommerce-app', currentLocale) },
 ];
 
 const otherLocales = LOCALES.filter((locale) => locale !== currentLocale).map((locale) => ({
@@ -25,8 +25,8 @@ const otherLocales = LOCALES.filter((locale) => locale !== currentLocale).map((l
 
     <nav class="nav" id="main-nav" aria-label={t.nav.ariaMain}>
       {navLinks.map(({ label, href }) => <a href={href} class="nav-link">{label}</a>)}
-      <a href="/admin/login" class="nav-link login-link">{t.nav.login}</a>
-      <a href="/contacta" class="btn-primary nav-cta">{t.nav.contacta}</a>
+      <a href={localizeHref('/admin/login', currentLocale)} class="nav-link login-link">{t.nav.login}</a>
+      <a href={localizeHref('/contacta', currentLocale)} class="btn-primary nav-cta">{t.nav.contacta}</a>
 
       <div class="lang-switcher" id="lang-switcher">
         <button
@@ -43,7 +43,7 @@ const otherLocales = LOCALES.filter((locale) => locale !== currentLocale).map((l
           {
             otherLocales.map(({ code, href }) => (
               <li>
-                <a href={href} class="lang-option" lang={code}>
+                <a href={href} class="lang-option" lang={code} data-locale={code}>
                   {code.toUpperCase()}
                 </a>
               </li>
@@ -221,6 +221,15 @@ const otherLocales = LOCALES.filter((locale) => locale !== currentLocale).map((l
     event.stopPropagation();
     const isOpen = langSwitcher?.classList.toggle('open') ?? false;
     langToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Persistencia del idioma elegido: se guarda al usar el selector y
+  // Layout redirige la portada al idioma preferido en la próxima visita.
+  document.querySelectorAll<HTMLAnchorElement>('.lang-option').forEach((option) => {
+    option.addEventListener('click', () => {
+      const locale = option.dataset.locale;
+      if (locale) localStorage.setItem('reskyt-locale', locale);
+    });
   });
 
   document.addEventListener('click', () => {
