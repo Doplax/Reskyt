@@ -1,0 +1,262 @@
+---
+// Formulario de solicitud de demo (compartido por /solicitar-una-demo y /pide-tu-demo-m4c).
+// Réplica estática: la validación es nativa y el envío muestra la confirmación en cliente.
+---
+
+<form class="demo-form" id="demo-form" novalidate>
+  <div class="form-row">
+    <div class="form-field">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Ana García" required />
+    </div>
+    <div class="form-field">
+      <label for="empresa">Empresa</label>
+      <input type="text" id="empresa" name="empresa" autocomplete="organization" placeholder="Mi Tienda SL" required />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="ana@mitienda.com" required />
+    </div>
+    <div class="form-field">
+      <label for="telefono">Teléfono <span class="optional">(opcional)</span></label>
+      <input type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="600 000 000" />
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="url">URL de tu eCommerce</label>
+    <input type="url" id="url" name="url" inputmode="url" placeholder="https://www.mitienda.com" required />
+  </div>
+
+  <label class="form-check">
+    <input type="checkbox" name="terminos" required />
+    <span class="form-check-box" aria-hidden="true"></span>
+    <span>Acepto los <a href="/condiciones-generales" class="form-link">términos y condiciones</a></span>
+  </label>
+
+  <button type="submit" class="btn-primary form-submit">Pide tu demo</button>
+
+  <p class="form-error" id="form-error" hidden>Revisa los campos marcados: falta algún dato o no es válido.</p>
+  <p class="form-note">*Válido para no clientes. Una app por empresa.</p>
+</form>
+
+<div class="demo-success" id="demo-success" hidden>
+  <span class="demo-success-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
+      <path d="M4 12.5l5.5 5.5L20 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </span>
+  <h2 class="demo-success-title">¡Solicitud enviada!</h2>
+  <p>Gracias por tu interés. Nuestro equipo te contactará en menos de 24 h laborables.</p>
+</div>
+
+<style>
+  /* El display de abajo pisaría el atributo hidden sin esta regla */
+  .demo-form[hidden] {
+    display: none;
+  }
+
+  .demo-form {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) * 1.25);
+    padding: 1.75rem;
+    box-shadow: 0 1.5rem 3rem rgba(22, 22, 26, 0.07);
+    display: grid;
+    gap: 1.25rem;
+    align-self: start;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .form-field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .form-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+
+  .form-field input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    background-color: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-field input::placeholder {
+    color: #a7a7b0;
+  }
+
+  .form-field input:focus {
+    outline: none;
+    border-color: var(--color-red);
+    box-shadow: 0 0 0 3px rgba(213, 21, 33, 0.12);
+    background-color: var(--color-bg);
+  }
+
+  .demo-form.was-validated input:invalid {
+    border-color: var(--color-red);
+    background-color: rgba(213, 21, 33, 0.04);
+  }
+
+  .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .form-check input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .form-check-box {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.1rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 0.35rem;
+    background-color: var(--color-bg-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .form-check-box::after {
+    content: '';
+    width: 0.65rem;
+    height: 0.35rem;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translate(1px, -1px);
+    opacity: 0;
+  }
+
+  .form-check input:checked + .form-check-box {
+    background-color: var(--color-red);
+    border-color: var(--color-red);
+  }
+
+  .form-check input:checked + .form-check-box::after {
+    opacity: 1;
+  }
+
+  .form-check input:focus-visible + .form-check-box {
+    box-shadow: 0 0 0 3px rgba(213, 21, 33, 0.12);
+  }
+
+  .demo-form.was-validated .form-check input:invalid + .form-check-box {
+    border-color: var(--color-red);
+  }
+
+  .form-link {
+    color: var(--color-red);
+    font-weight: 600;
+  }
+
+  .form-link:hover {
+    text-decoration: underline;
+  }
+
+  .form-submit {
+    border: 0;
+    cursor: pointer;
+    font-size: 1rem;
+    padding-block: 0.95rem;
+  }
+
+  .form-error {
+    color: var(--color-red);
+    font-size: 0.9rem;
+  }
+
+  .form-note {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .demo-success {
+    justify-self: center;
+    max-width: 26rem;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .demo-success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: rgba(213, 21, 33, 0.1);
+    color: var(--color-red);
+  }
+
+  .demo-success-title {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .form-row {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .demo-form {
+      padding: 2.25rem;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('demo-form') as HTMLFormElement | null;
+  const success = document.getElementById('demo-success');
+  const error = document.getElementById('form-error');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    form.classList.add('was-validated');
+
+    if (!form.checkValidity()) {
+      error?.removeAttribute('hidden');
+      return;
+    }
+
+    // Réplica estática: no hay backend, mostramos la confirmación directamente.
+    form.hidden = true;
+    error?.setAttribute('hidden', '');
+    document.querySelector('.demo-intro')?.setAttribute('hidden', '');
+    success?.removeAttribute('hidden');
+  });
+</script>

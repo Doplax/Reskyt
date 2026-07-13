@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import DemoForm from '../components/DemoForm.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Solicita tu demo gratuita y lanza tu app eCommerce | Reskyt"
+  description="Consigue tu demo personalizada gratis gracias a Marketing4eCommerce y un 20% de descuento en tu primer año con Reskyt."
+>
+  <Header />
+  <main>
+    <section class="section demo">
+      <div class="container demo-grid">
+        <div class="demo-intro">
+          <p class="demo-badge">Marketing4eCommerce</p>
+          <h1 class="demo-title">
+            Marketer, gracias a Marketing4eCommerce consigue tu demo personalizada
+            <span class="red">Gratis</span> y un <span class="red">20% de descuento</span> en tu primer año
+          </h1>
+          <p class="demo-subtitle">Introduce tus datos y en breve nos pondremos en contacto.</p>
+
+          <div class="demo-contact">
+            <p>Envía un mail a <a href="mailto:appselling@reskyt.com" class="demo-link">appselling@reskyt.com</a></p>
+            <p>
+              Llámanos al <a href="tel:+34902731998" class="demo-link">+34 902 731 998</a> /
+              <a href="tel:+34973949991" class="demo-link">+34 973 94 99 91</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="demo-form-slot">
+          <DemoForm />
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .demo {
+    background:
+      radial-gradient(40rem 25rem at 110% -10%, rgba(213, 21, 33, 0.07), transparent),
+      var(--color-bg-soft);
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .demo-intro[hidden] {
+    display: none;
+  }
+
+  .demo-badge {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    background-color: var(--color-red);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .demo-title {
+    margin-top: 1.25rem;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .demo-subtitle {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 30rem;
+  }
+
+  .demo-contact {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    display: grid;
+    gap: 0.35rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .demo-link {
+    color: var(--color-red);
+    font-weight: 600;
+  }
+
+  .demo-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 60rem) {
+    .demo-grid {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+</style>
