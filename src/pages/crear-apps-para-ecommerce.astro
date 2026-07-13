@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import TechMarquee from '../components/TechMarquee.astro';
+import DemoCta from '../components/DemoCta.astro';
+import Footer from '../components/Footer.astro';
+
+const base = [
+  {
+    title: 'Plataforma No-code',
+    text: 'Gracias a la plataforma podrás crear composiciones e iconografía, para dar a tus clientes una manera fácil e intuitiva a la hora de navegar por la app.',
+  },
+  {
+    title: 'Notificaciones Push',
+    text: 'Comunícate con tus clientes de forma directa para informarle de ofertas, para recuperar carritos abandonados, novedades o códigos descuento para su cumpleaños.',
+  },
+];
+
+const conversion = [
+  {
+    title: 'Checkout en un click',
+    text: 'Integración con cualquiera de los checkouts de última generación: Paypal, Amazon Pay, Apple Pay, Klarna, Aplazame…',
+  },
+  {
+    title: 'Inicio de sesión social',
+    text: 'Incrementa las conversiones en ventas gracias a la rapidez de inicio de sesión con Facebook, Google, Amazon o Apple.',
+  },
+  {
+    title: 'Buscadores avanzados',
+    text: 'Buscadores avanzados como Doofinder, APISearch, Empathy, directamente integrados dentro de la app.',
+  },
+  {
+    title: 'Chatbots',
+    text: 'Ten el mismo contacto con el cliente utilizando el mismo chatbot que tienes en el eCommerce, ya que estará dentro de la app.',
+  },
+  {
+    title: 'Lector de QR/EAN nativo en app',
+    text: 'Tus clientes podrán escanear tus productos desde cualquier lugar, ¡acelerando así el proceso de compra!',
+  },
+  {
+    title: 'Promociones exclusivas para la app',
+    text: 'El eCommerce con un simple desarrollo podrá generar promociones exclusivas para la app.',
+  },
+  {
+    title: 'Posicionamiento de Marca',
+    text: 'Fortalece tu marca. Con una App vas a generar más impacto a tus clientes. Mayor comunicación, más feeling y más ventas.',
+  },
+  {
+    title: 'Google Analytics/GA4',
+    text: 'Todas las visitas a la app estarán en tu Google Analytics, ya que automáticamente detectará un nuevo medio por el cual entran visitas.',
+  },
+];
+
+const segmentation = [
+  {
+    title: 'API Push',
+    text: 'Vincula nuestra API para el envío de notificaciones push y personaliza las notificaciones para tus usuarios: información logística, envío de paquetes, descuentos…',
+  },
+  {
+    title: 'Carritos Abandonados',
+    text: 'Notifica a tus usuarios cuando se dejen elementos en el carrito, para que continúen su compra, ofreciéndoles descuentos, promociones, etc.',
+  },
+  {
+    title: 'Geolocalización',
+    text: 'Envía notificaciones push delimitadas por una zona, mediante geolocalización procedente de las entradas en la app.',
+  },
+  {
+    title: 'Formulario de Segmentación',
+    text: 'Genera un formulario in-app, para saber qué intereses tienen en tus productos y poder aportarles información más relevante.',
+  },
+  {
+    title: 'País',
+    text: 'Apps con múltiples países se benefician de poder segmentar las notificaciones en función del país de uso de la app.',
+  },
+  {
+    title: 'Aperturas',
+    text: 'Envía una notificación push en función de qué usuarios han abierto una notificación anterior.',
+  },
+  {
+    title: 'Bienvenida',
+    text: 'Envía una notificación push con un descuento a cada usuario, por descargarse la app.',
+  },
+  {
+    title: 'Dispositivo de pruebas',
+    text: 'Prueba todas las notificaciones push antes de enviarlas, para asegurarte de que todo está correcto.',
+  },
+];
+---
+
+<Layout
+  title="Crear apps móviles personalizadas para eCommerce | Reskyt"
+  description="La plataforma de creación de Apps con más funcionalidades del mercado: no-code, notificaciones push segmentadas, checkouts, buscadores, chatbots y más."
+>
+  <Header />
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <h1 class="hero-title">
+          La plataforma de creación de Apps con <span class="red">más funcionalidades</span> del mercado
+        </h1>
+        <p class="hero-subtitle">
+          Todas las herramientas al alcance de tu mano para crear una app intuitiva que hará disparar
+          las ventas de tu eCommerce.
+        </p>
+      </div>
+    </section>
+
+    <section class="section features">
+      <div class="container">
+        <div class="cards two">
+          {
+            base.map(({ title, text }) => (
+              <article class="card">
+                <h2 class="card-title">{title}</h2>
+                <p class="card-text">{text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <TechMarquee />
+
+    <section class="section features">
+      <div class="container">
+        <h2 class="section-title">Soluciones para <span class="red">incrementar la conversión</span> de tu tienda</h2>
+        <div class="cards">
+          {
+            conversion.map(({ title, text }) => (
+              <article class="card">
+                <h3 class="card-title">{title}</h3>
+                <p class="card-text">{text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section features soft">
+      <div class="container">
+        <h2 class="section-title">Segmentación avanzada para tus <span class="red">Notificaciones Push</span></h2>
+        <div class="cards">
+          {
+            segmentation.map(({ title, text }) => (
+              <article class="card">
+                <h3 class="card-title">{title}</h3>
+                <p class="card-text">{text}</p>
+              </article>
+            ))
+          }
+        </div>
+        <div class="reviews">
+          <h3 class="reviews-title">Las valoraciones y reseñas generan confianza</h3>
+          <p class="reviews-text">
+            La confianza y la seguridad son uno de los puntos más importantes a la hora de la toma de
+            decisión de compra. Nuestras Apps permiten que los usuarios valoren y reseñen directamente.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <DemoCta />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    letter-spacing: -0.02em;
+    max-width: 54rem;
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 40rem;
+  }
+
+  .features.soft {
+    background-color: var(--color-bg-soft);
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+    max-width: 46rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .features:not(.soft) .card {
+    background-color: var(--color-bg-soft);
+  }
+
+  .card:hover {
+    border-color: var(--color-red);
+    transform: translateY(-4px);
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+  }
+
+  .card-text {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .reviews {
+    margin-top: 3rem;
+    padding: 2rem;
+    border-radius: var(--radius);
+    background-color: var(--color-text);
+    color: #fff;
+  }
+
+  .reviews-title {
+    font-size: 1.35rem;
+  }
+
+  .reviews-text {
+    margin-top: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 44rem;
+  }
+
+  @media (min-width: 60rem) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cards.two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

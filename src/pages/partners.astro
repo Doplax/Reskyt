@@ -1,0 +1,227 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const reasons = [
+  {
+    title: 'La plataforma más completa',
+    text: 'Para desarrollar una APP se requiere una inversión muy alta en dinero y tiempo. Reskyt es la plataforma más completa y más utilizada por los eCommerce, agencias y partners.',
+    highlight: 'Nos avalan más de 370 eCommerce de alto rendimiento',
+  },
+  {
+    title: 'No esperes a que lo haga otro',
+    text: 'Todos los ecommerce terminarán con una APP, no esperes a que lo haga otro. Fideliza a tus clientes.',
+    highlight: '¡Sé el partner GLOBAL de soluciones digitales de tus clientes!',
+  },
+  {
+    title: 'Sin depender de programadores',
+    text: 'El responsable de Marketing del cliente o su agencia de MK digital podrá realizar los cambios que necesite a través de la plataforma sin precisar de ningún programador. Modifica Menús, Submenús, Portadas, Sliders, etc.',
+    highlight: 'Bienvenido a la nueva generación de APPs ¡Ahorra tiempo!',
+  },
+  {
+    title: 'Sincronización al instante',
+    text: 'Los cambios de contenido en la web se sincronizan al instante en la App ya que carga directamente el contenido de la web.',
+    highlight: 'Más comodidad, más usabilidad, ¡más ventas!',
+  },
+  {
+    title: 'El mejor canal para fidelizar',
+    text: 'Gracias a las notificaciones, la App es el mejor canal para fidelizar e incrementar las ventas de un eCommerce. Con Reskyt podrás segmentar las notificaciones según tus necesidades.',
+    highlight: 'Las notificaciones Push tienen la conversión más alta que los emails',
+  },
+  {
+    title: 'Compatible con todas tus herramientas',
+    text: 'Reskyt se adapta a la perfección con todas las herramientas de los ecommerce: Whatsapp, Oct8ne, Zendesk, Doofinder, Apisearch, Sequra, Google Maps, Google Analytics y muchas más.',
+    highlight: '¡Nunca había sido tan fácil!',
+  },
+  {
+    title: 'En constante evolución',
+    text: 'La plataforma Reskyt está en constante evolución y ofrece la última tecnología, en las nuevas actualizaciones, sin necesidad de publicación en App Store y Google Play.',
+    highlight: '¡Adiós a las actualizaciones manuales!',
+  },
+];
+---
+
+<Layout
+  title="Partners Reskyt"
+  description="Únete al programa Partners de Reskyt: crea las apps de los eCommerce de tus clientes con la plataforma de Appselling y revoluciona sus ventas."
+>
+  <Header />
+  <main>
+    <section class="section partners-hero">
+      <div class="container">
+        <h1 class="hero-title">Programa <span class="red">Partners</span> RESKYT</h1>
+        <p class="hero-lead">REVOLUCIONA las Ventas de los eCommerce de tus clientes.</p>
+        <p class="hero-text">
+          Da un paso más en la digitalización de sus negocios, creando sus aplicaciones. En Reskyt no
+          sólo encontrarás un partner tecnológico, sino que te unirás a un equipo que vive con pasión
+          cada proyecto que hace.
+        </p>
+        <div class="hero-todo">
+          <p class="hero-todo-title">Nos ocupamos de TODO:</p>
+          <ul>
+            <li>Presentación de demo a tus clientes.</li>
+            <li>Creación y diseño de Apps, formación y publicación en los markets Google Play y App Store.</li>
+            <li>Soporte técnico especializado.</li>
+          </ul>
+        </div>
+        <div class="hero-actions">
+          <a href="/contacta" class="btn-primary">¡Únete al Appselling!</a>
+          <div class="hero-contact">
+            <p>Envía mail a <a href="mailto:appselling@reskyt.com" class="link-red">appselling@reskyt.com</a></p>
+            <p>
+              Llámanos al <a href="tel:+34902731998" class="link-red">+34 902 731 998</a> /
+              <a href="tel:+34973949991" class="link-red">+34 973 94 99 91</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section why">
+      <div class="container">
+        <h2 class="why-title">¿Porqué <span class="red">RESKYT</span>?</h2>
+        <div class="why-grid">
+          {
+            reasons.map(({ title, text, highlight }) => (
+              <article class="why-card">
+                <h3>{title}</h3>
+                <p>{text}</p>
+                <p class="why-highlight">{highlight}</p>
+              </article>
+            ))
+          }
+        </div>
+        <p class="why-closing">
+          Todas las herramientas al alcance de tu mano para crear una app intuitiva que hará disparar
+          las ventas de tu eCommerce. <strong>¡Nunca había sido tan fácil crear una APP!</strong>
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .partners-hero {
+    background-color: var(--color-bg-soft);
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-lead {
+    margin-top: 1.25rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.35rem;
+  }
+
+  .hero-text {
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    max-width: 44rem;
+  }
+
+  .hero-todo {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-red);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background-color: var(--color-bg);
+    max-width: 40rem;
+  }
+
+  .hero-todo-title {
+    font-weight: 700;
+  }
+
+  .hero-todo ul {
+    margin: 0.75rem 0 0;
+    padding-left: 1.25rem;
+    color: var(--color-text-muted);
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .hero-actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-contact {
+    display: grid;
+    gap: 0.25rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .link-red {
+    color: var(--color-red);
+    font-weight: 600;
+  }
+
+  .link-red:hover {
+    text-decoration: underline;
+  }
+
+  .why-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+  }
+
+  .why-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .why-card {
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg-soft);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .why-card:hover {
+    border-color: var(--color-red);
+    transform: translateY(-4px);
+  }
+
+  .why-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .why-card p {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .why-highlight {
+    font-weight: 700;
+    color: var(--color-red) !important;
+  }
+
+  .why-closing {
+    margin-top: 3rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 44rem;
+  }
+
+  @media (min-width: 60rem) {
+    .why-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

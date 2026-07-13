@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import DemoCta from '../components/DemoCta.astro';
+import Footer from '../components/Footer.astro';
+import { publishedApps } from '../data/published-apps';
+---
+
+<Layout
+  title="Casos de éxito de apps móviles para eCommerce | Reskyt"
+  description="Desarrollo de Apps para los mejores eCommerce B2C y B2B: la plataforma de creación de aplicaciones móviles más utilizada por las tiendas online en España, Latam y Europa."
+>
+  <Header />
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <h1 class="hero-title">
+          Desarrollo de Apps para los <span class="red">mejores eCommerce</span> B2C y B2B
+        </h1>
+        <p class="hero-subtitle">
+          La plataforma de creación de Aplicaciones móviles más utilizada por las tiendas online en
+          España, Latam y Europa.
+        </p>
+      </div>
+    </section>
+
+    <section class="section apps">
+      <div class="container">
+        <h2 class="apps-title">Apps publicadas en España <span class="red">¡y muchas más!</span></h2>
+        <div class="apps-grid">
+          {
+            publishedApps.map(({ name, logo }) => (
+              <div class="app-item">
+                <img src={logo} alt={`Logo ${name}`} loading="lazy" width="64" height="64" />
+                <p>{name}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <DemoCta />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    letter-spacing: -0.02em;
+    max-width: 50rem;
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 40rem;
+  }
+
+  .apps-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  .app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .app-item img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(22, 22, 26, 0.08);
+  }
+
+  .app-item p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 60rem) {
+    .apps-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+</style>

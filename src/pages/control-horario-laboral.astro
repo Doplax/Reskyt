@@ -1,0 +1,223 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const reasons = [
+  {
+    title: 'Por ser sencillo e intuitivo',
+    text: 'Una vez registrado, el empleado sólo tiene que efectuar un clic en el botón de Inicio-Final, con posibilidad de registro de múltiples tiempos en una jornada laboral.',
+  },
+  {
+    title: 'Por no tener inversión ni permanencia',
+    text: 'La modalidad de pago por uso no tiene un coste de inversión inicial y tampoco obliga a ningún sistema de permanencia.',
+  },
+  {
+    title: 'Por su facilidad de acceso',
+    text: 'El empleado puede acceder al Control Horario desde la App en móvil o tablet, o por web desde cualquier ordenador. Si instalas dispositivos beacons, los empleados fichan automáticamente.',
+  },
+  {
+    title: 'Por sus funcionalidades',
+    text: 'Integramos la facilidad de uso con las mejores funcionalidades y estamos en constante evolución para mejorar el producto.',
+  },
+];
+
+const features = [
+  { title: 'Geolocalización', text: 'Posibilidad de obtener la geolocalización de un empleado en la entrada y salida de su puesto de trabajo.' },
+  { title: 'IP', text: 'Posibilidad de permitir iniciar o finalizar el Control Horario sólo desde una IP determinada o de varias.' },
+  { title: 'Múltiples Empresas', text: 'Posibilidad de gestionar múltiples empresas desde la misma App.' },
+  { title: 'Múltiples tiempos', text: 'Posibilidad de gestionar múltiples tiempos en una jornada para control de salidas del puesto de trabajo (desayunos, salidas a fumar, etc.).' },
+  { title: 'Autorizaciones', text: 'Posibilidad de autorización de modificación de los datos efectuada por el mismo empleado en un día determinado o en cualquier fecha.' },
+  { title: 'Ausencias', text: 'Envío diario de ausencias de cualquier tipo vía mail al supervisor para su aprobación o para efectuar cambios directamente desde el propio mail con un solo click.' },
+  { title: 'PDF', text: 'Posibilidad de generación de PDF, para su envío al supervisor o para los empleados a final de mes.' },
+  { title: 'Alarmas & Push', text: 'Recordatorio para empleados que no hayan fichado en sus horarios habituales de entrada y salida.' },
+  { title: 'Analíticas', text: 'Posibilidad de visualización de los datos por un empleado en el día del Control Horario o en días anteriores.' },
+];
+
+const access = [
+  {
+    title: 'Acceso desde App Genérica de Reskyt',
+    text: 'Esta App es de diseño genérico e idéntica para todos los clientes y podrá ser descargada gratuitamente de los markets. El usuario se identifica en la App Genérica de Control Horario y accede para efectuar sus fichajes.',
+  },
+  {
+    title: 'Acceso desde web',
+    text: 'El usuario se identifica en la web de control horario y accede para efectuar sus fichajes.',
+  },
+  {
+    title: 'Acceso desde App Exclusiva de clientes',
+    text: 'Pensada para gestorías, asesorías o asociaciones que quieran ofrecer a sus clientes su imagen de empresa de servicios en la App, escogiendo el diseño y nombre de la App. También para empresas medianas o grandes que quieran disponer de una App exclusiva para sus empleados.',
+  },
+];
+---
+
+<Layout
+  title="Control horario laboral con apps para empresas | Reskyt"
+  description="Sistema de Control Horario de Reskyt: registro de la jornada laboral obligatorio desde app móvil, tablet u ordenador, sin inversión ni permanencia."
+>
+  <Header />
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <h1 class="hero-title">Control <span class="red">Horario</span></h1>
+        <p class="hero-text">
+          El 12 de mayo entró en vigor el Decreto Ley 8/2019 sobre el Registro de la Jornada Laboral
+          Obligatorio.
+        </p>
+        <p class="hero-text">
+          Las empresas garantizarán el registro diario de la jornada, que deberá incluir el horario
+          concreto de inicio y finalización de la jornada de trabajo de cada persona trabajadora.
+        </p>
+      </div>
+    </section>
+
+    <section class="section why">
+      <div class="container">
+        <h2 class="section-title">¿Por qué contratar el sistema de <span class="red">CONTROL HORARIO</span> Reskyt?</h2>
+        <div class="cards two">
+          {
+            reasons.map(({ title, text }) => (
+              <article class="card">
+                <h3 class="card-title">{title}</h3>
+                <p class="card-text">{text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section funcs soft">
+      <div class="container">
+        <h2 class="section-title">Funcionalidades</h2>
+        <div class="cards">
+          {
+            features.map(({ title, text }) => (
+              <article class="card">
+                <h3 class="card-title">{title}</h3>
+                <p class="card-text">{text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section access">
+      <div class="container">
+        <h2 class="section-title">
+          El sistema de CONTROL HORARIO está disponible desde <span class="red">móvil, tablet u ordenador</span>
+        </h2>
+        <div class="cards three">
+          {
+            access.map(({ title, text }) => (
+              <article class="card">
+                <h3 class="card-title">{title}</h3>
+                <p class="card-text">{text}</p>
+              </article>
+            ))
+          }
+        </div>
+        <div class="pricing-cta">
+          <p>¿Quieres conocer los precios del sistema de Control Horario?</p>
+          <a href="/contacta" class="btn-primary">Contacta con nosotros</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    background-color: var(--color-bg-soft);
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-text {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 44rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+    max-width: 46rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .funcs.soft {
+    background-color: var(--color-bg-soft);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    padding: 1.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .why .card,
+  .access .card {
+    background-color: var(--color-bg-soft);
+  }
+
+  .card:hover {
+    border-color: var(--color-red);
+    transform: translateY(-4px);
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-text {
+    margin-top: 0.7rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .pricing-cta {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-radius: var(--radius);
+    background-color: var(--color-text);
+    color: #fff;
+  }
+
+  .pricing-cta p {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  @media (min-width: 60rem) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cards.two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cards.three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
