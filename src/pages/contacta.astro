@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Contacta | Reskyt"
+  description="Ponte en contacto con el equipo de Reskyt: resolvemos tus dudas sobre cómo convertir tu eCommerce en una app nativa."
+>
+  <Header />
+  <main>
+    <section class="section contact">
+      <div class="container contact-grid">
+        <div class="contact-intro">
+          <h1 class="contact-title">Contacta <span class="red">con nosotros</span></h1>
+          <p class="contact-subtitle">
+            Cuéntanos qué necesitas y te responderemos lo antes posible. Si quieres ver la
+            plataforma en acción, <a href="/solicitar-una-demo" class="contact-link">pide una demo</a>.
+          </p>
+
+          <div class="contact-info">
+            <p>Envía un mail a <a href="mailto:appselling@reskyt.com" class="contact-link">appselling@reskyt.com</a></p>
+            <p>
+              Llámanos al <a href="tel:+34902731998" class="contact-link">+34 902 731 998</a> /
+              <a href="tel:+34973949991" class="contact-link">+34 973 94 99 91</a>
+            </p>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Ana García" required />
+          </div>
+
+          <div class="form-field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="ana@mitienda.com" required />
+          </div>
+
+          <div class="form-field">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5" placeholder="¿En qué podemos ayudarte?" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary form-submit">Enviar</button>
+          <p class="form-error" id="form-error" hidden>Revisa los campos: falta algún dato o no es válido.</p>
+        </form>
+
+        <div class="contact-success" id="contact-success" hidden>
+          <h2 class="contact-success-title">¡Mensaje enviado!</h2>
+          <p>Gracias por escribirnos. Te responderemos lo antes posible.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .contact {
+    background:
+      radial-gradient(40rem 25rem at 110% -10%, rgba(213, 21, 33, 0.07), transparent),
+      var(--color-bg-soft);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .contact-subtitle {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 30rem;
+  }
+
+  .contact-info {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    display: grid;
+    gap: 0.35rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .contact-link {
+    color: var(--color-red);
+    font-weight: 600;
+  }
+
+  .contact-link:hover {
+    text-decoration: underline;
+  }
+
+  .contact-form[hidden] {
+    display: none;
+  }
+
+  .contact-form {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) * 1.25);
+    padding: 1.75rem;
+    box-shadow: 0 1.5rem 3rem rgba(22, 22, 26, 0.07);
+    display: grid;
+    gap: 1.25rem;
+    align-self: start;
+  }
+
+  .form-field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .form-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    background-color: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    resize: vertical;
+  }
+
+  .form-field input::placeholder,
+  .form-field textarea::placeholder {
+    color: #a7a7b0;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--color-red);
+    box-shadow: 0 0 0 3px rgba(213, 21, 33, 0.12);
+    background-color: var(--color-bg);
+  }
+
+  .contact-form.was-validated input:invalid,
+  .contact-form.was-validated textarea:invalid {
+    border-color: var(--color-red);
+    background-color: rgba(213, 21, 33, 0.04);
+  }
+
+  .form-submit {
+    border: 0;
+    cursor: pointer;
+    font-size: 1rem;
+    padding-block: 0.95rem;
+  }
+
+  .form-error {
+    color: var(--color-red);
+    font-size: 0.9rem;
+  }
+
+  .contact-success {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: 26rem;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .contact-success-title {
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .contact-grid {
+      grid-template-columns: 1fr 1.05fr;
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const success = document.getElementById('contact-success');
+  const error = document.getElementById('form-error');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    form.classList.add('was-validated');
+
+    if (!form.checkValidity()) {
+      error?.removeAttribute('hidden');
+      return;
+    }
+
+    // Réplica estática: no hay backend, mostramos la confirmación directamente.
+    form.hidden = true;
+    error?.setAttribute('hidden', '');
+    success?.removeAttribute('hidden');
+  });
+</script>
