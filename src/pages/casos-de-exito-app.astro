@@ -3,71 +3,27 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
+import { publishedApps } from '../data/published-apps';
 
 const cases = [
   {
     name: 'Bata',
     sector: 'Moda',
     href: '/casos-de-exito/bata',
-    image: '/images/cases/bata.png',
+    image: '/images/cases/bata-thumb.png',
   },
   {
     name: "Toys 'R' Us",
     sector: 'Juguetes',
     href: '/casos-de-exito/toys-rus',
-    image: '/images/cases/toys-r-us.png',
+    image: '/images/cases/toys-thumb.png',
   },
   {
     name: 'Galileo Farma',
     sector: 'Parafarmacia',
     href: '/casos-de-exito/galileo-farma',
-    image: '/images/cases/galileo-farma.png',
+    image: '/images/cases/galileo-thumb.png',
   },
-];
-
-// Etiquetas tal cual aparecen en la web original (algunas comparten logo)
-const apps = [
-  { name: 'TradeINN', logo: '/images/brands/tradeinn.webp' },
-  { name: 'Atrápalo', logo: '/images/brands/atrapalo.webp' },
-  { name: 'Sprinter', logo: '/images/brands/sprinter.webp' },
-  { name: 'Wurth', logo: '/images/brands/wurth.webp' },
-  { name: 'PcComponentes', logo: '/images/brands/pc-componentes.webp' },
-  { name: 'Casa del Libro', logo: '/images/brands/casa-del-libro.webp' },
-  { name: 'Bata', logo: '/images/brands/bata.png' },
-  { name: 'Deporvillage', logo: '/images/brands/deporvillage.webp' },
-  { name: 'Douglas', logo: '/images/brands/douglas.webp' },
-  { name: 'Douglas', logo: '/images/brands/douglas-2.webp' },
-  { name: 'Atida|Mifarma', logo: '/images/brands/atida-mifarma.webp' },
-  { name: 'Pādel Nuestro', logo: '/images/brands/petsonic.webp' },
-  { name: 'Munich', logo: '/images/brands/munich.webp' },
-  { name: 'AWLab', logo: '/images/brands/awlab.png' },
-  { name: 'Conforama', logo: '/images/brands/conforama.webp' },
-  { name: 'Estrella Galicia', logo: '/images/brands/estrella-galicia.jpg' },
-  { name: 'Ottodisanpietro', logo: '/images/brands/ottodisanpietro.webp' },
-  { name: 'Lola Casademunt', logo: '/images/brands/lola-casademunt.webp' },
-  { name: 'Mayoral', logo: '/images/brands/mayoral.webp' },
-  { name: 'Polin et Moi', logo: '/images/brands/polin-et-moi.avif' },
-  { name: 'Pedro Miralles', logo: '/images/brands/pedro-miralles.webp' },
-  { name: 'Gioseppo', logo: '/images/brands/gioseppo.webp' },
-  { name: 'La Sirena', logo: '/images/brands/la-sirena.webp' },
-  { name: 'Tea Shop', logo: '/images/brands/mascoteros.webp' },
-  { name: 'BBQuality', logo: '/images/brands/bbquality.png' },
-  { name: 'Barrabés', logo: '/images/brands/barrabes.webp' },
-  { name: 'Inside', logo: '/images/brands/inside.webp' },
-  { name: 'Polinesia', logo: '/images/brands/polinesia.webp' },
-  { name: "Toys 'R' US", logo: '/images/brands/toys-r-us.webp' },
-  { name: 'Mundo Surf', logo: '/images/brands/mundo-surf.webp' },
-  { name: 'Atmosfera Sport', logo: '/images/brands/atmosfera-sport.webp' },
-  { name: 'Yellow Shop', logo: '/images/brands/yellow-shop.png' },
-  { name: 'Kennay Home', logo: '/images/brands/kenay-home.webp' },
-  { name: 'Mascaró', logo: '/images/brands/mascaro.webp' },
-  { name: 'Born Living Yoga', logo: '/images/brands/maria-pascual.webp' },
-  { name: 'Drop shot', logo: '/images/brands/drop-shot.webp' },
-  { name: 'Decimas', logo: '/images/brands/decimas.webp' },
-  { name: 'Farma2go', logo: '/images/brands/farma2go.webp' },
-  { name: 'DosFarma', logo: '/images/brands/dosfarma.webp' },
-  { name: 'Verdecora', logo: '/images/brands/verdecora.webp' },
-  { name: 'Perfumería Júlia', logo: '/images/brands/perfumeria-julia.webp' },
 ];
 ---
 
@@ -98,6 +54,7 @@ const apps = [
                   <span class="case-pill">{sector}</span>
                 </div>
                 <img src={image} alt={`App de ${name} creada con Reskyt`} loading="lazy" />
+                <span class="case-notch" aria-hidden="true" />
               </a>
             ))
           }
@@ -110,7 +67,7 @@ const apps = [
         <h2 class="apps-title">Apps publicadas en todo el mundo</h2>
         <div class="apps-grid">
           {
-            apps.map(({ name, logo }) => (
+            publishedApps.map(({ name, logo }) => (
               <div class="app-item">
                 <img src={logo} alt={`Logo ${name}`} loading="lazy" width="64" height="64" />
                 <p>{name}</p>
@@ -151,6 +108,7 @@ const apps = [
   }
 
   .case-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -163,8 +121,25 @@ const apps = [
   }
 
   .case-card:hover {
-    transform: translateY(-12px);
+    transform: translateY(-20px);
     border-color: var(--color-red);
+  }
+
+  /* Barra inferior que se ensancha al pasar el ratón, como en la web oficial */
+  .case-notch {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 0.3rem;
+    border-radius: 999px;
+    background-color: var(--color-red);
+    transition: width 0.3s ease;
+  }
+
+  .case-card:hover .case-notch {
+    width: 6.25rem;
   }
 
   .case-header {
