@@ -1,0 +1,239 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { blogPosts } from '../../data/blog-posts';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+
+interface PostContent {
+  metaTitle: string;
+  description: string;
+  html: string;
+}
+
+// Contenido extraído de la web oficial (src/data/blog-content/<slug>.json)
+const modules = import.meta.glob<{ default: PostContent }>('../../data/blog-content/*.json', {
+  eager: true,
+});
+const content = modules[`../../data/blog-content/${post.slug}.json`]?.default;
+if (!content) throw new Error(`Falta el contenido de la entrada: ${post.slug}`);
+
+const cover = `/images/blog/${post.slug}.png`;
+const related = blogPosts.filter(({ slug }) => slug !== post.slug).slice(0, 6);
+---
+
+<Layout title={content.metaTitle} description={content.description} ogImage={cover}>
+  <Header />
+  <main>
+    <article class="section post">
+      <div class="container post-container">
+        <h1 class="post-heading">{post.title}</h1>
+        <p class="post-meta">
+          <span>{post.date}</span>
+          <span class="dot">·</span>
+          <span>{post.readTime} min de lectura</span>
+        </p>
+        <img class="post-cover" src={cover} alt={post.title} width="940" loading="eager" />
+        <div class="post-content" set:html={content.html} />
+      </div>
+    </article>
+
+    <section class="section related">
+      <div class="container">
+        <h2 class="related-title">También te puede interesar…</h2>
+        <div class="related-grid">
+          {
+            related.map(({ slug, title, date, readTime }) => (
+              <a href={`/noticias-ecommerce-app/${slug}`} class="related-card">
+                <span
+                  class="related-image"
+                  style={`background-image: url('/images/blog/${slug}.png')`}
+                  aria-hidden="true"
+                />
+                <span class="related-body">
+                  <span class="related-meta">
+                    {date} <span class="dot">·</span> {readTime} min
+                  </span>
+                  <span class="related-name">{title}</span>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-container {
+    max-width: 60rem;
+  }
+
+  .post-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+  }
+
+  .post-meta {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .dot {
+    color: var(--color-red);
+    font-weight: 700;
+  }
+
+  .post-cover {
+    margin-top: 2rem;
+    width: 100%;
+    border-radius: var(--radius);
+  }
+
+  /* Estilos del contenido enriquecido extraído de la web oficial */
+  .post-content {
+    margin-top: 2.5rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .post-content :global(h2) {
+    font-size: 1.6rem;
+    color: var(--color-text);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-content :global(h3) {
+    font-size: 1.25rem;
+    color: var(--color-text);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content :global(p) {
+    margin-bottom: 1rem;
+  }
+
+  .post-content :global(ul) {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .post-content :global(li) {
+    margin-bottom: 0.4rem;
+  }
+
+  .post-content :global(a) {
+    color: var(--color-red);
+    font-weight: 600;
+  }
+
+  .post-content :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .post-content :global(strong) {
+    color: var(--color-text);
+  }
+
+  .post-content :global(blockquote) {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 3px solid var(--color-red);
+    background-color: var(--color-bg-soft);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .post-content :global(blockquote p) {
+    margin: 0;
+  }
+
+  .post-content :global(figure) {
+    margin: 2rem 0;
+  }
+
+  .post-content :global(img) {
+    border-radius: var(--radius);
+    margin-inline: auto;
+  }
+
+  .related {
+    background-color: var(--color-bg-soft);
+  }
+
+  .related-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .related-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background-color: var(--color-bg);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .related-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-red);
+  }
+
+  .related-image {
+    display: block;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .related-body {
+    display: block;
+    padding: 1.1rem 1.25rem 1.4rem;
+  }
+
+  .related-meta {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .related-name {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .related-card:hover .related-name {
+    color: var(--color-red);
+  }
+
+  @media (max-width: 60rem) {
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

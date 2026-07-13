@@ -1,14 +1,28 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { blogPosts } from '../data/blog-posts';
+import type { GetStaticPaths, Page } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { blogPosts, type BlogPost } from '../../data/blog-posts';
 
-const featured = blogPosts.slice(0, 2);
-const rest = blogPosts.slice(2);
+export const getStaticPaths = (({ paginate }) => {
+  return paginate(blogPosts, { pageSize: 11 });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<BlogPost>;
+}
+
+const { page } = Astro.props;
+
+// Los dos primeros posts se muestran destacados solo en la primera página.
+const featured = page.currentPage === 1 ? page.data.slice(0, 2) : [];
+const rest = page.currentPage === 1 ? page.data.slice(2) : page.data;
 
 const postUrl = (slug: string) => `/noticias-ecommerce-app/${slug}`;
 const postImage = (slug: string) => `/images/blog/${slug}.png`;
+const pageUrl = (n: number) => (n === 1 ? '/noticias-ecommerce-app' : `/noticias-ecommerce-app/${n}`);
+const pages = Array.from({ length: page.lastPage }, (_, i) => i + 1);
 ---
 
 <Layout
@@ -25,28 +39,30 @@ const postImage = (slug: string) => `/images/blog/${slug}.png`;
           aplicaciones móviles.
         </p>
 
-        <div class="featured-grid">
-          {
-            featured.map(({ slug, title, date, readTime }) => (
-              <article class="post featured">
-                <a
-                  href={postUrl(slug)}
-                  class="post-image"
-                  style={`background-image: url('${postImage(slug)}')`}
-                  aria-label={title}
-                />
-                <a href={postUrl(slug)} class="post-body">
-                  <p class="post-meta">
-                    <span>{date}</span>
-                    <span class="dot">·</span>
-                    <span>{readTime} min</span>
-                  </p>
-                  <h2 class="post-title">{title}</h2>
-                </a>
-              </article>
-            ))
-          }
-        </div>
+        {
+          featured.length > 0 && (
+            <div class="featured-grid">
+              {featured.map(({ slug, title, date, readTime }) => (
+                <article class="post featured">
+                  <a
+                    href={postUrl(slug)}
+                    class="post-image"
+                    style={`background-image: url('${postImage(slug)}')`}
+                    aria-label={title}
+                  />
+                  <a href={postUrl(slug)} class="post-body">
+                    <p class="post-meta">
+                      <span>{date}</span>
+                      <span class="dot">·</span>
+                      <span>{readTime} min</span>
+                    </p>
+                    <h2 class="post-title">{title}</h2>
+                  </a>
+                </article>
+              ))}
+            </div>
+          )
+        }
 
         <div class="posts-grid">
           {
@@ -70,6 +86,29 @@ const postImage = (slug: string) => `/images/blog/${slug}.png`;
             ))
           }
         </div>
+
+        <nav class="pagination" aria-label="Paginación del blog">
+          {
+            pages.map((n) =>
+              n === page.currentPage ? (
+                <span class="page-item current" aria-current="page">
+                  {n}
+                </span>
+              ) : (
+                <a href={pageUrl(n)} class="page-item">
+                  {n}
+                </a>
+              )
+            )
+          }
+          {
+            page.url.next && (
+              <a href={page.url.next} class="page-item page-next" aria-label="Página siguiente">
+                →
+              </a>
+            )
+          }
+        </nav>
       </div>
     </section>
   </main>
@@ -160,6 +199,46 @@ const postImage = (slug: string) => `/images/blog/${slug}.png`;
 
   .post:hover .post-title {
     color: var(--color-red);
+  }
+
+  .pagination {
+    margin-top: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .page-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding-inline: 0.5rem;
+    border-radius: 0.6rem;
+    background-color: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  a.page-item:hover {
+    border-color: var(--color-red);
+    color: var(--color-red);
+  }
+
+  .page-item.current {
+    background-color: var(--color-text);
+    border-color: var(--color-text);
+    color: #fff;
+  }
+
+  .page-next {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 1.2rem;
   }
 
   @media (max-width: 60rem) {
