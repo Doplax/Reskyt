@@ -1,0 +1,537 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import DemoCta from '../../components/DemoCta.astro';
+import Footer from '../../components/Footer.astro';
+
+interface Item {
+  title: string;
+  text?: string;
+}
+
+interface CaseStudy {
+  slug: string;
+  name: string;
+  sector: string;
+  lead: string;
+  mock: string;
+  cover: string;
+  logo: string;
+  about: string;
+  goals: Item[];
+  implementation: Item[];
+  quote: { text: string; person: string; role: string; photo: string };
+  stats: { value: string; label: string }[];
+  tagline: string;
+}
+
+// Contenido extraído 1:1 de las páginas de caso de éxito de la web oficial.
+const cases: CaseStudy[] = [
+  {
+    slug: 'bata',
+    name: 'Bata',
+    sector: 'Moda',
+    lead: 'Elegir Reskyt no fue solo una solución tecnológica, sino una decisión estratégica para acelerar el crecimiento digital y generar valor sostenible',
+    mock: '/images/cases/bata-mock.png',
+    cover: '/images/cases/bata-cover.jpg',
+    logo: '/images/cases/bata-logo.svg',
+    about:
+      'Fundada como el concepto premium de zapatillas y streetwear de Bata, AW LAB se ha consolidado como un actor clave en el mercado europeo, con una fuerte presencia en Italia, España y otras regiones estratégicas. La marca colabora con grandes nombres globales como Nike, Adidas, Puma y New Balance, ofreciendo lanzamientos exclusivos y colecciones seleccionadas que se alinean con las últimas tendencias de la moda urbana.',
+    goals: [
+      {
+        title: 'Incremento del ARPU en 4–5 veces',
+        text: 'Los usuarios de la app mostraron un compromiso y un comportamiento de gasto significativamente mayores, lo que llevó a un aumento de 4 a 5 veces en el Ingreso Promedio por Usuario (ARPU) en comparación con los usuarios de la web móvil.',
+      },
+      {
+        title: 'Lanzamiento en menos de 2 meses',
+        text: 'Aprovechando la plataforma de Reskyt, AW LAB llevó la app al mercado en menos de 60 días, reduciendo el tiempo de desarrollo tradicional a más de la mitad.',
+      },
+      {
+        title: 'Duplicar la tasa de conversión',
+        text: 'Al optimizar la experiencia del usuario móvil a través de la app, las tasas de conversión fueron el doble que en la web móvil.',
+      },
+    ],
+    implementation: [
+      {
+        title: 'Fase de Descubrimiento',
+        text: 'AW LAB y Reskyt identificaron una alternativa escalable al desarrollo nativo, enfocándose en la agilidad y la velocidad de lanzamiento en múltiples países.',
+      },
+      {
+        title: 'Lanzamiento Acelerado',
+        text: 'La app se desplegó en menos de 2 meses, reduciendo drásticamente el tiempo de desarrollo y acelerando la obtención del ROI.',
+      },
+      {
+        title: 'Rendimiento Impactante',
+        text: 'Durante su lanzamiento suave, la app ya generó el 20% de los ingresos totales, sin inversión en marketing, lo que demuestra su valor inmediato.',
+      },
+      {
+        title: 'Base Preparada para el Futuro',
+        text: 'La arquitectura de la app permite una integración rápida de funcionalidades como tarjetas de fidelización, escaneo de códigos de barras y geolocalización, abriendo el camino hacia una experiencia retail omnicanal mejorada.',
+      },
+    ],
+    quote: {
+      text: 'Reskyt nos permitió convertir nuestra web móvil en una app de alto rendimiento en tiempo récord, sin los costes del desarrollo tradicional. No es solo un contenedor, es un habilitador estratégico que duplicó nuestra tasa de conversión y nos ayudó a demostrar el caso de negocio para el crecimiento impulsado por apps',
+      person: 'Benjamin Groenewoud',
+      role: 'Head of Digital Product en Bata',
+      photo: '/images/cases/bata-person.jpg',
+    },
+    stats: [
+      { value: '+20%', label: 'Participación en ingresos durante el lanzamiento suave, sin esfuerzos de marketing' },
+      { value: 'x4-5', label: 'Mayor ARPU, demostrando que los usuarios de la app están más comprometidos y dispuestos a gastar más' },
+      { value: 'x2', label: 'Tasas de conversión más altas en comparación con la web móvil' },
+      { value: '60 días', label: 'De desarrollo hasta el lanzamiento' },
+    ],
+    tagline: 'Bata y Reskyt, escalando el éxito móvil',
+  },
+  {
+    slug: 'toys-rus',
+    name: "Toys 'R' Us",
+    sector: 'Juguetes',
+    lead: 'Asociarse con Reskyt no es solo una solución, es una estrategia para el éxito a largo plazo',
+    mock: '/images/cases/toys-mock.png',
+    cover: '/images/cases/toys-cover.jpg',
+    logo: '/images/cases/toys-logo.png',
+    about:
+      "Toys 'R' Us es un líder reconocido a nivel mundial en la industria de los juguetes y productos para bebés, dedicado a ofrecer experiencias de compra excepcionales para las familias. Con unos ingresos anuales estimados en más de 600 millones y una fuerte presencia en diversas regiones, la empresa innova continuamente para mantenerse a la vanguardia en el competitivo sector minorista. Nuestro cliente, Toys 'R' us Iberia, cuenta con una larga trayectoria y un gran número de tiendas en España y Portugal.",
+    goals: [
+      { title: 'Reducir costes', text: 'Busqué lanzar la app móvil rápidamente y a un costo mucho menor.' },
+      { title: 'Autónomos a la hora de hacer cambios', text: 'Ser autónomos para adaptar la app.' },
+      { title: 'Sin costes para IT', text: 'Desarrollo y despliegue homogéneo de la web y la app.' },
+      {
+        title: 'Crear una comunidad',
+        text: 'Permitir que las familias reserven sesiones de juego en tienda y charlas educativas para padres e hijos.',
+      },
+    ],
+    implementation: [
+      {
+        title: 'Fase de Descubrimiento',
+        text: 'Reskyt colaboró con Toys R Us para analizar los desafíos digitales existentes e identificar áreas clave de mejora.',
+      },
+      { title: 'Solución Personalizada' },
+      {
+        title: 'Integración de Programación de Eventos',
+        text: 'Se creó una base de datos centralizada que permite a las familias reservar sesiones de juego y charlas para padres e hijos en las tiendas más cercanas. Los padres pueden elegir actividades según su ubicación y preferencias.',
+      },
+      {
+        title: 'Notificaciones Automáticas',
+        text: 'El sistema envía recordatorios y confirmaciones mediante notificaciones push, garantizando una experiencia fluida para las familias que asisten a eventos en tienda.',
+      },
+    ],
+    quote: {
+      text: 'Estábamos buscando una solución para impulsar nuestra estrategia móvil de forma rápida, que fuera de la mano con nuestra estrategia web y a un precio accesible. Reskyt resultó ser el socio perfecto para nosotros.',
+      person: 'Gerardo Casas Fernandez',
+      role: "Ecommerce Director Spain & Portugal, Toys 'R' us, Febrero 2025",
+      photo: '/images/cases/toys-person.jpg',
+    },
+    stats: [
+      { value: '+25K', label: 'Descargas de la app en los primeros 3 meses' },
+      { value: '3x', label: 'Mayor tasa de conversión en usuarios de la app frente a usuarios móviles' },
+      { value: '9%', label: 'Tasa de apertura de notificaciones push' },
+      { value: '60 días', label: 'De desarrollo hasta el lanzamiento' },
+    ],
+    tagline: "Toys 'R' Us y Reskyt, impulsando el engagement omnicanal",
+  },
+  {
+    slug: 'galileo-farma',
+    name: 'Galileo Farma',
+    sector: 'Parafarmacia',
+    lead: 'Colaborar con Reskyt no es solo una solución, es una estrategia para el éxito a largo plazo.',
+    mock: '/images/cases/galileo-mock.png',
+    cover: '/images/cases/galileo-cover.jpg',
+    logo: '/images/cases/galileo-logo.svg',
+    about:
+      'Galileo Farma es una destacada farmacia en línea especializada en cosméticos, dermocosméticos y marcas premium de parafarmacia. Fundada en 2015 y con sede en Madrid, España, la empresa ha experimentado una transformación significativa, evolucionando de una farmacia tradicional a una plataforma digital líder en el sector farmacéutico.',
+    goals: [
+      {
+        title: 'Incremento del CLTV',
+        text: 'Al ofrecer una experiencia de compra personalizada y conveniente, incentivamos a los clientes a realizar compras repetidas.',
+      },
+      {
+        title: 'Mejora de la Tasa de Conversión',
+        text: 'La app simplificó el proceso de compra, lo que resultó en un aumento significativo de las conversiones.',
+      },
+      {
+        title: 'Apertura de un Nuevo Canal de Comunicación',
+        text: 'Las notificaciones push nos permitieron interactuar directamente con nuestros clientes, ofreciendo promociones exclusivas, recordatorios de productos y contenido relevante. Esto fortaleció nuestra relación con ellos y aumentó su fidelidad.',
+      },
+    ],
+    implementation: [
+      {
+        title: 'Fase de Descubrimiento',
+        text: 'Reskyt colaboró con Galileo Farma para identificar los principales desafíos y definir prioridades.',
+      },
+      {
+        title: 'Solución Personalizada',
+        text: 'La solución personalizada que Reskyt implementó para Galileo Farma fue fundamental para nuestro éxito. No se trataba simplemente de lanzar una aplicación móvil estándar, sino de crear una plataforma que se adaptara perfectamente a nuestras necesidades y a las de nuestros clientes.',
+      },
+      {
+        title: 'Diseño Personalizado',
+        text: 'Cada elemento de la app, desde la disposición de los productos hasta el proceso de pago, fue personalizado para ofrecer una experiencia de compra fluida y agradable.',
+      },
+      {
+        title: 'Mejora en la Experiencia del Usuario',
+        text: 'Funciones como notificaciones push personalizadas y programas de fidelización integrados mejoraron significativamente la interacción con los usuarios y fomentaron la lealtad hacia la marca.',
+      },
+      {
+        title: 'Cronograma',
+        text: 'El proyecto se completó en 1 mes, con hitos estructurados para el diseño, desarrollo, pruebas y lanzamiento.',
+      },
+    ],
+    quote: {
+      text: 'Estábamos buscando una solución que nos ayudara a fidelizar a nuestros clientes y así aumentar la tasa de recurrencia de nuestro comercio electrónico. Reskyt resultó ser el socio perfecto para nosotros.',
+      person: 'Marta Segura',
+      role: 'CMO Galileo Farma',
+      photo: '/images/cases/galileo-person.jpeg',
+    },
+    stats: [
+      { value: '+30%', label: 'Mayor interacción con la app móvil en 12 semanas' },
+      { value: '-6h', label: 'Reducidas de procesos manuales semanales' },
+      { value: '20%', label: 'Aumento de ingresos atribuido directamente a mejoras en las experiencias digitales' },
+      { value: '30 días', label: 'De desarrollo hasta el lanzamiento' },
+    ],
+    tagline: 'Galileo Farma & Reskyt, acelerando la transformación digital',
+  },
+];
+
+export function getStaticPaths() {
+  return ['bata', 'toys-rus', 'galileo-farma'].map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const study = cases.find((c) => c.slug === slug);
+if (!study) throw new Error(`Caso de éxito desconocido: ${slug}`);
+const others = cases.filter((c) => c.slug !== slug);
+---
+
+<Layout
+  title={`Caso de éxito: ${study.name} | Reskyt`}
+  description={study.lead}
+  ogImage={study.cover}
+>
+  <Header />
+  <main>
+    <section class="section case-hero">
+      <div class="container case-hero-grid">
+        <div>
+          <p class="case-badge">Caso de éxito</p>
+          <h1 class="case-name">{study.name}</h1>
+          <p class="case-lead">{study.lead}</p>
+          <img class="case-logo" src={study.logo} alt={`Logo ${study.name}`} loading="lazy" height="48" />
+        </div>
+        <img class="case-mock" src={study.mock} alt={`App de ${study.name}`} loading="eager" width="480" />
+      </div>
+    </section>
+
+    <section class="section case-body">
+      <div class="container">
+        <img class="case-cover" src={study.cover} alt={`Equipo de ${study.name}`} loading="lazy" width="1200" />
+
+        <div class="case-columns">
+          <div>
+            <h2 class="case-section-title">Objetivos</h2>
+            <div class="case-items">
+              {
+                study.goals.map(({ title, text }) => (
+                  <div class="case-item">
+                    <h3>{title}</h3>
+                    {text && <p>{text}</p>}
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+          <div>
+            <h2 class="case-section-title">Aspectos Destacados de la Implementación</h2>
+            <div class="case-items">
+              {
+                study.implementation.map(({ title, text }) => (
+                  <div class="case-item">
+                    <h3>{title}</h3>
+                    {text && <p>{text}</p>}
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <p class="case-about">{study.about}</p>
+
+        <figure class="case-quote">
+          <img src={study.quote.photo} alt={study.quote.person} loading="lazy" width="96" height="96" />
+          <blockquote>“{study.quote.text}”</blockquote>
+          <figcaption>
+            <strong>{study.quote.person}</strong>
+            <span>{study.quote.role}</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section case-results">
+      <div class="container">
+        <h2 class="results-title">Resultados y puntos clave</h2>
+        <div class="results-grid">
+          {
+            study.stats.map(({ value, label }) => (
+              <div class="result">
+                <p class="result-value">{value}</p>
+                <p class="result-label">{label}</p>
+              </div>
+            ))
+          }
+        </div>
+        <p class="case-tagline">{study.tagline}</p>
+      </div>
+    </section>
+
+    <section class="section case-more">
+      <div class="container">
+        <h2 class="more-title">Explora más casos de éxito</h2>
+        <div class="more-grid">
+          {
+            others.map((c) => (
+              <a href={`/casos-de-exito/${c.slug}`} class="more-card">
+                <span class="more-name">{c.name}</span>
+                <span class="more-pill">{c.sector}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <DemoCta />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .case-hero {
+    background-color: var(--color-bg-soft);
+  }
+
+  .case-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .case-badge {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    background-color: var(--color-red);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .case-name {
+    margin-top: 1.25rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.02em;
+  }
+
+  .case-lead {
+    margin-top: 1.25rem;
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 34rem;
+  }
+
+  .case-logo {
+    margin-top: 2rem;
+    max-height: 3rem;
+    width: auto;
+  }
+
+  .case-mock {
+    justify-self: center;
+    max-width: min(26rem, 80vw);
+  }
+
+  .case-cover {
+    width: 100%;
+    border-radius: var(--radius);
+  }
+
+  .case-columns {
+    margin-top: 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .case-section-title {
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .case-items {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .case-item {
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-red);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background-color: var(--color-bg-soft);
+  }
+
+  .case-item h3 {
+    font-size: 1.05rem;
+  }
+
+  .case-item p {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .case-about {
+    margin-top: 3rem;
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    max-width: 52rem;
+  }
+
+  .case-quote {
+    margin: 3rem 0 0;
+    padding: 2rem;
+    border-radius: var(--radius);
+    background-color: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    display: grid;
+    gap: 1.25rem;
+    max-width: 52rem;
+  }
+
+  .case-quote img {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .case-quote blockquote {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+
+  .case-quote figcaption {
+    display: grid;
+  }
+
+  .case-quote figcaption span {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .case-results {
+    background-color: var(--color-text);
+    color: #fff;
+  }
+
+  .results-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .results-grid {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .result-value {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--color-red);
+    line-height: 1;
+  }
+
+  .result-label {
+    margin-top: 0.6rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+  }
+
+  .case-tagline {
+    margin-top: 3rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .more-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .more-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .more-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg-soft);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .more-card:hover {
+    border-color: var(--color-red);
+    transform: translateY(-3px);
+  }
+
+  .more-name {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+
+  .more-pill {
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    background-color: var(--color-red);
+    color: #fff;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 60rem) {
+    .case-hero-grid {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .case-columns {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .results-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .more-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
