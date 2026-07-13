@@ -1,0 +1,11 @@
+---
+import LegalPage from '../../components/LegalPage.astro';
+import data from '../../data/legal/condiciones-de-uso.json';
+---
+
+<LegalPage
+  title={data.title}
+  description="Condiciones de uso del sitio web y de la plataforma de Reskyt Online SL."
+>
+  <div set:html={data.html} />
+</LegalPage>

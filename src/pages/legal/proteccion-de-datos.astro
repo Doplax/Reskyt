@@ -1,0 +1,11 @@
+---
+import LegalPage from '../../components/LegalPage.astro';
+import data from '../../data/legal/proteccion-de-datos.json';
+---
+
+<LegalPage
+  title={data.title}
+  description="Información sobre el tratamiento y la protección de datos personales en Reskyt."
+>
+  <div set:html={data.html} />
+</LegalPage>
