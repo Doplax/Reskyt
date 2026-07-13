@@ -1,19 +1,18 @@
 ---
+import { getDict } from '../i18n';
 
+const t = getDict(Astro.currentLocale);
 ---
 
 <section class="section cta">
   <div class="container cta-inner">
     <h2 class="cta-title">
-      ¿Listo para lanzar la app de tu <span class="red">eCommerce</span>?
+      {t.cta.titleStart}<span class="red">{t.cta.titleHighlight}</span>{t.cta.titleEnd}
     </h2>
-    <p class="cta-text">
-      Pide una demo y descubre cómo transformar tu tienda online en una app nativa en menos de
-      cuatro semanas.
-    </p>
+    <p class="cta-text">{t.cta.text}</p>
     <div class="cta-buttons">
-      <a href="/solicitar-una-demo" class="btn-primary">Pide tu demo</a>
-      <a href="/contacta" class="btn-secondary">Contacta</a>
+      <a href="/solicitar-una-demo" class="btn-primary">{t.hero.demo}</a>
+      <a href="/contacta" class="btn-secondary">{t.nav.contacta}</a>
     </div>
   </div>
 </section>

@@ -1,19 +1,20 @@
 ---
 import '../styles/global.css';
+import { getDict, DEFAULT_LOCALE } from '../i18n';
 
 interface Props {
   title?: string;
   description?: string;
 }
 
-const {
-  title = 'Desarrollo de app móvil sin código para tu eCommerce | Reskyt',
-  description = 'Plataforma para transformar tu tienda online en app nativa sin programar, mejorando la conversión y fidelización de tus clientes',
-} = Astro.props;
+const lang = Astro.currentLocale ?? DEFAULT_LOCALE;
+const dict = getDict(lang);
+
+const { title = dict.meta.title, description = dict.meta.description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

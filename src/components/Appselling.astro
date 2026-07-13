@@ -1,54 +1,24 @@
 ---
-const cards = [
-  {
-    number: '01',
-    title: 'Sin extensos plazos de lanzamiento',
-    text: 'Tu App, totalmente operativa, lista en menos de cuatro semanas.',
-  },
-  {
-    number: '02',
-    title: 'Sin elevados costes de desarrollo y mantenimiento',
-    text: 'Reduce los costes de desarrollo en un 80%. Disfruta de un modelo de suscripción con actualizaciones incluidas y sin gastos de mantenimiento.',
-  },
-  {
-    number: '03',
-    title: 'Sin escalabilidad limitada, ni rigidez operativa',
-    text: 'Activa actualizaciones y personalizaciones, sin fricciones ni conocimientos técnicos.',
-  },
-  {
-    number: '04',
-    title: 'Sin constantes sincronizaciones',
-    text: 'Tu app siempre conectada con tu eCommerce y actualizada en tiempo real.',
-  },
-  {
-    number: '05',
-    title: 'Sin depender del equipo de IT',
-    text: 'Convierte tu app en un canal de ventas autogestionado sin necesidad de intervención técnica.',
-  },
-  {
-    number: '06',
-    title: 'Sin necesitar recursos especializados',
-    text: 'Tu App siempre optimizada para iOS y Android sin necesidad de equipos técnicos.',
-  },
-];
+import { getDict } from '../i18n';
+
+const t = getDict(Astro.currentLocale);
+
+const cards = t.appselling.cards.map((card, i) => ({
+  number: String(i + 1).padStart(2, '0'),
+  ...card,
+}));
 ---
 
 <section class="section appselling">
   <div class="container">
     <div class="intro">
       <div class="intro-title">
-        <h2>Descubre el <span class="red">Appselling</span></h2>
-        <a href="/descubre-reskyt" class="btn-primary">Descubre más</a>
+        <h2>{t.appselling.titleStart}<span class="red">{t.appselling.titleHighlight}</span></h2>
+        <a href="/descubre-reskyt" class="btn-primary">{t.appselling.more}</a>
       </div>
       <div class="intro-text">
-        <p>
-          Una fórmula ágil, rentable y eficaz para aumentar tu tasa de conversión, ticket medio y
-          recurrencia de compra.
-        </p>
-        <p>
-          Aprovecha todo el poder del App Commerce, sin complicaciones técnicas, y gracias a
-          tecnología UWT de Reskyt.
-        </p>
+        <p>{t.appselling.intro1}</p>
+        <p>{t.appselling.intro2}</p>
       </div>
     </div>
 

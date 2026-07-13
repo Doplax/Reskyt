@@ -1,33 +1,36 @@
 ---
+import { getDict } from '../i18n';
+
+const t = getDict(Astro.currentLocale);
 const year = new Date().getFullYear();
 
 const columns = [
   {
-    title: 'Plataforma',
+    title: t.footer.plataforma,
     links: [
-      { label: 'Funcionalidades', href: '/funcionalidades' },
-      { label: 'Precio', href: '/precios' },
-      { label: 'Calculadora ROI', href: '/roi-calculator' },
-      { label: 'Login', href: 'https://administracion.reskyt.com/admin/login', external: true },
+      { label: t.nav.funcionalidades, href: '/funcionalidades' },
+      { label: t.footer.precio, href: '/precios' },
+      { label: t.footer.roiCalculator, href: '/roi-calculator' },
+      { label: t.nav.login, href: '/admin/login' },
     ],
   },
   {
-    title: 'Empresa',
+    title: t.footer.empresa,
     links: [
-      { label: 'Sobre nosotros', href: '/agencia-desarrollo-apps/nosotros-v2' },
-      { label: 'Casos de éxito', href: '/casos-de-exito-app' },
+      { label: t.footer.sobreNosotros, href: '/agencia-desarrollo-apps/nosotros-v2' },
+      { label: t.nav.casosDeExito, href: '/casos-de-exito-app' },
     ],
   },
   {
-    title: 'Ayuda',
-    links: [{ label: 'Contacto', href: '/contacta' }],
+    title: t.footer.ayuda,
+    links: [{ label: t.footer.contacto, href: '/contacta' }],
   },
 ];
 
 const legalLinks = [
-  { label: 'Condiciones Generales', href: '/condiciones-generales' },
-  { label: 'Política de Cookies', href: '/legal/politica-de-cookies' },
-  { label: 'Aviso Legal', href: '/legal/aviso-legal' },
+  { label: t.footer.condiciones, href: '/condiciones-generales' },
+  { label: t.footer.cookies, href: '/legal/politica-de-cookies' },
+  { label: t.footer.avisoLegal, href: '/legal/aviso-legal' },
 ];
 ---
 
@@ -54,7 +57,7 @@ const legalLinks = [
         </a>
       </div>
       <div class="footer-collab">
-        <p>con colaboración de</p>
+        <p>{t.footer.collab}</p>
         <a href="https://www.accio.gencat.cat/ca/inici" target="_blank" rel="noopener">
           <img src="/images/logo-accio.png" alt="ACCIÓ – Generalitat de Catalunya" width="120" loading="lazy" />
         </a>

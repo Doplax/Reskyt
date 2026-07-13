@@ -1,5 +1,8 @@
 ---
 import LogoMarquee from './LogoMarquee.astro';
+import { getDict } from '../i18n';
+
+const t = getDict(Astro.currentLocale);
 
 const column1 = [
   { src: '/images/brands/mascoteros.webp', alt: 'Logo Mascoteros' },
@@ -40,20 +43,17 @@ const column3 = [
 <section class="section hero">
   <div class="container hero-grid">
     <div class="hero-text">
-      <h1 class="hero-title">Lanza tu App en solo <span class="red">4 semanas</span></h1>
-      <p class="hero-subtitle">
-        Multiplica las ventas de tu eCommerce con una app nativa 100% personalizable, conectada y
-        lista para convertirse.
-      </p>
+      <h1 class="hero-title">{t.hero.titleStart}<span class="red">{t.hero.titleHighlight}</span></h1>
+      <p class="hero-subtitle">{t.hero.subtitle}</p>
       <div class="hero-buttons">
-        <a href="/solicitar-una-demo" class="btn-primary">Pide tu demo</a>
-        <a href="https://www.appselling.com/" target="_blank" rel="noopener" class="btn-secondary">
-          Calcula tu ROI
+        <a href="/solicitar-una-demo" class="btn-primary">{t.hero.demo}</a>
+        <a href="/roi-calculator" class="btn-secondary">
+          {t.hero.roi}
         </a>
       </div>
     </div>
 
-    <div class="hero-marquees" aria-label="Marcas que confían en Reskyt">
+    <div class="hero-marquees" aria-label={t.hero.brandsAria}>
       <LogoMarquee logos={column1} direction="down" duration="45s" />
       <LogoMarquee logos={column2} direction="up" duration="50s" />
       <LogoMarquee logos={column3} direction="down" duration="42s" />
