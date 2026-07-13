@@ -1,0 +1,916 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import DemoCta from '../components/DemoCta.astro';
+import Footer from '../components/Footer.astro';
+
+const kpis = [
+  { id: 'kpi-roi', label: 'ROI del primer año', tip: 'Retorno sobre la inversión anual en la app: (ingresos incrementales del primer año − inversión) / inversión.' },
+  { id: 'kpi-tx', label: 'Crecimiento de las transacciones', tip: 'Incremento de transacciones totales con la adopción de la app plenamente desplegada.' },
+  { id: 'kpi-rev', label: 'Crecimiento de los ingresos', tip: 'Incremento de ingresos totales con la adopción de la app plenamente desplegada.' },
+  { id: 'kpi-aov', label: 'Incremento del valor medio del pedido', tip: 'Variación del AOV combinado de todos los canales gracias al mayor ticket medio en la app.' },
+];
+
+const fields = [
+  { id: 'visits', label: 'Visitas mensuales a tu web', value: 50000, min: 0, step: 1000, suffix: '', tip: 'Número total de visitas a tu sitio web cada mes, sumando todos los dispositivos.' },
+  { id: 'aov', label: 'Valor medio del pedido', value: 60, min: 1, step: 1, suffix: '€', tip: 'Importe medio de cada pedido en tu eCommerce (AOV).' },
+  { id: 'mobilePct', label: 'Visitas desde móvil', value: 70, min: 0, max: 100, step: 1, suffix: '%', tip: 'Porcentaje del tráfico que llega desde dispositivos móviles.' },
+  { id: 'desktopPct', label: 'Visitas desde escritorio', value: 30, min: 0, max: 100, step: 1, suffix: '%', readonly: true, tip: 'Se calcula automáticamente: 100% menos las visitas desde móvil.' },
+  { id: 'convM', label: 'Conversión en móvil', value: 1, min: 0, max: 100, step: 0.1, suffix: '%', tip: 'Porcentaje de visitas móviles que acaban en compra.' },
+  { id: 'convD', label: 'Conversión en escritorio', value: 2, min: 0, max: 100, step: 0.1, suffix: '%', tip: 'Porcentaje de visitas de escritorio que acaban en compra.' },
+  { id: 'cost', label: 'Inversión anual en la app', value: 19500, min: 0, step: 500, suffix: '€', tip: 'Coste anual estimado de desarrollo y mantenimiento de la app. Se usa para calcular el ROI.' },
+];
+
+const sliders = [
+  { id: 'adoption', label: 'Tasa de adopción de la app', value: 30, min: 0, max: 100, tip: 'Porcentaje de tus usuarios móviles que acabarán comprando a través de la app. La adopción crece de forma progresiva durante los primeros meses.' },
+  { id: 'growth', label: 'Crecimiento mensual del tráfico', value: 2, min: 0, max: 100, tip: 'Crecimiento mensual esperado del tráfico total de tu web.' },
+  { id: 'convBoost', label: 'Mejora de conversión en app nativa vs web móvil', value: 100, min: 0, max: 450, tip: 'Cuánto mejor convierte la app frente a la web móvil. Un 100% significa que la app convierte el doble.' },
+  { id: 'aovBoost', label: 'Incremento del AOV con adopción de la app', value: 20, min: 1, max: 100, tip: 'Incremento del ticket medio de los pedidos realizados desde la app.' },
+];
+
+const brands = [
+  { src: '/images/brands/pc-componentes.webp', alt: 'Logo PC Componentes' },
+  { src: '/images/brands/casa-del-libro.webp', alt: 'Logo Casa del Libro' },
+  { src: '/images/brands/atrapalo.webp', alt: 'Logo Atrápalo' },
+  { src: '/images/brands/awlab.png', alt: 'Logo AW LAB' },
+  { src: '/images/brands/atida-mifarma.webp', alt: 'Logo Atida Mifarma' },
+  { src: '/images/brands/deporvillage.webp', alt: 'Logo Deporvillage' },
+  { src: '/images/brands/douglas.webp', alt: 'Logo Douglas' },
+  { src: '/images/brands/mayoral.webp', alt: 'Logo Mayoral' },
+  { src: '/images/brands/munich.webp', alt: 'Logo Munich' },
+  { src: '/images/brands/conforama.webp', alt: 'Logo Conforama' },
+  { src: '/images/brands/la-sirena.webp', alt: 'Logo La Sirena' },
+  { src: '/images/brands/estrella-galicia.jpg', alt: 'Logo Estrella Galicia' },
+];
+
+const tableRows = [
+  { id: 'tx-desktop', label: 'Transacciones en escritorio' },
+  { id: 'tx-mobile', label: 'Transacciones en móvil' },
+  { id: 'tx-app', label: 'Transacciones en app' },
+  { id: 'tx-total', label: 'Total de transacciones', total: true },
+  { id: 'rev-desktop', label: 'Ingresos desde escritorio' },
+  { id: 'rev-mobile', label: 'Ingresos desde móvil' },
+  { id: 'rev-app', label: 'Ingresos desde app' },
+  { id: 'rev-total', label: 'Ingresos totales', total: true },
+];
+---
+
+<Layout
+  title="Calculadora de ROI para Apps eCommerce | Reskyt"
+  description="Calcula el retorno de inversión de tu app para eCommerce y descubre cómo aumentar conversiones, ventas y fidelización con datos reales de rendimiento"
+>
+  <Header />
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <h1 class="hero-title"><span class="red">Impulsa tu ROI</span> con una app móvil personalizada</h1>
+        <p class="hero-subtitle">
+          Descubre cuánto podrías ganar con la calculadora de ROI de appselling de Reskyt y lleva tu negocio al
+          siguiente nivel en la era mobile-first
+        </p>
+      </div>
+    </section>
+
+    <section class="section calc">
+      <div class="container">
+        <div class="kpi-row">
+          {
+            kpis.map((kpi) => (
+              <article class="kpi-card">
+                <p class="kpi-value" id={kpi.id}>—</p>
+                <div class="kpi-label-row">
+                  <p class="kpi-label">{kpi.label}</p>
+                  <button type="button" class="hint" data-tip={kpi.tip} aria-label={kpi.tip}>?</button>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="calc-grid">
+          <form class="calc-inputs" id="calc-form">
+            <h2 class="panel-title">Tus datos</h2>
+
+            <div class="fields-grid">
+              {
+                fields.map((field) => (
+                  <label class="field" for={field.id}>
+                    <span class="field-label">
+                      {field.label}
+                      <button type="button" class="hint" data-tip={field.tip} aria-label={field.tip}>?</button>
+                    </span>
+                    <span class="field-input" data-suffix={field.suffix}>
+                      <input
+                        type="number"
+                        id={field.id}
+                        name={field.id}
+                        value={field.value}
+                        min={field.min}
+                        max={field.max}
+                        step={field.step}
+                        readonly={field.readonly}
+                        inputmode="decimal"
+                      />
+                    </span>
+                  </label>
+                ))
+              }
+            </div>
+
+            {
+              sliders.map((slider) => (
+                <div class="slider-field">
+                  <label class="field-label" for={slider.id}>
+                    {slider.label}
+                    <button type="button" class="hint" data-tip={slider.tip} aria-label={slider.tip}>?</button>
+                  </label>
+                  <div class="slider-row">
+                    <input
+                      type="range"
+                      id={slider.id}
+                      name={slider.id}
+                      value={slider.value}
+                      min={slider.min}
+                      max={slider.max}
+                      step="1"
+                    />
+                    <output class="slider-value" for={slider.id} id={`${slider.id}-out`}>{slider.value} %</output>
+                  </div>
+                  <div class="slider-scale">
+                    <span>{slider.min}%</span>
+                    <span>{slider.max}%</span>
+                  </div>
+                </div>
+              ))
+            }
+          </form>
+
+          <div class="calc-charts">
+            <article class="chart-card">
+              <h3 class="chart-title">Ingresos mensuales por adopción de la app</h3>
+              <p class="chart-subtitle">Proyección a 24 meses con curva de adopción progresiva</p>
+              <div class="chart-wrap"><canvas id="chart-monthly"></canvas></div>
+            </article>
+            <article class="chart-card">
+              <h3 class="chart-title">Ingresos acumulados por adopción de la app</h3>
+              <p class="chart-subtitle">Acumulado del escenario actual más el incremental de la app</p>
+              <div class="chart-wrap"><canvas id="chart-accumulated"></canvas></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="summary">
+          <div class="summary-head">
+            <h2 class="summary-title">¡Hora del AppSell! <span class="red">Resultados a 2 años</span></h2>
+            <div class="summary-chips">
+              <p class="chip"><span id="chip-rev">—</span> en ingresos adicionales</p>
+              <p class="chip"><span id="chip-tx">—</span> más transacciones</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Actual</th>
+                  <th scope="col">AppSelling con Reskyt</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  tableRows.map((row) => (
+                    <tr class:list={{ 'row-total': row.total }}>
+                      <th scope="row">{row.label}</th>
+                      <td id={`${row.id}-base`}>—</td>
+                      <td id={`${row.id}-app`}>—</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="brands">
+          <h2 class="brands-title">Únete a las <span class="red">+750 historias de éxito</span> de Reskyt en todos los sectores</h2>
+          <div class="brands-grid">
+            {brands.map((brand) => <img src={brand.src} alt={brand.alt} loading="lazy" />)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <DemoCta />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  .hero-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    max-width: 42rem;
+    margin: 1.25rem auto 0;
+  }
+
+  .calc {
+    padding-top: 3rem;
+  }
+
+  /* KPIs */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .kpi-card {
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.4rem;
+  }
+
+  .kpi-value {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 700;
+    color: var(--color-red);
+    line-height: 1.1;
+  }
+
+  .kpi-label-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .kpi-label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.35;
+  }
+
+  /* Tooltip hints */
+  .hint {
+    position: relative;
+    flex-shrink: 0;
+    width: 1.05rem;
+    height: 1.05rem;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: help;
+    padding: 0;
+  }
+
+  .hint::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    right: -0.5rem;
+    z-index: 10;
+    width: 15rem;
+    background: var(--color-text);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .hint:hover::after,
+  .hint:focus-visible::after {
+    opacity: 1;
+  }
+
+  /* Layout */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: minmax(20rem, 26rem) 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .calc-inputs,
+  .chart-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .panel-title {
+    font-size: 1.15rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .field-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .field .field-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+    min-height: 2.1rem;
+    align-items: flex-end;
+  }
+
+  .field-input {
+    position: relative;
+    display: block;
+  }
+
+  .field-input input {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    background: #fff;
+  }
+
+  .field-input input:focus {
+    outline: 2px solid var(--color-red);
+    outline-offset: -1px;
+    border-color: transparent;
+  }
+
+  .field-input input[readonly] {
+    background: var(--color-bg-soft);
+    color: var(--color-text-muted);
+  }
+
+  .field-input[data-suffix]:not([data-suffix=''])::after {
+    content: attr(data-suffix);
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+
+  /* Sliders */
+  .slider-field {
+    margin-bottom: 1.1rem;
+  }
+
+  .slider-field .field-label {
+    margin-bottom: 0.4rem;
+  }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .slider-value {
+    flex-shrink: 0;
+    min-width: 3.9rem;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background: #fff;
+  }
+
+  input[type='range'] {
+    flex: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    height: 0.3rem;
+    border-radius: 999px;
+    background: var(--color-border);
+    outline: none;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--color-red);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+  }
+
+  input[type='range']::-moz-range-thumb {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--color-red);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+  }
+
+  input[type='range']:focus-visible {
+    outline: 2px solid var(--color-red);
+    outline-offset: 3px;
+  }
+
+  .slider-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+    padding-right: 4.8rem;
+  }
+
+  /* Charts */
+  .calc-charts {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .chart-title {
+    font-size: 1.15rem;
+  }
+
+  .chart-subtitle {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 20rem;
+    margin-top: 1rem;
+  }
+
+  /* Summary table */
+  .summary {
+    margin-top: 3rem;
+    background: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+  }
+
+  .summary-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-title {
+    font-size: 1.5rem;
+  }
+
+  .summary-chips {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    background: var(--color-red);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    font-size: 0.92rem;
+  }
+
+  .summary-table th,
+  .summary-table td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .summary-table th[scope='row'] {
+    text-align: left;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .summary-table thead th {
+    background: var(--color-text);
+    color: #fff;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .summary-table .row-total th,
+  .summary-table .row-total td {
+    font-weight: 700;
+    color: var(--color-text);
+    background: #faf7f2;
+  }
+
+  .summary-table tbody tr:last-child td,
+  .summary-table tbody tr:last-child th {
+    border-bottom: none;
+  }
+
+  .summary-table td:last-child {
+    color: var(--color-red);
+    font-weight: 600;
+  }
+
+  /* Brands */
+  .brands {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  .brands-title {
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+
+  .brands-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .brands-grid img {
+    width: 6.5rem;
+    height: 6.5rem;
+    object-fit: cover;
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 16px rgba(22, 22, 26, 0.08);
+    transition: transform 0.2s ease;
+  }
+
+  .brands-grid img:hover {
+    transform: translateY(-4px);
+  }
+
+  @media (max-width: 64rem) {
+    .calc-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .kpi-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .fields-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .brands-grid img {
+      width: 5rem;
+      height: 5rem;
+    }
+
+    .summary {
+      padding: 1.25rem;
+    }
+
+    .hint::after {
+      right: auto;
+      left: -6rem;
+    }
+  }
+</style>
+
+<script>
+  import Chart from 'chart.js/auto';
+
+  // Escenario "con app": la adopción crece de forma constante hasta su máximo
+  // durante los primeros RAMP_MONTHS meses (calibrado con el informe original).
+  const RAMP_MONTHS = 8;
+  const MONTHS = 24;
+  const COLOR_APP = '#d51521';
+  const COLOR_BASE = '#3d5f9e';
+  const COLOR_GRID = '#ececf0';
+  const COLOR_INK = '#5a5a63';
+
+  const fmtInt = new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 });
+  const fmtEur = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  const fmtEurCompact = new Intl.NumberFormat('es-ES', {
+    style: 'currency',
+    currency: 'EUR',
+    notation: 'compact',
+    maximumFractionDigits: 1,
+  });
+  const fmtPct = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const setText = (id: string, text: string) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+
+  function readParams() {
+    const mobilePct = Math.min(100, Math.max(0, Number($('mobilePct').value) || 0));
+    return {
+      visits: Math.max(0, Number($('visits').value) || 0),
+      aov: Math.max(0, Number($('aov').value) || 0),
+      mobile: mobilePct / 100,
+      desktop: (100 - mobilePct) / 100,
+      convM: Math.max(0, Number($('convM').value) || 0) / 100,
+      convD: Math.max(0, Number($('convD').value) || 0) / 100,
+      cost: Math.max(0, Number($('cost').value) || 0),
+      adoption: Number($('adoption').value) / 100,
+      growth: Number($('growth').value) / 100,
+      convBoost: Number($('convBoost').value) / 100,
+      aovBoost: Number($('aovBoost').value) / 100,
+    };
+  }
+
+  function compute(p: ReturnType<typeof readParams>) {
+    const monthly = { base: [] as number[], app: [] as number[], accBase: [] as number[], accIncr: [] as number[] };
+    const totals = {
+      txD: 0, txM: 0, txMw: 0, txA: 0,
+      revD: 0, revM: 0, revMw: 0, revA: 0,
+      incrY1: 0,
+    };
+    let accBase = 0;
+    let accIncr = 0;
+
+    for (let m = 1; m <= MONTHS; m++) {
+      const v = p.visits * Math.pow(1 + p.growth, m - 1);
+      const ad = p.adoption * Math.min(m / RAMP_MONTHS, 1);
+      const txD = v * p.desktop * p.convD;
+      const txM = v * p.mobile * p.convM;
+      const txMw = v * p.mobile * (1 - ad) * p.convM;
+      const txA = v * p.mobile * ad * p.convM * (1 + p.convBoost);
+
+      const revBase = (txD + txM) * p.aov;
+      const revApp = (txD + txMw) * p.aov + txA * p.aov * (1 + p.aovBoost);
+
+      totals.txD += txD;
+      totals.txM += txM;
+      totals.txMw += txMw;
+      totals.txA += txA;
+      totals.revD += txD * p.aov;
+      totals.revM += txM * p.aov;
+      totals.revMw += txMw * p.aov;
+      totals.revA += txA * p.aov * (1 + p.aovBoost);
+      if (m <= 12) totals.incrY1 += revApp - revBase;
+
+      accBase += revBase;
+      accIncr += revApp - revBase;
+      monthly.base.push(revBase);
+      monthly.app.push(revApp);
+      monthly.accBase.push(accBase);
+      monthly.accIncr.push(accIncr);
+    }
+
+    // KPIs instantáneos con la adopción plenamente desplegada
+    const txUnitBase = p.desktop * p.convD + p.mobile * p.convM;
+    const txUnitApp = p.desktop * p.convD + p.mobile * ((1 - p.adoption) + p.adoption * (1 + p.convBoost)) * p.convM;
+    const revUnitBase = txUnitBase * p.aov;
+    const revUnitApp =
+      (p.desktop * p.convD + p.mobile * (1 - p.adoption) * p.convM) * p.aov +
+      p.mobile * p.adoption * p.convM * (1 + p.convBoost) * p.aov * (1 + p.aovBoost);
+
+    return {
+      monthly,
+      totals,
+      txGrowth: txUnitBase > 0 ? txUnitApp / txUnitBase - 1 : 0,
+      revGrowth: revUnitBase > 0 ? revUnitApp / revUnitBase - 1 : 0,
+      aovGrowth: txUnitApp > 0 && revUnitBase > 0 ? revUnitApp / txUnitApp / (revUnitBase / txUnitBase) - 1 : 0,
+      roi: p.cost > 0 ? (totals.incrY1 - p.cost) / p.cost : null,
+    };
+  }
+
+  const labels = Array.from({ length: MONTHS }, (_, i) => `Mes ${i + 1}`);
+  const baseFont = { family: "'Inter', sans-serif", size: 12 };
+
+  const sharedScales = {
+    x: {
+      grid: { display: false },
+      ticks: { color: COLOR_INK, font: baseFont, maxRotation: 45, autoSkip: true, maxTicksLimit: 12 },
+    },
+    y: {
+      grid: { color: COLOR_GRID },
+      border: { display: false },
+      ticks: {
+        color: COLOR_INK,
+        font: baseFont,
+        callback: (value: unknown) => fmtEurCompact.format(Number(value)),
+      },
+    },
+  };
+
+  const sharedPlugins = {
+    legend: {
+      position: 'bottom' as const,
+      labels: { color: COLOR_INK, font: baseFont, usePointStyle: true, boxWidth: 8, boxHeight: 8 },
+    },
+    tooltip: {
+      backgroundColor: '#16161a',
+      padding: 10,
+      cornerRadius: 8,
+      titleFont: baseFont,
+      bodyFont: baseFont,
+      callbacks: {
+        label: (ctx: { dataset: { label?: string }; parsed: { y: number } }) =>
+          ` ${ctx.dataset.label}: ${fmtEur.format(ctx.parsed.y)}`,
+      },
+    },
+  };
+
+  const monthlyChart = new Chart(document.getElementById('chart-monthly') as HTMLCanvasElement, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Ingresos mensuales sin app',
+          data: [],
+          borderColor: COLOR_BASE,
+          backgroundColor: COLOR_BASE,
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBorderWidth: 2,
+          pointHoverBorderColor: '#fff',
+          tension: 0.3,
+        },
+        {
+          label: 'Ingresos mensuales con AppSelling',
+          data: [],
+          borderColor: COLOR_APP,
+          backgroundColor: COLOR_APP,
+          borderWidth: 2,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHoverBorderWidth: 2,
+          pointHoverBorderColor: '#fff',
+          tension: 0.3,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      scales: sharedScales,
+      plugins: sharedPlugins,
+    },
+  });
+
+  const accumulatedChart = new Chart(document.getElementById('chart-accumulated') as HTMLCanvasElement, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Ingresos acumulados sin app',
+          data: [],
+          backgroundColor: COLOR_BASE,
+          stack: 'total',
+          categoryPercentage: 0.72,
+        },
+        {
+          label: 'Ingresos incrementales con AppSelling',
+          data: [],
+          backgroundColor: COLOR_APP,
+          stack: 'total',
+          categoryPercentage: 0.72,
+          borderRadius: { topLeft: 4, topRight: 4 },
+          borderSkipped: false,
+          borderColor: '#fff',
+          borderWidth: { top: 0, right: 0, bottom: 2, left: 0 },
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        x: { ...sharedScales.x, stacked: true },
+        y: { ...sharedScales.y, stacked: true },
+      },
+      plugins: sharedPlugins,
+    },
+  });
+
+  function update() {
+    const p = readParams();
+    $('desktopPct').value = String(Math.round((1 - p.mobile) * 100));
+
+    const r = compute(p);
+
+    setText('kpi-roi', r.roi === null ? '—' : `+ ${fmtPct.format(r.roi * 100)} %`);
+    setText('kpi-tx', `+ ${fmtPct.format(r.txGrowth * 100)} %`);
+    setText('kpi-rev', `+ ${fmtPct.format(r.revGrowth * 100)} %`);
+    setText('kpi-aov', `+ ${fmtPct.format(r.aovGrowth * 100)} %`);
+
+    const t = r.totals;
+    setText('tx-desktop-base', fmtInt.format(t.txD));
+    setText('tx-desktop-app', fmtInt.format(t.txD));
+    setText('tx-mobile-base', fmtInt.format(t.txM));
+    setText('tx-mobile-app', fmtInt.format(t.txMw));
+    setText('tx-app-base', '—');
+    setText('tx-app-app', fmtInt.format(t.txA));
+    setText('tx-total-base', fmtInt.format(t.txD + t.txM));
+    setText('tx-total-app', fmtInt.format(t.txD + t.txMw + t.txA));
+    setText('rev-desktop-base', fmtEur.format(t.revD));
+    setText('rev-desktop-app', fmtEur.format(t.revD));
+    setText('rev-mobile-base', fmtEur.format(t.revM));
+    setText('rev-mobile-app', fmtEur.format(t.revMw));
+    setText('rev-app-base', '—');
+    setText('rev-app-app', fmtEur.format(t.revA));
+    setText('rev-total-base', fmtEur.format(t.revD + t.revM));
+    setText('rev-total-app', fmtEur.format(t.revD + t.revMw + t.revA));
+
+    const incrRev = t.revMw + t.revA - t.revM;
+    const incrTx = t.txMw + t.txA - t.txM;
+    setText('chip-rev', `+${fmtEur.format(incrRev)}`);
+    setText('chip-tx', `+${fmtInt.format(incrTx)}`);
+
+    monthlyChart.data.datasets[0].data = r.monthly.base;
+    monthlyChart.data.datasets[1].data = r.monthly.app;
+    monthlyChart.update('none');
+
+    accumulatedChart.data.datasets[0].data = r.monthly.accBase;
+    accumulatedChart.data.datasets[1].data = r.monthly.accIncr;
+    accumulatedChart.update('none');
+  }
+
+  function syncSlider(input: HTMLInputElement) {
+    const out = document.getElementById(`${input.id}-out`);
+    if (out) out.textContent = `${input.value} %`;
+    const pct = ((Number(input.value) - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
+    input.style.background = `linear-gradient(to right, ${COLOR_APP} ${pct}%, #e6e6ea ${pct}%)`;
+  }
+
+  const form = document.getElementById('calc-form') as HTMLFormElement;
+  form.addEventListener('submit', (event) => event.preventDefault());
+  form.addEventListener('input', (event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.type === 'range') syncSlider(target);
+    update();
+  });
+
+  form.querySelectorAll<HTMLInputElement>('input[type="range"]').forEach(syncSlider);
+  update();
+</script>
