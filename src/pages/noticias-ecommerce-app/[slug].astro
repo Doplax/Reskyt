@@ -23,7 +23,7 @@ const modules = import.meta.glob<{ default: PostContent }>('../../data/blog-cont
 const content = modules[`../../data/blog-content/${post.slug}.json`]?.default;
 if (!content) throw new Error(`Falta el contenido de la entrada: ${post.slug}`);
 
-const cover = `/images/blog/${post.slug}.png`;
+const cover = post.image;
 const related = blogPosts.filter(({ slug }) => slug !== post.slug).slice(0, 6);
 ---
 
@@ -48,11 +48,11 @@ const related = blogPosts.filter(({ slug }) => slug !== post.slug).slice(0, 6);
         <h2 class="related-title">También te puede interesar…</h2>
         <div class="related-grid">
           {
-            related.map(({ slug, title, date, readTime }) => (
+            related.map(({ slug, title, date, readTime, image }) => (
               <a href={`/noticias-ecommerce-app/${slug}`} class="related-card">
                 <span
                   class="related-image"
-                  style={`background-image: url('/images/blog/${slug}.png')`}
+                  style={`background-image: url('${image}')`}
                   aria-hidden="true"
                 />
                 <span class="related-body">
