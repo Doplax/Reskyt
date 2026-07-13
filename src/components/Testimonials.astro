@@ -1,0 +1,238 @@
+---
+// Sección "Las mejores marcas ya confían en nosotros": banda roja de logos en
+// marquee y carrusel de testimonios con flechas (contenido de la web oficial).
+import { getDict } from '../i18n';
+
+const t = getDict(Astro.currentLocale);
+
+const bandLogos = [
+  { src: '/images/testimonials/band-pccom.svg', alt: 'PcComponentes' },
+  { src: '/images/testimonials/band-douglas.svg', alt: 'Douglas' },
+  { src: '/images/testimonials/band-sprinter.svg', alt: 'Sprinter' },
+  { src: '/images/testimonials/band-cdl.svg', alt: 'Casa del Libro' },
+  { src: '/images/testimonials/band-deporvillage.svg', alt: 'Deporvillage' },
+  { src: '/images/testimonials/band-wurth.svg', alt: 'Würth' },
+  { src: '/images/testimonials/band-awlab.svg', alt: 'AW LAB' },
+  { src: '/images/testimonials/band-bata.svg', alt: 'Bata' },
+  { src: '/images/testimonials/band-gocco.svg', alt: 'Gocco' },
+  { src: '/images/testimonials/band-conforama.svg', alt: 'Conforama' },
+  { src: '/images/testimonials/band-toys.svg', alt: "Toys 'R' Us" },
+];
+
+const testimonials = [
+  {
+    logo: '/images/testimonials/galileo.svg',
+    brand: 'Galileo Farma',
+    person: 'Marta Segura',
+    role: 'CMO Galileo Farma',
+    text: 'Estábamos buscando una solución que nos ayudara a fidelizar a nuestros clientes y así aumentar la tasa de recurrencia de nuestro comercio electrónico. Reskyt resultó ser el socio perfecto para nosotros.',
+  },
+  {
+    logo: '/images/testimonials/toys.svg',
+    brand: "Toys 'R' Us",
+    person: 'Gerardo Casas',
+    role: 'Ecommerce Director Spain & Portugal',
+    text: 'En Reskyt hemos encontrado un partner cercano, profesional y muy ágil que nos ha permitido implementar iniciativas en la app que van más allá de la creación de un canal transaccional adicional: eventos, B2B, personalización, loyalty y ominicanalidad. ¡Imprescindibles!',
+  },
+  {
+    logo: '/images/testimonials/farmaciasdirect.svg',
+    brand: 'Farmaciasdirect',
+    person: 'Antonio Campos',
+    role: 'CEO de Farmaciasdirect',
+    text: 'Gracias a Reskyt y a su soporte, hemos conseguido que nuestra App sea líder en la categoría de farmacia y parafarmacia. Es intuitiva, rápida y accesible.',
+  },
+  {
+    logo: '/images/testimonials/drim.svg',
+    brand: 'Drim',
+    person: 'Raúl Lleberia',
+    role: 'General Manager',
+    text: 'Gracias a la fácil integración con Google Analytics, podemos medir las visitas, ventas y conversiones de las notificaciones enviadas.',
+  },
+  {
+    logo: '/images/testimonials/deporvillage.svg',
+    brand: 'Deporvillage',
+    person: 'Lidia Gómez',
+    role: 'Product Owner & QA manager',
+    text: 'Que nuestros departamentos de Marketing y programación tengan un control total sobre la App, es fundamental para nosotros.',
+  },
+  {
+    logo: '/images/testimonials/sprinter.svg',
+    brand: 'Sprinter',
+    person: 'Núria Garcia',
+    role: 'Global Performance Lead',
+    text: 'Hemos publicado nuestra App en un tiempo récord con excelentes resultados de usabilidad y diseño. El equipo de Reskyt es muy resolutivo y profesional y su asesoramiento ha sido crucial en el éxito de este proyecto.',
+  },
+  {
+    logo: '/images/testimonials/zacaris.png',
+    brand: 'Zacaris',
+    person: 'Toni Badias',
+    role: 'CEO',
+    text: 'Fácil y rápida implementación. Gracias a Reskyt, disponemos de una App que podemos personalizar en cualquier momento y así adaptarnos de forma rápida a los cambios constantes que exige el mercado.',
+  },
+];
+---
+
+<section class="section trust">
+  <div class="container">
+    <h2 class="trust-title">
+      {t.testimonials.titleStart}<span class="red">{t.testimonials.titleHighlight}</span>{t.testimonials.titleEnd}
+    </h2>
+  </div>
+
+  <div class="band" aria-hidden="true">
+    <div class="band-track">
+      {
+        [...bandLogos, ...bandLogos].map(({ src, alt }, i) => (
+          <img src={src} alt={i < bandLogos.length ? alt : ''} loading="lazy" height="28" />
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="slider" id="testimonial-slider">
+      {
+        testimonials.map(({ logo, brand, person, role, text }) => (
+          <figure class="testimonial">
+            <img class="testimonial-logo" src={logo} alt={`Logo ${brand}`} loading="lazy" height="32" />
+            <figcaption>
+              <strong>{person}</strong>
+              <span>{role}</span>
+            </figcaption>
+            <blockquote>{text}</blockquote>
+          </figure>
+        ))
+      }
+    </div>
+    <div class="slider-nav">
+      <button type="button" class="slider-btn" id="testimonial-prev" aria-label="Anterior">‹</button>
+      <button type="button" class="slider-btn" id="testimonial-next" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    max-width: 36rem;
+  }
+
+  .band {
+    margin-top: 2.5rem;
+    background-color: var(--color-red);
+    overflow: hidden;
+    padding-block: 1.25rem;
+    mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+  }
+
+  .band-track {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: max-content;
+    animation: band-scroll 35s linear infinite;
+    padding-inline: 2rem;
+  }
+
+  .band-track img {
+    height: 1.75rem;
+    width: auto;
+    flex: none;
+  }
+
+  @keyframes band-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .slider {
+    margin-top: 3rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(28rem, 85%);
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testimonial {
+    margin: 0;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg-soft);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .testimonial-logo {
+    height: 2rem;
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .testimonial figcaption {
+    display: grid;
+  }
+
+  .testimonial figcaption span {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .testimonial blockquote {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .slider-nav {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  .slider-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    background-color: var(--color-bg);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .slider-btn:hover {
+    border-color: var(--color-red);
+    color: var(--color-red);
+  }
+</style>
+
+<script>
+  const slider = document.getElementById('testimonial-slider');
+  const step = () => (slider?.querySelector('.testimonial')?.clientWidth ?? 400) + 24;
+
+  document.getElementById('testimonial-prev')?.addEventListener('click', () => {
+    slider?.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+  document.getElementById('testimonial-next')?.addEventListener('click', () => {
+    slider?.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+</script>

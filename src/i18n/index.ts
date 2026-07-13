@@ -116,6 +116,11 @@ const es = {
     conversion: 'Conversión vs. Web Mobile',
     roi: 'Positivo en menos de 6 meses',
   },
+  testimonials: {
+    titleStart: 'Las ',
+    titleHighlight: 'mejores marcas',
+    titleEnd: ' ya confían en nosotros',
+  },
   cta: {
     titleStart: '¿Listo para lanzar la app de tu ',
     titleHighlight: 'eCommerce',
@@ -210,6 +215,11 @@ const ca: Dict = {
     conversion: 'Conversió vs. Web Mobile',
     roi: 'Positiu en menys de 6 mesos',
   },
+  testimonials: {
+    titleStart: 'Les ',
+    titleHighlight: 'millors marques',
+    titleEnd: ' ja confien en nosaltres',
+  },
   cta: {
     titleStart: "A punt per llançar l'app del teu ",
     titleHighlight: 'eCommerce',
@@ -301,6 +311,11 @@ const en: Dict = {
     visitas: 'Daily visits',
     conversion: 'Conversion vs. mobile web',
     roi: 'Positive in under 6 months',
+  },
+  testimonials: {
+    titleStart: 'The ',
+    titleHighlight: 'best brands',
+    titleEnd: ' already trust us',
   },
   cta: {
     titleStart: 'Ready to launch your ',
@@ -394,6 +409,11 @@ const it: Dict = {
     conversion: 'Conversione vs. web mobile',
     roi: 'Positivo in meno di 6 mesi',
   },
+  testimonials: {
+    titleStart: 'I ',
+    titleHighlight: 'migliori brand',
+    titleEnd: ' si fidano già di noi',
+  },
   cta: {
     titleStart: "Pronto a lanciare l'app del tuo ",
     titleHighlight: 'eCommerce',
@@ -485,6 +505,11 @@ const nl: Dict = {
     visitas: 'Dagelijkse bezoeken',
     conversion: 'Conversie vs. mobiel web',
     roi: 'Positief binnen 6 maanden',
+  },
+  testimonials: {
+    titleStart: 'De ',
+    titleHighlight: 'beste merken',
+    titleEnd: ' vertrouwen al op ons',
   },
   cta: {
     titleStart: 'Klaar om de app van je ',
