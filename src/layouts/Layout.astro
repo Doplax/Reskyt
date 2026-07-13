@@ -1,16 +1,41 @@
 ---
 import '../styles/global.css';
-import { getDict, DEFAULT_LOCALE } from '../i18n';
+import { getDict, hasTranslation, localizePath, isLocale, DEFAULT_LOCALE, LOCALES } from '../i18n';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Imagen para redes sociales (ruta absoluta o relativa al site). */
+  ogImage?: string;
 }
 
-const lang = Astro.currentLocale ?? DEFAULT_LOCALE;
+const lang = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
 const dict = getDict(lang);
 
-const { title = dict.meta.title, description = dict.meta.description } = Astro.props;
+const {
+  title = dict.meta.title,
+  description = dict.meta.description,
+  ogImage = '/images/og-image.png',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site);
+
+// hreflang solo cuando la página tiene versión en todos los idiomas.
+const alternates = hasTranslation(Astro.url.pathname)
+  ? LOCALES.map((locale) => ({
+      locale,
+      url: new URL(localizePath(Astro.url.pathname, locale), Astro.site),
+    }))
+  : [];
+
+const OG_LOCALES: Record<string, string> = {
+  es: 'es_ES',
+  ca: 'ca_ES',
+  en: 'en_US',
+  it: 'it_IT',
+  nl: 'nl_NL',
+};
 ---
 
 <!doctype html>
@@ -18,12 +43,27 @@ const { title = dict.meta.title, description = dict.meta.description } = Astro.p
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map(({ locale, url }) => <link rel="alternate" hreflang={locale} href={url} />)}
+    {
+      alternates.length > 0 && (
+        <link rel="alternate" hreflang="x-default" href={new URL(localizePath(Astro.url.pathname, DEFAULT_LOCALE), Astro.site)} />
+      )
+    }
+    <meta property="og:site_name" content="Reskyt" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={OG_LOCALES[lang]} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <link rel="icon" type="image/png" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/favicon-96.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,6 +72,28 @@ const { title = dict.meta.title, description = dict.meta.description } = Astro.p
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      // Persistencia de idioma: en la portada castellana se redirige al idioma
+      // preferido; visitar una portada con prefijo actualiza la preferencia.
+      (function () {
+        try {
+          var path = window.location.pathname;
+          var match = path.match(/^\/(ca|en|it|nl)(\/|$)/);
+          if (match) {
+            localStorage.setItem('reskyt-locale', match[1]);
+            return;
+          }
+          if (path === '/') {
+            var preferred = localStorage.getItem('reskyt-locale');
+            if (preferred && preferred !== 'es') {
+              window.location.replace('/' + preferred + '/');
+            }
+          }
+        } catch (e) {
+          /* localStorage puede no estar disponible */
+        }
+      })();
+    </script>
   </head>
   <body>
     <slot />
