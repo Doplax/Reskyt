@@ -5,6 +5,30 @@ import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
 import { publishedApps } from '../data/published-apps';
 
+// Carrusel de mockups de apps reales, con las descripciones de la web oficial
+const mockups = [
+  { image: '/images/cases/mockups/tradeinn.webp', text: 'Página de Inicio personalizada por vertical del cliente' },
+  {
+    image: '/images/cases/mockups/estrella-galicia.webp',
+    text: 'Carrusel de productos destacados. Información del producto mediante escaneo de código de barras',
+  },
+  {
+    image: '/images/cases/mockups/pccomponentes.webp',
+    text: 'eCommerce marketplace integral, completamente sincronizado con las nuevas funcionalidades web',
+  },
+  { image: '/images/cases/mockups/munich.webp', text: 'Diseño totalmente personalizado, web a app eCommerce' },
+  {
+    image: '/images/cases/mockups/wurth.webp',
+    text: 'Catálogo personalizado de precios B2B. Lector inteligente de códigos EAN',
+  },
+  { image: '/images/cases/mockups/motocard.webp', text: 'Tarjeta de Fidelización en la App del cliente' },
+  {
+    image: '/images/cases/mockups/galileo.png',
+    text: 'Escaparate con galería de marcas destacadas. Buscador inteligente sincronizado y vídeos de TikTok con accesos a producto',
+  },
+  { image: '/images/cases/mockups/toys.png', text: 'Comunicación de eventos y registro de asistencia de clientes' },
+];
+
 const cases = [
   {
     name: 'Bata',
@@ -58,6 +82,25 @@ const cases = [
               </a>
             ))
           }
+        </div>
+      </div>
+    </section>
+
+    <section class="section mockups">
+      <div class="container">
+        <div class="mockup-slider" id="mockup-slider">
+          {
+            mockups.map(({ image, text }) => (
+              <figure class="mockup">
+                <img src={image} alt={text} loading="lazy" width="360" />
+                <figcaption>{text}</figcaption>
+              </figure>
+            ))
+          }
+        </div>
+        <div class="mockup-nav">
+          <button type="button" class="mockup-btn" id="mockup-prev" aria-label="Anterior">‹</button>
+          <button type="button" class="mockup-btn" id="mockup-next" aria-label="Siguiente">›</button>
         </div>
       </div>
     </section>
@@ -172,6 +215,72 @@ const cases = [
     object-position: top;
   }
 
+  .mockups {
+    background-color: var(--color-bg-soft);
+  }
+
+  .mockup-slider {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(18rem, 75%);
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .mockup-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mockup {
+    margin: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mockup img {
+    width: 100%;
+    border-radius: 1.5rem;
+    filter: drop-shadow(0 1rem 1.5rem rgba(22, 22, 26, 0.15));
+  }
+
+  .mockup figcaption {
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .mockup-nav {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  .mockup-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    background-color: var(--color-bg);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .mockup-btn:hover {
+    border-color: var(--color-red);
+    color: var(--color-red);
+  }
+
   .apps-title {
     font-size: clamp(1.75rem, 3.5vw, 2.5rem);
     letter-spacing: -0.02em;
@@ -215,3 +324,15 @@ const cases = [
     }
   }
 </style>
+
+<script>
+  const slider = document.getElementById('mockup-slider');
+  const step = () => (slider?.querySelector('.mockup')?.clientWidth ?? 300) + 32;
+
+  document.getElementById('mockup-prev')?.addEventListener('click', () => {
+    slider?.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+  document.getElementById('mockup-next')?.addEventListener('click', () => {
+    slider?.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+</script>
