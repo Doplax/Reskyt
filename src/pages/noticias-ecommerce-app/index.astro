@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import BlogListing from '../../components/BlogListing.astro';
+import Footer from '../../components/Footer.astro';
+import { blogPosts } from '../../data/blog-posts';
+
+export const PAGE_SIZE = 11;
+const lastPage = Math.ceil(blogPosts.length / PAGE_SIZE);
+---
+
+<Layout
+  title="Noticias sobre eCommerce y apps móviles actualizadas | Reskyt"
+  description="Tendencias del eCommerce, estrategias de apps móviles, novedades del sector y claves para vender más con tu tienda online en formato app"
+>
+  <Header />
+  <main>
+    <BlogListing posts={blogPosts.slice(0, PAGE_SIZE)} currentPage={1} lastPage={lastPage} />
+  </main>
+  <Footer />
+</Layout>

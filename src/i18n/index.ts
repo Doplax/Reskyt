@@ -3,9 +3,6 @@ export const LOCALES = ['es', 'ca', 'en', 'it', 'nl'] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
-/** Rutas que ya tienen versión traducida bajo /<locale>/... */
-const TRANSLATED_PATHS = new Set(['/']);
-
 export function isLocale(value: string | undefined): value is Locale {
   return typeof value === 'string' && (LOCALES as readonly string[]).includes(value);
 }
@@ -18,31 +15,24 @@ export function stripLocale(pathname: string): string {
 }
 
 /**
- * Devuelve la URL de `pathname` en el idioma `locale`. Si la página aún no
- * está traducida, lleva a la portada de ese idioma.
+ * Devuelve la URL de `pathname` en el idioma `locale`. Todas las rutas existen
+ * en todos los idiomas gracias al fallback con rewrite de Astro (las páginas
+ * sin traducir sirven el contenido castellano con el chrome en el idioma).
  */
 export function localizePath(pathname: string, locale: Locale): string {
   const path = stripLocale(pathname);
-  const target = TRANSLATED_PATHS.has(path) ? path : '/';
-  if (locale === DEFAULT_LOCALE) return target;
-  return `/${locale}${target === '/' ? '/' : target}`;
-}
-
-/**
- * Como localizePath, pero para enlaces de navegación: si el destino no está
- * traducido devuelve la página en castellano (que sí existe) en lugar de
- * mandar a la portada del idioma. Así la navegación conserva el idioma en
- * cuanto la página destino tenga traducción.
- */
-export function localizeHref(href: string, locale: Locale): string {
-  const path = stripLocale(href);
-  if (locale === DEFAULT_LOCALE || !TRANSLATED_PATHS.has(path)) return path;
+  if (locale === DEFAULT_LOCALE) return path;
   return `/${locale}${path === '/' ? '/' : path}`;
 }
 
-/** Idiomas en los que existe traducción de `pathname` (todos o ninguno). */
-export function hasTranslation(pathname: string): boolean {
-  return TRANSLATED_PATHS.has(stripLocale(pathname));
+/** Alias de localizePath para enlaces de navegación. */
+export function localizeHref(href: string, locale: Locale): string {
+  return localizePath(href, locale);
+}
+
+/** Con el fallback por rewrite, toda ruta tiene versión en todos los idiomas. */
+export function hasTranslation(_pathname: string): boolean {
+  return true;
 }
 
 const es = {

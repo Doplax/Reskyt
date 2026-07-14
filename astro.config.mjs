@@ -14,8 +14,17 @@ export default defineConfig({
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'ca', 'en', 'it', 'nl'],
+    // Las páginas sin traducir se sirven también bajo /<locale>/ con el
+    // contenido castellano (rewrite), manteniendo el chrome en el idioma.
+    fallback: {
+      ca: 'es',
+      en: 'es',
+      it: 'es',
+      nl: 'es',
+    },
     routing: {
       prefixDefaultLocale: false,
+      fallbackType: 'rewrite',
     },
   },
   integrations: [

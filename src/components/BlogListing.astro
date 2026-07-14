@@ -1,0 +1,258 @@
+---
+// Listado del blog con paginación (compartido por la portada del blog y /pagina/N).
+import type { BlogPost } from '../data/blog-posts';
+
+interface Props {
+  posts: BlogPost[];
+  currentPage: number;
+  lastPage: number;
+}
+
+const { posts, currentPage, lastPage } = Astro.props;
+
+// Los dos primeros posts se muestran destacados solo en la primera página.
+const featured = currentPage === 1 ? posts.slice(0, 2) : [];
+const rest = currentPage === 1 ? posts.slice(2) : posts;
+
+const postUrl = (slug: string) => `/noticias-ecommerce-app/${slug}`;
+const pageUrl = (n: number) =>
+  n === 1 ? '/noticias-ecommerce-app' : `/noticias-ecommerce-app/pagina/${n}`;
+
+// Paginación con elipsis: 1 … actual-1 actual actual+1 … última
+function pageList(current: number, last: number): (number | '…')[] {
+  if (last <= 7) return Array.from({ length: last }, (_, i) => i + 1);
+  const pages: (number | '…')[] = [1];
+  if (current > 3) pages.push('…');
+  for (let n = Math.max(2, current - 1); n <= Math.min(last - 1, current + 1); n++) pages.push(n);
+  if (current < last - 2) pages.push('…');
+  pages.push(last);
+  return pages;
+}
+
+const pages = pageList(currentPage, lastPage);
+---
+
+<section class="section blog">
+  <div class="container">
+    <h1 class="blog-title">Noticias - Apps para eCommerce</h1>
+    <p class="blog-subtitle">
+      Las últimas noticias del mundo de las Apps para eCommerce y desarrollo y diseño de
+      aplicaciones móviles.
+    </p>
+
+    {
+      featured.length > 0 && (
+        <div class="featured-grid">
+          {featured.map(({ slug, title, date, readTime, image }) => (
+            <article class="post featured">
+              <a
+                href={postUrl(slug)}
+                class="post-image"
+                style={`background-image: url('${image}')`}
+                aria-label={title}
+              />
+              <a href={postUrl(slug)} class="post-body">
+                <p class="post-meta">
+                  <span>{date}</span>
+                  <span class="dot">·</span>
+                  <span>{readTime} min</span>
+                </p>
+                <h2 class="post-title">{title}</h2>
+              </a>
+            </article>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="posts-grid">
+      {
+        rest.map(({ slug, title, date, readTime, image }) => (
+          <article class="post">
+            <a
+              href={postUrl(slug)}
+              class="post-image"
+              style={`background-image: url('${image}')`}
+              aria-label={title}
+            />
+            <a href={postUrl(slug)} class="post-body">
+              <p class="post-meta">
+                <span>{date}</span>
+                <span class="dot">·</span>
+                <span>{readTime} min</span>
+              </p>
+              <h2 class="post-title">{title}</h2>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <nav class="pagination" aria-label="Paginación del blog">
+      {
+        pages.map((n) =>
+          n === '…' ? (
+            <span class="page-item ellipsis">…</span>
+          ) : n === currentPage ? (
+            <span class="page-item current" aria-current="page">
+              {n}
+            </span>
+          ) : (
+            <a href={pageUrl(n)} class="page-item">
+              {n}
+            </a>
+          )
+        )
+      }
+      {
+        currentPage < lastPage && (
+          <a href={pageUrl(currentPage + 1)} class="page-item page-next" aria-label="Página siguiente">
+            →
+          </a>
+        )
+      }
+    </nav>
+  </div>
+</section>
+
+<style>
+  .blog-title {
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .blog-subtitle {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 40rem;
+  }
+
+  .featured-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .posts-grid {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background-color: var(--color-bg-soft);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .post:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-red);
+  }
+
+  .post-image {
+    display: block;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .post.featured .post-image {
+    aspect-ratio: 16 / 8;
+  }
+
+  .post-body {
+    display: block;
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .dot {
+    color: var(--color-red);
+    font-weight: 700;
+  }
+
+  .post-title {
+    margin-top: 0.6rem;
+    font-size: 1.1rem;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+  }
+
+  .post.featured .post-title {
+    font-size: 1.35rem;
+  }
+
+  .post:hover .post-title {
+    color: var(--color-red);
+  }
+
+  .pagination {
+    margin-top: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .page-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding-inline: 0.5rem;
+    border-radius: 0.6rem;
+    background-color: var(--color-bg-soft);
+    border: 1px solid var(--color-border);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  a.page-item:hover {
+    border-color: var(--color-red);
+    color: var(--color-red);
+  }
+
+  .page-item.current {
+    background-color: var(--color-text);
+    border-color: var(--color-text);
+    color: #fff;
+  }
+
+  .page-item.ellipsis {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .page-next {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 60rem) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

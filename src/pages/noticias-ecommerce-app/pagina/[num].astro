@@ -1,0 +1,29 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import BlogListing from '../../../components/BlogListing.astro';
+import Footer from '../../../components/Footer.astro';
+import { blogPosts } from '../../../data/blog-posts';
+import { PAGE_SIZE } from '../index.astro';
+
+export async function getStaticPaths() {
+  const { blogPosts } = await import('../../../data/blog-posts');
+  const lastPage = Math.ceil(blogPosts.length / 11);
+  return Array.from({ length: lastPage - 1 }, (_, i) => ({ params: { num: String(i + 2) } }));
+}
+
+const num = Number(Astro.params.num);
+const lastPage = Math.ceil(blogPosts.length / PAGE_SIZE);
+const posts = blogPosts.slice((num - 1) * PAGE_SIZE, num * PAGE_SIZE);
+---
+
+<Layout
+  title={`Noticias sobre eCommerce y apps móviles – página ${num} | Reskyt`}
+  description="Tendencias del eCommerce, estrategias de apps móviles, novedades del sector y claves para vender más con tu tienda online en formato app"
+>
+  <Header />
+  <main>
+    <BlogListing posts={posts} currentPage={num} lastPage={lastPage} />
+  </main>
+  <Footer />
+</Layout>

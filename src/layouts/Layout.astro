@@ -72,13 +72,22 @@ const OG_LOCALES: Record<string, string> = {
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script is:inline define:vars={{ builtPath: Astro.url.pathname }}>
-      // Persistencia de idioma: en la portada castellana se redirige al idioma
-      // preferido; visitar una portada con prefijo actualiza la preferencia.
-      // La ruta lógica viene de Astro para que funcione también cuando el sitio
-      // se sirve bajo un subpath (p. ej. GitHub Pages en /Reskyt/).
+    <script is:inline define:vars={{ builtPath: Astro.url.pathname, pageLocale: lang }}>
+      // Persistencia de idioma: visitar una página con prefijo de idioma guarda
+      // la preferencia; las páginas castellanas redirigen a la versión del
+      // idioma preferido. En las páginas fallback (rewrite) builtPath es la
+      // ruta origen sin prefijo, por eso el idioma viene aparte (pageLocale).
+      // La base se deriva comparando rutas para funcionar también bajo un
+      // subpath de hosting (p. ej. GitHub Pages en /Reskyt/).
       (function () {
         try {
+          if (pageLocale !== 'es') {
+            localStorage.setItem('reskyt-locale', pageLocale);
+            return;
+          }
+          var preferred = localStorage.getItem('reskyt-locale');
+          if (!preferred || preferred === 'es') return;
+
           var norm = function (p) {
             return p.replace(/\/+$/, '') || '/';
           };
@@ -91,17 +100,7 @@ const OG_LOCALES: Record<string, string> = {
                 : actual
               : actual.slice(0, actual.length - logical.length);
 
-          var match = logical.match(/^\/(ca|en|it|nl)(\/|$)/);
-          if (match) {
-            localStorage.setItem('reskyt-locale', match[1]);
-            return;
-          }
-          if (logical === '/') {
-            var preferred = localStorage.getItem('reskyt-locale');
-            if (preferred && preferred !== 'es') {
-              window.location.replace(base + '/' + preferred + '/');
-            }
-          }
+          window.location.replace(base + '/' + preferred + (logical === '/' ? '/' : logical));
         } catch (e) {
           /* localStorage puede no estar disponible */
         }
