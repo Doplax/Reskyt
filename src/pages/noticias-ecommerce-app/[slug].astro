@@ -3,12 +3,17 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { blogPosts } from '../../data/blog-posts';
+import { localizeHref, isLocale, DEFAULT_LOCALE } from '../../i18n';
+import { contentFor } from '../../i18n/content';
+import { miscContent } from '../../i18n/extra';
 
 export function getStaticPaths() {
   return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post } = Astro.props;
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = contentFor(miscContent, currentLocale);
 
 interface PostContent {
   metaTitle: string;
@@ -36,7 +41,7 @@ const related = blogPosts.filter(({ slug }) => slug !== post.slug).slice(0, 6);
         <p class="post-meta">
           <span>{post.date}</span>
           <span class="dot">·</span>
-          <span>{post.readTime} min de lectura</span>
+          <span>{post.readTime} {t.postReadingTime}</span>
         </p>
         <img class="post-cover" src={cover} alt={post.title} width="940" loading="eager" />
         <div class="post-content" set:html={content.html} />
@@ -45,11 +50,11 @@ const related = blogPosts.filter(({ slug }) => slug !== post.slug).slice(0, 6);
 
     <section class="section related">
       <div class="container">
-        <h2 class="related-title">También te puede interesar…</h2>
+        <h2 class="related-title">{t.postRelated}</h2>
         <div class="related-grid">
           {
             related.map(({ slug, title, date, readTime, image }) => (
-              <a href={`/noticias-ecommerce-app/${slug}`} class="related-card">
+              <a href={localizeHref(`/noticias-ecommerce-app/${slug}`, currentLocale)} class="related-card">
                 <span
                   class="related-image"
                   style={`background-image: url('${image}')`}

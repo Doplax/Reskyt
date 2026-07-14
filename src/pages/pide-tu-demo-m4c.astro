@@ -3,6 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import DemoForm from '../components/DemoForm.astro';
 import Footer from '../components/Footer.astro';
+import { contentFor, formsContent } from '../i18n/content';
+import { miscContent } from '../i18n/extra';
+
+const t = contentFor(miscContent, Astro.currentLocale);
+const forms = contentFor(formsContent, Astro.currentLocale);
 ---
 
 <Layout
@@ -14,17 +19,14 @@ import Footer from '../components/Footer.astro';
     <section class="section demo">
       <div class="container demo-grid">
         <div class="demo-intro">
-          <p class="demo-badge">Marketing4eCommerce</p>
-          <h1 class="demo-title">
-            Marketer, gracias a Marketing4eCommerce consigue tu demo personalizada
-            <span class="red">Gratis</span> y un <span class="red">20% de descuento</span> en tu primer año
-          </h1>
-          <p class="demo-subtitle">Introduce tus datos y en breve nos pondremos en contacto.</p>
+          <p class="demo-badge">{t.m4cBadge}</p>
+          <h1 class="demo-title">{t.m4cTitle}</h1>
+          <p class="demo-subtitle">{t.m4cSubtitle}</p>
 
           <div class="demo-contact">
-            <p>Envía un mail a <a href="mailto:appselling@reskyt.com" class="demo-link">appselling@reskyt.com</a></p>
+            <p>{forms.mailLine} <a href="mailto:appselling@reskyt.com" class="demo-link">appselling@reskyt.com</a></p>
             <p>
-              Llámanos al <a href="tel:+34902731998" class="demo-link">+34 902 731 998</a> /
+              {forms.phoneLine} <a href="tel:+34902731998" class="demo-link">+34 902 731 998</a> /
               <a href="tel:+34973949991" class="demo-link">+34 973 94 99 91</a>
             </p>
           </div>

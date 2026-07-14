@@ -2,8 +2,11 @@
 // Sección "Las mejores marcas ya confían en nosotros": banda roja de logos en
 // marquee y carrusel de testimonios con flechas (contenido de la web oficial).
 import { getDict } from '../i18n';
+import { contentFor } from '../i18n/content';
+import { testimonialQuotes } from '../i18n/about-cases';
 
 const t = getDict(Astro.currentLocale);
+const quotes = contentFor(testimonialQuotes, Astro.currentLocale);
 
 const bandLogos = [
   { src: '/images/testimonials/band-pccom.svg', alt: 'PcComponentes' },
@@ -25,49 +28,49 @@ const testimonials = [
     brand: 'Galileo Farma',
     person: 'Marta Segura',
     role: 'CMO Galileo Farma',
-    text: 'Estábamos buscando una solución que nos ayudara a fidelizar a nuestros clientes y así aumentar la tasa de recurrencia de nuestro comercio electrónico. Reskyt resultó ser el socio perfecto para nosotros.',
+    text: quotes[0],
   },
   {
     logo: '/images/testimonials/toys.svg',
     brand: "Toys 'R' Us",
     person: 'Gerardo Casas',
     role: 'Ecommerce Director Spain & Portugal',
-    text: 'En Reskyt hemos encontrado un partner cercano, profesional y muy ágil que nos ha permitido implementar iniciativas en la app que van más allá de la creación de un canal transaccional adicional: eventos, B2B, personalización, loyalty y ominicanalidad. ¡Imprescindibles!',
+    text: quotes[1],
   },
   {
     logo: '/images/testimonials/farmaciasdirect.svg',
     brand: 'Farmaciasdirect',
     person: 'Antonio Campos',
     role: 'CEO de Farmaciasdirect',
-    text: 'Gracias a Reskyt y a su soporte, hemos conseguido que nuestra App sea líder en la categoría de farmacia y parafarmacia. Es intuitiva, rápida y accesible.',
+    text: quotes[2],
   },
   {
     logo: '/images/testimonials/drim.svg',
     brand: 'Drim',
     person: 'Raúl Lleberia',
     role: 'General Manager',
-    text: 'Gracias a la fácil integración con Google Analytics, podemos medir las visitas, ventas y conversiones de las notificaciones enviadas.',
+    text: quotes[3],
   },
   {
     logo: '/images/testimonials/deporvillage.svg',
     brand: 'Deporvillage',
     person: 'Lidia Gómez',
     role: 'Product Owner & QA manager',
-    text: 'Que nuestros departamentos de Marketing y programación tengan un control total sobre la App, es fundamental para nosotros.',
+    text: quotes[4],
   },
   {
     logo: '/images/testimonials/sprinter.svg',
     brand: 'Sprinter',
     person: 'Núria Garcia',
     role: 'Global Performance Lead',
-    text: 'Hemos publicado nuestra App en un tiempo récord con excelentes resultados de usabilidad y diseño. El equipo de Reskyt es muy resolutivo y profesional y su asesoramiento ha sido crucial en el éxito de este proyecto.',
+    text: quotes[5],
   },
   {
     logo: '/images/testimonials/zacaris.png',
     brand: 'Zacaris',
     person: 'Toni Badias',
     role: 'CEO',
-    text: 'Fácil y rápida implementación. Gracias a Reskyt, disponemos de una App que podemos personalizar en cualquier momento y así adaptarnos de forma rápida a los cambios constantes que exige el mercado.',
+    text: quotes[6],
   },
 ];
 ---

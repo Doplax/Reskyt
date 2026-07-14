@@ -4,87 +4,15 @@ import Header from '../components/Header.astro';
 import TechMarquee from '../components/TechMarquee.astro';
 import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
+import { contentFor, funcionalidadesContent } from '../i18n/content';
+import { miscContent } from '../i18n/extra';
 
-const base = [
-  {
-    title: 'Plataforma No-code',
-    text: 'Gracias a la plataforma podrás crear composiciones e iconografía, para dar a tus clientes una manera fácil e intuitiva a la hora de navegar por la app.',
-  },
-  {
-    title: 'Notificaciones Push',
-    text: 'Comunícate con tus clientes de forma directa para informarle de ofertas, para recuperar carritos abandonados, novedades o códigos descuento para su cumpleaños.',
-  },
-];
+const t = contentFor(miscContent, Astro.currentLocale);
+const func = contentFor(funcionalidadesContent, Astro.currentLocale);
 
-const conversion = [
-  {
-    title: 'Checkout en un click',
-    text: 'Integración con cualquiera de los checkouts de última generación: Paypal, Amazon Pay, Apple Pay, Klarna, Aplazame…',
-  },
-  {
-    title: 'Inicio de sesión social',
-    text: 'Incrementa las conversiones en ventas gracias a la rapidez de inicio de sesión con Facebook, Google, Amazon o Apple.',
-  },
-  {
-    title: 'Buscadores avanzados',
-    text: 'Buscadores avanzados como Doofinder, APISearch, Empathy, directamente integrados dentro de la app.',
-  },
-  {
-    title: 'Chatbots',
-    text: 'Ten el mismo contacto con el cliente utilizando el mismo chatbot que tienes en el eCommerce, ya que estará dentro de la app.',
-  },
-  {
-    title: 'Lector de QR/EAN nativo en app',
-    text: 'Tus clientes podrán escanear tus productos desde cualquier lugar, ¡acelerando así el proceso de compra!',
-  },
-  {
-    title: 'Promociones exclusivas para la app',
-    text: 'El eCommerce con un simple desarrollo podrá generar promociones exclusivas para la app.',
-  },
-  {
-    title: 'Posicionamiento de Marca',
-    text: 'Fortalece tu marca. Con una App vas a generar más impacto a tus clientes. Mayor comunicación, más feeling y más ventas.',
-  },
-  {
-    title: 'Google Analytics/GA4',
-    text: 'Todas las visitas a la app estarán en tu Google Analytics, ya que automáticamente detectará un nuevo medio por el cual entran visitas.',
-  },
-];
-
-const segmentation = [
-  {
-    title: 'API Push',
-    text: 'Vincula nuestra API para el envío de notificaciones push y personaliza las notificaciones para tus usuarios: información logística, envío de paquetes, descuentos…',
-  },
-  {
-    title: 'Carritos Abandonados',
-    text: 'Notifica a tus usuarios cuando se dejen elementos en el carrito, para que continúen su compra, ofreciéndoles descuentos, promociones, etc.',
-  },
-  {
-    title: 'Geolocalización',
-    text: 'Envía notificaciones push delimitadas por una zona, mediante geolocalización procedente de las entradas en la app.',
-  },
-  {
-    title: 'Formulario de Segmentación',
-    text: 'Genera un formulario in-app, para saber qué intereses tienen en tus productos y poder aportarles información más relevante.',
-  },
-  {
-    title: 'País',
-    text: 'Apps con múltiples países se benefician de poder segmentar las notificaciones en función del país de uso de la app.',
-  },
-  {
-    title: 'Aperturas',
-    text: 'Envía una notificación push en función de qué usuarios han abierto una notificación anterior.',
-  },
-  {
-    title: 'Bienvenida',
-    text: 'Envía una notificación push con un descuento a cada usuario, por descargarse la app.',
-  },
-  {
-    title: 'Dispositivo de pruebas',
-    text: 'Prueba todas las notificaciones push antes de enviarlas, para asegurarte de que todo está correcto.',
-  },
-];
+const base = t.crearBase;
+const conversion = func.conversionCards;
+const segmentation = func.pushCards;
 ---
 
 <Layout
@@ -96,12 +24,9 @@ const segmentation = [
     <section class="section hero">
       <div class="container">
         <h1 class="hero-title">
-          La plataforma de creación de Apps con <span class="red">más funcionalidades</span> del mercado
+          {t.crearHeroStart}<span class="red">{t.crearHeroHighlight}</span>{t.crearHeroEnd}
         </h1>
-        <p class="hero-subtitle">
-          Todas las herramientas al alcance de tu mano para crear una app intuitiva que hará disparar
-          las ventas de tu eCommerce.
-        </p>
+        <p class="hero-subtitle">{t.crearSubtitle}</p>
       </div>
     </section>
 
@@ -124,7 +49,7 @@ const segmentation = [
 
     <section class="section features">
       <div class="container">
-        <h2 class="section-title">Soluciones para <span class="red">incrementar la conversión</span> de tu tienda</h2>
+        <h2 class="section-title">{func.convStart}<span class="red">{func.convHighlight}</span>{func.convEnd}</h2>
         <div class="cards">
           {
             conversion.map(({ title, text }) => (
@@ -140,7 +65,7 @@ const segmentation = [
 
     <section class="section features soft">
       <div class="container">
-        <h2 class="section-title">Segmentación avanzada para tus <span class="red">Notificaciones Push</span></h2>
+        <h2 class="section-title">{func.pushStart}<span class="red">{func.pushHighlight}</span>{func.pushEnd}</h2>
         <div class="cards">
           {
             segmentation.map(({ title, text }) => (
@@ -152,11 +77,8 @@ const segmentation = [
           }
         </div>
         <div class="reviews">
-          <h3 class="reviews-title">Las valoraciones y reseñas generan confianza</h3>
-          <p class="reviews-text">
-            La confianza y la seguridad son uno de los puntos más importantes a la hora de la toma de
-            decisión de compra. Nuestras Apps permiten que los usuarios valoren y reseñen directamente.
-          </p>
+          <h3 class="reviews-title">{t.crearReviewsTitle}</h3>
+          <p class="reviews-text">{t.crearReviewsText}</p>
         </div>
       </div>
     </section>

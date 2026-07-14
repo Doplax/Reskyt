@@ -4,6 +4,10 @@ import Header from '../components/Header.astro';
 import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
 import { publishedApps } from '../data/published-apps';
+import { contentFor } from '../i18n/content';
+import { miscContent } from '../i18n/extra';
+
+const t = contentFor(miscContent, Astro.currentLocale);
 ---
 
 <Layout
@@ -15,18 +19,15 @@ import { publishedApps } from '../data/published-apps';
     <section class="section hero">
       <div class="container">
         <h1 class="hero-title">
-          Desarrollo de Apps para los <span class="red">mejores eCommerce</span> B2C y B2B
+          {t.desarrolloTitleStart}<span class="red">{t.desarrolloTitleHighlight}</span>{t.desarrolloTitleEnd}
         </h1>
-        <p class="hero-subtitle">
-          La plataforma de creación de Aplicaciones móviles más utilizada por las tiendas online en
-          España, Latam y Europa.
-        </p>
+        <p class="hero-subtitle">{t.desarrolloSubtitle}</p>
       </div>
     </section>
 
     <section class="section apps">
       <div class="container">
-        <h2 class="apps-title">Apps publicadas en España <span class="red">¡y muchas más!</span></h2>
+        <h2 class="apps-title">{t.desarrolloAppsTitleStart}<span class="red">{t.desarrolloAppsTitleHighlight}</span></h2>
         <div class="apps-grid">
           {
             publishedApps.map(({ name, logo }) => (

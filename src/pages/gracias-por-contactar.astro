@@ -2,6 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { localizeHref, isLocale, DEFAULT_LOCALE } from '../i18n';
+import { contentFor } from '../i18n/content';
+import { miscContent } from '../i18n/extra';
+
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = contentFor(miscContent, currentLocale);
 ---
 
 <Layout
@@ -17,9 +23,9 @@ import Footer from '../components/Footer.astro';
             <path d="M4 12.5l5.5 5.5L20 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </span>
-        <h1 class="thanks-title">¡Gracias por <span class="red">Contactar</span>!</h1>
-        <p class="thanks-text">¡En breve nos pondremos en contacto contigo para empezar el proyecto de tu app!</p>
-        <a href="/" class="btn-primary">Volver al inicio</a>
+        <h1 class="thanks-title">{t.graciasTitleStart}<span class="red">{t.graciasTitleHighlight}</span>!</h1>
+        <p class="thanks-text">{t.graciasText}</p>
+        <a href={localizeHref('/', currentLocale)} class="btn-primary">{t.graciasHome}</a>
       </div>
     </section>
   </main>

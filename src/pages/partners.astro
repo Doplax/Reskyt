@@ -2,44 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { localizeHref, isLocale, DEFAULT_LOCALE } from '../i18n';
+import { contentFor, formsContent } from '../i18n/content';
+import { partnersContent } from '../i18n/extra';
 
-const reasons = [
-  {
-    title: 'La plataforma más completa',
-    text: 'Para desarrollar una APP se requiere una inversión muy alta en dinero y tiempo. Reskyt es la plataforma más completa y más utilizada por los eCommerce, agencias y partners.',
-    highlight: 'Nos avalan más de 370 eCommerce de alto rendimiento',
-  },
-  {
-    title: 'No esperes a que lo haga otro',
-    text: 'Todos los ecommerce terminarán con una APP, no esperes a que lo haga otro. Fideliza a tus clientes.',
-    highlight: '¡Sé el partner GLOBAL de soluciones digitales de tus clientes!',
-  },
-  {
-    title: 'Sin depender de programadores',
-    text: 'El responsable de Marketing del cliente o su agencia de MK digital podrá realizar los cambios que necesite a través de la plataforma sin precisar de ningún programador. Modifica Menús, Submenús, Portadas, Sliders, etc.',
-    highlight: 'Bienvenido a la nueva generación de APPs ¡Ahorra tiempo!',
-  },
-  {
-    title: 'Sincronización al instante',
-    text: 'Los cambios de contenido en la web se sincronizan al instante en la App ya que carga directamente el contenido de la web.',
-    highlight: 'Más comodidad, más usabilidad, ¡más ventas!',
-  },
-  {
-    title: 'El mejor canal para fidelizar',
-    text: 'Gracias a las notificaciones, la App es el mejor canal para fidelizar e incrementar las ventas de un eCommerce. Con Reskyt podrás segmentar las notificaciones según tus necesidades.',
-    highlight: 'Las notificaciones Push tienen la conversión más alta que los emails',
-  },
-  {
-    title: 'Compatible con todas tus herramientas',
-    text: 'Reskyt se adapta a la perfección con todas las herramientas de los ecommerce: Whatsapp, Oct8ne, Zendesk, Doofinder, Apisearch, Sequra, Google Maps, Google Analytics y muchas más.',
-    highlight: '¡Nunca había sido tan fácil!',
-  },
-  {
-    title: 'En constante evolución',
-    text: 'La plataforma Reskyt está en constante evolución y ofrece la última tecnología, en las nuevas actualizaciones, sin necesidad de publicación en App Store y Google Play.',
-    highlight: '¡Adiós a las actualizaciones manuales!',
-  },
-];
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = contentFor(partnersContent, currentLocale);
+const forms = contentFor(formsContent, currentLocale);
+const reasons = t.reasons;
 ---
 
 <Layout
@@ -50,27 +20,21 @@ const reasons = [
   <main>
     <section class="section partners-hero">
       <div class="container">
-        <h1 class="hero-title">Programa <span class="red">Partners</span> RESKYT</h1>
-        <p class="hero-lead">REVOLUCIONA las Ventas de los eCommerce de tus clientes.</p>
-        <p class="hero-text">
-          Da un paso más en la digitalización de sus negocios, creando sus aplicaciones. En Reskyt no
-          sólo encontrarás un partner tecnológico, sino que te unirás a un equipo que vive con pasión
-          cada proyecto que hace.
-        </p>
+        <h1 class="hero-title">{t.titleStart}<span class="red">{t.titleHighlight}</span>{t.titleEnd}</h1>
+        <p class="hero-lead">{t.lead}</p>
+        <p class="hero-text">{t.text}</p>
         <div class="hero-todo">
-          <p class="hero-todo-title">Nos ocupamos de TODO:</p>
+          <p class="hero-todo-title">{t.todoTitle}</p>
           <ul>
-            <li>Presentación de demo a tus clientes.</li>
-            <li>Creación y diseño de Apps, formación y publicación en los markets Google Play y App Store.</li>
-            <li>Soporte técnico especializado.</li>
+            {t.todoItems.map((item) => <li>{item}</li>)}
           </ul>
         </div>
         <div class="hero-actions">
-          <a href="/contacta" class="btn-primary">¡Únete al Appselling!</a>
+          <a href={localizeHref('/contacta', currentLocale)} class="btn-primary">{t.cta}</a>
           <div class="hero-contact">
-            <p>Envía mail a <a href="mailto:appselling@reskyt.com" class="link-red">appselling@reskyt.com</a></p>
+            <p>{forms.mailLine} <a href="mailto:appselling@reskyt.com" class="link-red">appselling@reskyt.com</a></p>
             <p>
-              Llámanos al <a href="tel:+34902731998" class="link-red">+34 902 731 998</a> /
+              {forms.phoneLine} <a href="tel:+34902731998" class="link-red">+34 902 731 998</a> /
               <a href="tel:+34973949991" class="link-red">+34 973 94 99 91</a>
             </p>
           </div>
@@ -80,7 +44,7 @@ const reasons = [
 
     <section class="section why">
       <div class="container">
-        <h2 class="why-title">¿Porqué <span class="red">RESKYT</span>?</h2>
+        <h2 class="why-title">{t.whyStart}<span class="red">{t.whyHighlight}</span>?</h2>
         <div class="why-grid">
           {
             reasons.map(({ title, text, highlight }) => (
@@ -93,8 +57,7 @@ const reasons = [
           }
         </div>
         <p class="why-closing">
-          Todas las herramientas al alcance de tu mano para crear una app intuitiva que hará disparar
-          las ventas de tu eCommerce. <strong>¡Nunca había sido tan fácil crear una APP!</strong>
+          {t.closingStart}<strong>{t.closingBold}</strong>
         </p>
       </div>
     </section>

@@ -2,121 +2,25 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import { contentFor } from '../../i18n/content';
+import { aboutContent } from '../../i18n/about-cases';
 
-const valores = [
-  {
-    title: 'Innovación',
-    text: 'La innovación es el motor que impulsa nuestro crecimiento y el éxito de nuestros clientes.',
-  },
-  {
-    title: 'Servicio',
-    text: 'Nuestro objetivo es ofrecer un servicio excepcional para cada cliente, basado en la rapidez y la eficiencia.',
-  },
-  {
-    title: 'Equipo',
-    text: 'Nos encanta el trabajo en equipo, mezclando la experiencia y la creatividad para conseguir lo mejor de cada uno.',
-  },
-];
+const t = contentFor(aboutContent, Astro.currentLocale);
+const valores = t.valores;
 
 type TimelineEntry = { badge?: string; text?: string };
 
-const timeline: { year: string; entries: TimelineEntry[] }[] = [
-  {
-    year: '2013',
+// El hito de cada año intercala insignias y textos: primera insignia, textos y resto de insignias.
+const timeline: { year: string; entries: TimelineEntry[] }[] = Object.entries(t.timeline).map(
+  ([year, { badges = [], texts }]) => ({
+    year,
     entries: [
-      { text: 'Creación de la empresa Reskyt e inicio de la programación de la plataforma de creación de apps.' },
+      ...badges.slice(0, 1).map((badge) => ({ badge })),
+      ...texts.map((text) => ({ text })),
+      ...badges.slice(1).map((badge) => ({ badge })),
     ],
-  },
-  {
-    year: '2014',
-    entries: [
-      { text: 'Seguimos evolucionando la plataforma Reskyt, para una mejor y más sencilla interacción.' },
-    ],
-  },
-  {
-    year: '2015',
-    entries: [
-      { badge: '🚀 Creación de la primera app para ecommerce' },
-      {
-        text: 'Automatización de la Plataforma para la creación de Apps y reducir el time to market de la creación de las apps.',
-      },
-    ],
-  },
-  {
-    year: '2016',
-    entries: [
-      { badge: '🚀 Lanzamiento App plus' },
-      { text: 'Adaptación de la plataforma para webs corporativas: gimnasios, restaurantes, ayuntamientos, etc.' },
-      { badge: '🏆 eAwards mejor agencia creación de apps 2016' },
-    ],
-  },
-  {
-    year: '2017',
-    entries: [
-      { badge: '🚀 Primeras apps para ecommerce de alto rendimiento' },
-      {
-        text: 'Incorporación de las primeras funcionalidades nativas en la Plataforma. Especialización en Apps para eCommerce. Creación de API Notificaciones Push. Integración con las plataformas de eCommerce Prestashop, Magento, osCommerce y Woocommerce.',
-      },
-      { badge: '🏆 eAwards mejor agencia creación de apps 2017' },
-    ],
-  },
-  {
-    year: '2018',
-    entries: [
-      { badge: '🚀 Lanzamiento App Enterprise' },
-      {
-        text: 'Nuevo diseño UX en la Plataforma. Integración con las plataformas de eCommerce, VTEX, Salesforce y Logicommerce.',
-      },
-      { badge: '🏆 eAwards mejor agencia creación de apps 2018' },
-    ],
-  },
-  {
-    year: '2019',
-    entries: [
-      {
-        text: 'Instalación de Servidores en Amazon. Aumento de capacidades para el envío masivo de millones de Notificaciones Push.',
-      },
-    ],
-  },
-  {
-    year: '2020',
-    entries: [
-      { badge: '🚀 Posibilidad de incorporación de SDK nativo' },
-      { text: 'Adaptación de la plataforma para poder instalar SDK a medida de forma nativa.' },
-      {
-        text: 'Comienzo del desarrollo para el envío de notificaciones push a carritos abandonados. Integración con Shopify.',
-      },
-    ],
-  },
-  {
-    year: '2021',
-    entries: [
-      {
-        text: 'Comienzo del desarrollo del Módulo de Integración para una customización automatizada del contenido del eCommerce y así conseguir una mejor integración con la App.',
-      },
-      {
-        text: 'Incorporación en la plataforma de herramientas de integración con terceros como buscadores, chatbots y pasarelas de pago.',
-      },
-    ],
-  },
-  {
-    year: '2022',
-    entries: [
-      { badge: '🚀 Lanzamiento del módulo de integración' },
-      {
-        text: 'Programación e incorporación en la Plataforma del Módulo de Segmentación. Integración con todas las plataformas de eCommerce actuales.',
-      },
-    ],
-  },
-  {
-    year: '2023',
-    entries: [
-      {
-        text: 'Evolución importante en la Plataforma Reskyt con la incorporación de nuevas prestaciones para los eCommerce más exigentes.',
-      },
-    ],
-  },
-];
+  })
+);
 ---
 
 <Layout
@@ -128,13 +32,9 @@ const timeline: { year: string; entries: TimelineEntry[] }[] = [
     <section class="section about">
       <div class="container">
         <h1 class="about-title">
-          La Agencia Nº1 en desarrollo de <span class="red">Aplicaciones móviles</span> en España para eCommerce
+          {t.titleStart}<span class="red">{t.titleHighlight}</span>{t.titleEnd}
         </h1>
-        <p class="about-lead">
-          En 2013 nace Reskyt con sus 3 fundadores, apasionados del mundo del software e internet.
-          Iniciaron este viaje fruto de la pasión por el eCommerce, tras ver la necesidad que tenían
-          las tiendas online de poder vender a través de aplicaciones móviles.
-        </p>
+        <p class="about-lead">{t.lead}</p>
 
         <div class="about-grid">
           <div class="about-gallery">
@@ -168,47 +68,21 @@ const timeline: { year: string; entries: TimelineEntry[] }[] = [
           </div>
 
           <div class="about-description">
-            <p>
-              Su objetivo iba más allá de poder crear Apps, querían que cualquier eCommerce manager o
-              Responsable de marketing de un eCommerce pudiera personalizar su App o realizar cambios en
-              el momento que quisieran. Así nació la primera plataforma de creación de Apps para
-              eCommerce, B2B y marketplace de España.
-            </p>
-            <p>
-              Reskyt creó una de las primeras plataformas de Europa que permite adaptarse a cualquier
-              plataforma de eCommerce (Shopify, Magento, Prestashop, Vtex, Woocommerce, Logicommerce,
-              etc.) siendo su factor diferenciador el poder crear Apps totalmente a medida, sin
-              plantillas, combinando las mejores partes de un eCommerce con nuevas funcionalidades
-              nativas, consiguiendo, como resultado, Apps que mejoran con diferencia la conversión de
-              venta respecto a la Web mobile.
-            </p>
+            {t.description.map((paragraph) => <p>{paragraph}</p>)}
           </div>
         </div>
 
         <div class="about-closing">
-          <p>
-            Actualmente, Reskyt cuenta con más de 600 Apps y se ha consolidado como una de las
-            plataformas más sólidas del mercado. Contamos con un equipo altamente experimentado para
-            seguir creciendo e innovando en el mundo de las Apps.
-          </p>
-          <p>
-            <strong>
-              En Reskyt, hemos creado Apps para todo tipo de eCommerce, desde los más pequeños hasta
-              los eCommerce más exigentes, con 21 millones de visitas mensuales.
-            </strong>
-          </p>
-          <p>
-            Durante tres años consecutivos nuestra plataforma obtuvo el premio eAwards como mejor
-            Agencia de creación de Apps y ha obtenido el Premio a la mejor plataforma de España en la
-            Gala eCommerce Tools.
-          </p>
+          <p>{t.closing[0]}</p>
+          <p><strong>{t.closingBold}</strong></p>
+          <p>{t.closing[1]}</p>
         </div>
       </div>
     </section>
 
     <section class="section values">
       <div class="container">
-        <h2 class="values-title">Nuestros valores siempre están presentes</h2>
+        <h2 class="values-title">{t.valoresTitle}</h2>
         <div class="values-grid">
           {
             valores.map(({ title, text }) => (
@@ -224,19 +98,14 @@ const timeline: { year: string; entries: TimelineEntry[] }[] = [
 
     <section class="section goals">
       <div class="container">
-        <h2 class="goals-title">Nuestros <span class="red">Objetivos</span></h2>
-        <p class="goals-text">
-          Crear Apps para cualquier tipo de eCommerce, sea cual sea su plataforma (Shopify, Magento,
-          Prestashop, Logicommerce, Vtex, Salesforce, etc.). Gracias al largo recorrido y experiencia
-          adquirida después de la realización de más de 580 Apps, hoy es una de las plataformas más
-          sólidas del mercado, pudiendo dar soporte simultáneo a los mejores eCommerce de Europa.
-        </p>
+        <h2 class="goals-title">{t.objetivosStart}<span class="red">{t.objetivosHighlight}</span></h2>
+        <p class="goals-text">{t.objetivosText}</p>
       </div>
     </section>
 
     <section class="section evolution">
       <div class="container">
-        <h2 class="evolution-title">Evolución <span class="red">Reskyt</span></h2>
+        <h2 class="evolution-title">{t.evolucionStart}<span class="red">{t.evolucionHighlight}</span></h2>
 
         <div class="timeline" id="timeline">
           <div class="timeline-track" aria-hidden="true">

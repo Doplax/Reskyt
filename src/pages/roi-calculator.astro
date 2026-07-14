@@ -3,30 +3,43 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
+import { contentFor } from '../i18n/content';
+import { roiContent } from '../i18n/extra';
+
+const t = contentFor(roiContent, Astro.currentLocale);
 
 const kpis = [
-  { id: 'kpi-roi', label: 'ROI del primer año', tip: 'Retorno sobre la inversión anual en la app: (ingresos incrementales del primer año − inversión) / inversión.' },
-  { id: 'kpi-tx', label: 'Crecimiento de las transacciones', tip: 'Incremento de transacciones totales con la adopción de la app plenamente desplegada.' },
-  { id: 'kpi-rev', label: 'Crecimiento de los ingresos', tip: 'Incremento de ingresos totales con la adopción de la app plenamente desplegada.' },
-  { id: 'kpi-aov', label: 'Incremento del valor medio del pedido', tip: 'Variación del AOV combinado de todos los canales gracias al mayor ticket medio en la app.' },
+  { id: 'kpi-roi', ...t.kpis[0] },
+  { id: 'kpi-tx', ...t.kpis[1] },
+  { id: 'kpi-rev', ...t.kpis[2] },
+  { id: 'kpi-aov', ...t.kpis[3] },
 ];
 
 const fields = [
-  { id: 'visits', label: 'Visitas mensuales a tu web', value: 50000, min: 0, step: 1000, suffix: '', tip: 'Número total de visitas a tu sitio web cada mes, sumando todos los dispositivos.' },
-  { id: 'aov', label: 'Valor medio del pedido', value: 60, min: 1, step: 1, suffix: '€', tip: 'Importe medio de cada pedido en tu eCommerce (AOV).' },
-  { id: 'mobilePct', label: 'Visitas desde móvil', value: 70, min: 0, max: 100, step: 1, suffix: '%', tip: 'Porcentaje del tráfico que llega desde dispositivos móviles.' },
-  { id: 'desktopPct', label: 'Visitas desde escritorio', value: 30, min: 0, max: 100, step: 1, suffix: '%', readonly: true, tip: 'Se calcula automáticamente: 100% menos las visitas desde móvil.' },
-  { id: 'convM', label: 'Conversión en móvil', value: 1, min: 0, max: 100, step: 0.1, suffix: '%', tip: 'Porcentaje de visitas móviles que acaban en compra.' },
-  { id: 'convD', label: 'Conversión en escritorio', value: 2, min: 0, max: 100, step: 0.1, suffix: '%', tip: 'Porcentaje de visitas de escritorio que acaban en compra.' },
-  { id: 'cost', label: 'Inversión anual en la app', value: 19500, min: 0, step: 500, suffix: '€', tip: 'Coste anual estimado de desarrollo y mantenimiento de la app. Se usa para calcular el ROI.' },
+  { id: 'visits', ...t.fields[0], value: 50000, min: 0, step: 1000, suffix: '' },
+  { id: 'aov', ...t.fields[1], value: 60, min: 1, step: 1, suffix: '€' },
+  { id: 'mobilePct', ...t.fields[2], value: 70, min: 0, max: 100, step: 1, suffix: '%' },
+  { id: 'desktopPct', ...t.fields[3], value: 30, min: 0, max: 100, step: 1, suffix: '%', readonly: true },
+  { id: 'convM', ...t.fields[4], value: 1, min: 0, max: 100, step: 0.1, suffix: '%' },
+  { id: 'convD', ...t.fields[5], value: 2, min: 0, max: 100, step: 0.1, suffix: '%' },
+  { id: 'cost', ...t.fields[6], value: 19500, min: 0, step: 500, suffix: '€' },
 ];
 
 const sliders = [
-  { id: 'adoption', label: 'Tasa de adopción de la app', value: 30, min: 0, max: 100, tip: 'Porcentaje de tus usuarios móviles que acabarán comprando a través de la app. La adopción crece de forma progresiva durante los primeros meses.' },
-  { id: 'growth', label: 'Crecimiento mensual del tráfico', value: 2, min: 0, max: 100, tip: 'Crecimiento mensual esperado del tráfico total de tu web.' },
-  { id: 'convBoost', label: 'Mejora de conversión en app nativa vs web móvil', value: 100, min: 0, max: 450, tip: 'Cuánto mejor convierte la app frente a la web móvil. Un 100% significa que la app convierte el doble.' },
-  { id: 'aovBoost', label: 'Incremento del AOV con adopción de la app', value: 20, min: 1, max: 100, tip: 'Incremento del ticket medio de los pedidos realizados desde la app.' },
+  { id: 'adoption', ...t.sliders[0], value: 30, min: 0, max: 100 },
+  { id: 'growth', ...t.sliders[1], value: 2, min: 0, max: 100 },
+  { id: 'convBoost', ...t.sliders[2], value: 100, min: 0, max: 450 },
+  { id: 'aovBoost', ...t.sliders[3], value: 20, min: 1, max: 100 },
 ];
+
+// Textos que necesita el script de los gráficos (se inyectan como JSON en el DOM).
+const chartI18n = {
+  month: t.month,
+  dsMonthlyBase: t.dsMonthlyBase,
+  dsMonthlyApp: t.dsMonthlyApp,
+  dsAccBase: t.dsAccBase,
+  dsAccIncr: t.dsAccIncr,
+};
 
 const brands = [
   { src: '/images/brands/pc-componentes.webp', alt: 'Logo PC Componentes' },
@@ -44,14 +57,14 @@ const brands = [
 ];
 
 const tableRows = [
-  { id: 'tx-desktop', label: 'Transacciones en escritorio' },
-  { id: 'tx-mobile', label: 'Transacciones en móvil' },
-  { id: 'tx-app', label: 'Transacciones en app' },
-  { id: 'tx-total', label: 'Total de transacciones', total: true },
-  { id: 'rev-desktop', label: 'Ingresos desde escritorio' },
-  { id: 'rev-mobile', label: 'Ingresos desde móvil' },
-  { id: 'rev-app', label: 'Ingresos desde app' },
-  { id: 'rev-total', label: 'Ingresos totales', total: true },
+  { id: 'tx-desktop', label: t.tableRows[0] },
+  { id: 'tx-mobile', label: t.tableRows[1] },
+  { id: 'tx-app', label: t.tableRows[2] },
+  { id: 'tx-total', label: t.tableRows[3], total: true },
+  { id: 'rev-desktop', label: t.tableRows[4] },
+  { id: 'rev-mobile', label: t.tableRows[5] },
+  { id: 'rev-app', label: t.tableRows[6] },
+  { id: 'rev-total', label: t.tableRows[7], total: true },
 ];
 ---
 
@@ -63,11 +76,8 @@ const tableRows = [
   <main>
     <section class="section hero">
       <div class="container">
-        <h1 class="hero-title"><span class="red">Impulsa tu ROI</span> con una app móvil personalizada</h1>
-        <p class="hero-subtitle">
-          Descubre cuánto podrías ganar con la calculadora de ROI de appselling de Reskyt y lleva tu negocio al
-          siguiente nivel en la era mobile-first
-        </p>
+        <h1 class="hero-title"><span class="red">{t.heroHighlight}</span>{t.heroEnd}</h1>
+        <p class="hero-subtitle">{t.subtitle}</p>
       </div>
     </section>
 
@@ -88,8 +98,8 @@ const tableRows = [
         </div>
 
         <div class="calc-grid">
-          <form class="calc-inputs" id="calc-form">
-            <h2 class="panel-title">Tus datos</h2>
+          <form class="calc-inputs" id="calc-form" data-i18n={JSON.stringify(chartI18n)}>
+            <h2 class="panel-title">{t.panelTitle}</h2>
 
             <div class="fields-grid">
               {
@@ -147,13 +157,13 @@ const tableRows = [
 
           <div class="calc-charts">
             <article class="chart-card">
-              <h3 class="chart-title">Ingresos mensuales por adopción de la app</h3>
-              <p class="chart-subtitle">Proyección a 24 meses con curva de adopción progresiva</p>
+              <h3 class="chart-title">{t.chartMonthlyTitle}</h3>
+              <p class="chart-subtitle">{t.chartMonthlySubtitle}</p>
               <div class="chart-wrap"><canvas id="chart-monthly"></canvas></div>
             </article>
             <article class="chart-card">
-              <h3 class="chart-title">Ingresos acumulados por adopción de la app</h3>
-              <p class="chart-subtitle">Acumulado del escenario actual más el incremental de la app</p>
+              <h3 class="chart-title">{t.chartAccTitle}</h3>
+              <p class="chart-subtitle">{t.chartAccSubtitle}</p>
               <div class="chart-wrap"><canvas id="chart-accumulated"></canvas></div>
             </article>
           </div>
@@ -161,10 +171,10 @@ const tableRows = [
 
         <div class="summary">
           <div class="summary-head">
-            <h2 class="summary-title">¡Hora del AppSell! <span class="red">Resultados a 2 años</span></h2>
+            <h2 class="summary-title">{t.summaryStart}<span class="red">{t.summaryHighlight}</span></h2>
             <div class="summary-chips">
-              <p class="chip"><span id="chip-rev">—</span> en ingresos adicionales</p>
-              <p class="chip"><span id="chip-tx">—</span> más transacciones</p>
+              <p class="chip"><span id="chip-rev">—</span>{t.chipRevenue}</p>
+              <p class="chip"><span id="chip-tx">—</span>{t.chipTx}</p>
             </div>
           </div>
           <div class="table-wrap">
@@ -172,8 +182,8 @@ const tableRows = [
               <thead>
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col">Actual</th>
-                  <th scope="col">AppSelling con Reskyt</th>
+                  <th scope="col">{t.colCurrent}</th>
+                  <th scope="col">{t.colWithApp}</th>
                 </tr>
               </thead>
               <tbody>
@@ -192,7 +202,7 @@ const tableRows = [
         </div>
 
         <div class="brands">
-          <h2 class="brands-title">Únete a las <span class="red">+750 historias de éxito</span> de Reskyt en todos los sectores</h2>
+          <h2 class="brands-title">{t.brandsStart}<span class="red">{t.brandsHighlight}</span>{t.brandsEnd}</h2>
           <div class="brands-grid">
             {brands.map((brand) => <img src={brand.src} alt={brand.alt} loading="lazy" />)}
           </div>
@@ -739,7 +749,15 @@ const tableRows = [
     };
   }
 
-  const labels = Array.from({ length: MONTHS }, (_, i) => `Mes ${i + 1}`);
+  const i18n = JSON.parse(document.getElementById('calc-form')?.getAttribute('data-i18n') ?? '{}') as {
+    month?: string;
+    dsMonthlyBase?: string;
+    dsMonthlyApp?: string;
+    dsAccBase?: string;
+    dsAccIncr?: string;
+  };
+
+  const labels = Array.from({ length: MONTHS }, (_, i) => `${i18n.month ?? 'Mes'} ${i + 1}`);
   const baseFont = { family: "'Inter', sans-serif", size: 12 };
 
   const sharedScales = {
@@ -782,7 +800,7 @@ const tableRows = [
       labels,
       datasets: [
         {
-          label: 'Ingresos mensuales sin app',
+          label: i18n.dsMonthlyBase ?? 'Ingresos mensuales sin app',
           data: [],
           borderColor: COLOR_BASE,
           backgroundColor: COLOR_BASE,
@@ -794,7 +812,7 @@ const tableRows = [
           tension: 0.3,
         },
         {
-          label: 'Ingresos mensuales con AppSelling',
+          label: i18n.dsMonthlyApp ?? 'Ingresos mensuales con AppSelling',
           data: [],
           borderColor: COLOR_APP,
           backgroundColor: COLOR_APP,
@@ -822,14 +840,14 @@ const tableRows = [
       labels,
       datasets: [
         {
-          label: 'Ingresos acumulados sin app',
+          label: i18n.dsAccBase ?? 'Ingresos acumulados sin app',
           data: [],
           backgroundColor: COLOR_BASE,
           stack: 'total',
           categoryPercentage: 0.72,
         },
         {
-          label: 'Ingresos incrementales con AppSelling',
+          label: i18n.dsAccIncr ?? 'Ingresos incrementales con AppSelling',
           data: [],
           backgroundColor: COLOR_APP,
           stack: 'total',

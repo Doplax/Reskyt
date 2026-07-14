@@ -3,59 +3,20 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
+import { contentFor } from '../i18n/content';
+import { descubreContent } from '../i18n/extra';
 
-const marketing = [
-  {
-    title: 'Automatización',
-    text: 'Automatización de marketing con tu app, notificaciones push y estrategias para ganar lealtad.',
-  },
-  { title: 'Diseño', text: 'Experiencia de usuario optimizada para aumentar las conversiones.' },
-  { title: 'Trazabilidad', text: 'Información en tiempo real y seguimiento de campañas push.' },
-  {
-    title: 'Versatilidad',
-    text: 'Escalabilidad para crecer a futuro. Totalmente personalizable sin necesidad de conocimientos técnicos.',
-  },
-  {
-    title: 'Control',
-    text: 'Controla tus relaciones con los clientes y reduce tu dependencia de Meta y Google Ads.',
-  },
-];
+const t = contentFor(descubreContent, Astro.currentLocale);
 
-const it = [
-  { title: 'Sin Retrasos', text: 'Lanzamiento rápido, siempre actualizada' },
-  {
-    title: 'Sin Recursos Extra',
-    text: 'No requiere equipo técnico dedicado, integración fluida con tu CMS y CRM.',
-  },
-  { title: 'Escalabilidad', text: 'Escalado automático, sincronización en tiempo real' },
-  { title: 'Normativa', text: 'Seguridad avanzada y cumplimiento normativo' },
-  {
-    title: 'Apoyo Técnico',
-    text: 'Soporte técnico especializado para una comunicación fluida cuando sea necesario',
-  },
-];
-
-const uwtFeatures = [
-  {
-    title: 'Rápida implementación',
-    text: 'Tu app está lista en 4 semanas, totalmente adaptada e integrada…',
-  },
-  { title: 'No-Code, Control Total', text: 'Actualiza y personaliza sin intervención de IT' },
-  {
-    title: 'Eficiente en Costes',
-    text: 'Sin grandes inversiones, solo un modelo de suscripción escalable',
-  },
-  {
-    title: 'Sincronización fluida',
-    text: 'Sin actualizaciones manuales, contenido actualizado en tiempo real',
-  },
-];
+const marketing = t.marketing;
+const it = t.it;
+const uwtFeatures = t.uwtFeatures;
 
 const uwtStats = [
-  { value: '3x', label: 'conversión vs. mobile web' },
-  { value: '2x', label: 'recurrencia de compra' },
-  { value: '+20%', label: 'valor de pedido' },
-  { value: 'ROI', label: 'positivo en menos de 6 meses' },
+  { value: '3x', label: t.uwtStats[0] },
+  { value: '2x', label: t.uwtStats[1] },
+  { value: '+20%', label: t.uwtStats[2] },
+  { value: 'ROI', label: t.uwtStats[3] },
 ];
 ---
 
@@ -67,8 +28,8 @@ const uwtStats = [
   <main>
     <section class="section challenge">
       <div class="container">
-        <h1 class="challenge-title">El reto de lanzar una app</h1>
-        <p class="challenge-subtitle">¿Qué está frenando a las empresas?</p>
+        <h1 class="challenge-title">{t.heroTitle}</h1>
+        <p class="challenge-subtitle">{t.heroSubtitle}</p>
 
         <div class="challenge-grid">
           <div class="challenge-item">
@@ -77,7 +38,7 @@ const uwtStats = [
               <path d="M39.1893 65.0903V16.5081H42.3016V65.0903H39.1893ZM48.9247 31.5762C48.7223 29.7796 47.8873 28.388 46.4197 27.4011C44.9521 26.4016 43.1049 25.9019 40.8783 25.9019C39.2841 25.9019 37.9051 26.1549 36.7412 26.661C35.5772 27.1544 34.6726 27.8376 34.0274 28.7106C33.3948 29.5709 33.0785 30.5514 33.0785 31.6521C33.0785 32.5756 33.2936 33.3727 33.7238 34.0432C34.1666 34.7138 34.7422 35.2768 35.4507 35.7322C36.1718 36.175 36.9436 36.5483 37.7659 36.8519C38.5883 37.1429 39.379 37.3833 40.1381 37.573L43.9336 38.5599C45.1735 38.8635 46.445 39.2747 47.7481 39.7934C49.0512 40.3121 50.2594 40.9953 51.3728 41.843C52.4861 42.6906 53.3844 43.7407 54.0676 44.9932C54.7634 46.2457 55.1113 47.745 55.1113 49.4909C55.1113 51.6923 54.542 53.6469 53.4034 55.3549C52.2774 57.0629 50.639 58.4103 48.4882 59.3971C46.3501 60.3839 43.7628 60.8774 40.7264 60.8774C37.8166 60.8774 35.2989 60.4156 33.1734 59.492C31.0479 58.5684 29.3842 57.259 28.1823 55.5637C26.9804 53.8557 26.3162 51.8314 26.1897 49.4909H32.0727C32.1866 50.8952 32.642 52.0655 33.4391 53.0017C34.2488 53.9253 35.2799 54.6148 36.5324 55.0702C37.7976 55.5131 39.1829 55.7345 40.6885 55.7345C42.3458 55.7345 43.8198 55.4751 45.1102 54.9564C46.4133 54.425 47.4381 53.6912 48.1846 52.755C48.931 51.8061 49.3042 50.6991 49.3042 49.4339C49.3042 48.2826 48.9753 47.3401 48.3174 46.6063C47.6722 45.8725 46.7929 45.2652 45.6795 44.7845C44.5789 44.3037 43.3327 43.8799 41.941 43.513L37.3484 42.2605C34.2361 41.4128 31.7691 40.1666 29.9472 38.5219C28.1381 36.8772 27.2335 34.7011 27.2335 31.9937C27.2335 29.7543 27.8407 27.7997 29.0553 26.1296C30.2699 24.4596 31.9146 23.1628 33.9894 22.2393C36.0643 21.303 38.4049 20.8349 41.0111 20.8349C43.6426 20.8349 45.9642 21.2967 47.9758 22.2203C50.0001 23.1439 51.5942 24.4153 52.7581 26.0347C53.9221 27.6415 54.5294 29.4886 54.58 31.5762H48.9247Z" fill="#f8f8f8"></path>
               <path fill-rule="evenodd" clip-rule="evenodd" d="M79.9354 1.04804C79.1286 -0.349346 77.1117 -0.349347 76.3049 1.04804L65.7159 19.3887C64.9091 20.7861 65.9176 22.5328 67.5312 22.5328H71.8922V34.236C71.8922 35.3936 72.8306 36.332 73.9882 36.332H82.3726C83.5302 36.332 84.4686 35.3936 84.4686 34.236V22.5328H88.7092C90.3227 22.5328 91.3312 20.7861 90.5244 19.3887L79.9354 1.04804Z" fill="#DC143C"></path>
             </svg>
-            <p>Costes Elevados</p>
+            <p set:html={t.challenges[0]} />
           </div>
 
           <div class="challenge-item">
@@ -88,7 +49,7 @@ const uwtStats = [
               <path fill-rule="evenodd" clip-rule="evenodd" d="M44.7466 43.2214C46.1407 44.6304 56.0754 54.7173 55.4251 55.3646C54.7259 56.0606 42.3633 45.4986 42.3633 45.4986L42.3672 45.4943C42.3106 45.4458 42.2543 45.3961 42.1983 45.3452C40.7889 44.0619 40.1437 42.4753 40.7573 41.8014C41.3708 41.1276 43.0108 41.6217 44.4202 42.905C44.4761 42.956 44.5309 43.0074 44.5844 43.0592L44.5851 43.0584C44.5851 43.0584 44.6021 43.0756 44.6348 43.1085C44.6727 43.146 44.71 43.1836 44.7466 43.2214Z" fill="#f8f8f8"></path>
               <path fill-rule="evenodd" clip-rule="evenodd" d="M40.4483 41.2246C40.5905 39.5917 41.5064 29.5879 42.5944 29.6201C43.779 29.6553 44.3964 41.4486 44.3964 41.4486L44.3878 41.4486C44.3905 41.5027 44.3919 41.5572 44.3919 41.6121C44.3919 42.9953 43.5038 44.1166 42.4083 44.1166C41.3128 44.1166 40.4247 42.9953 40.4247 41.6121C40.4247 41.4803 40.4327 41.3509 40.4483 41.2246Z" fill="#f8f8f8"></path>
             </svg>
-            <p>Plazos Largos<br />de Desarrollo</p>
+            <p set:html={t.challenges[1]} />
           </div>
 
           <div class="challenge-item">
@@ -100,7 +61,7 @@ const uwtStats = [
               <path fill-rule="evenodd" clip-rule="evenodd" d="M40.6434 9.00388C40.6434 5.76081 43.2724 3.13178 46.5155 3.13178C49.7586 3.13178 52.3876 5.76081 52.3876 9.00388C52.3876 12.2469 49.7586 14.876 46.5155 14.876C43.2724 14.876 40.6434 12.2469 40.6434 9.00388ZM46.5155 0C41.5428 0 37.5116 4.03117 37.5116 9.00388C37.5116 11.799 38.7853 14.2967 40.784 15.9482C37.4592 17.2368 34.5873 19.6161 32.4225 22.6992L34.2847 25.5511C37.1147 20.9214 41.6239 18.0078 46.5155 18.0078C51.6416 18.0078 56.3478 21.2075 59.1416 26.2287L60.8813 23.0969C58.6876 19.8208 55.7134 17.2916 52.247 15.9482C54.2457 14.2967 55.5194 11.799 55.5194 9.00388C55.5194 4.03117 51.4882 0 46.5155 0Z" fill="#f8f8f8"></path>
               <path d="M82.9225 46.5853C82.9225 66.0437 66.3654 82.9922 46.907 82.9922C27.4486 82.9922 10.8915 66.0437 10.8915 46.5853" stroke="#DC143C" stroke-width="4.69767" stroke-dasharray="9.4 9.4"></path>
             </svg>
-            <p>Dependencia de<br />Equipos Técnicos</p>
+            <p set:html={t.challenges[2]} />
           </div>
 
           <div class="challenge-item">
@@ -114,21 +75,21 @@ const uwtStats = [
               <path fill-rule="evenodd" clip-rule="evenodd" d="M50.6428 31.6578C52.3255 30.1316 54.6964 29.8438 56.6366 30.7398L53.4073 33.6686L56.2942 36.8517L59.5207 33.9254C60.2188 35.9415 59.7006 38.2684 58.0204 39.7923C56.3391 41.3171 53.971 41.6057 52.0318 40.7126L36.6504 54.6628C35.7714 55.46 34.4126 55.3937 33.6154 54.5147C32.8182 53.6357 32.8845 52.2769 33.7635 51.4797L49.1444 37.53C48.4434 35.5127 48.961 33.183 50.6428 31.6578Z" fill="#FAF8F8"></path>
               <path fill-rule="evenodd" clip-rule="evenodd" d="M33.5028 39.6016C31.8964 37.9952 31.4934 35.6412 32.2938 33.6596L35.3765 36.7424L38.4151 33.7038L35.3351 30.6237C37.3147 29.8281 39.6641 30.2323 41.2681 31.8363C42.873 33.4412 43.2767 35.7925 42.4792 37.773L57.1624 52.4562C58.0015 53.2953 58.0015 54.6557 57.1624 55.4948C56.3233 56.3338 54.9629 56.3338 54.1238 55.4948L39.4411 40.812C37.4603 41.6105 35.1082 41.207 33.5028 39.6016Z" fill="#FAF8F8"></path>
             </svg>
-            <p>Retos de<br />Mantenimiento</p>
+            <p set:html={t.challenges[3]} />
           </div>
         </div>
 
         <div class="challenge-banner">
-          <p class="banner-highlight">Reskyt elimina estos bloqueos</p>
-          <p class="banner-text">Más rápido, más económico y sin complicaciones tecnológicas.</p>
+          <p class="banner-highlight">{t.bannerHighlight}</p>
+          <p class="banner-text">{t.bannerText}</p>
         </div>
       </div>
     </section>
 
     <section class="section reasons">
       <div class="container">
-        <h2 class="reasons-title"><span class="red">Top 5</span> razones para el equipo de marketing</h2>
-        <p class="reasons-subtitle">Convierte el compromiso en ingresos, todo en un solo lugar.</p>
+        <h2 class="reasons-title"><span class="red">{t.top5}</span>{t.marketingTitleEnd}</h2>
+        <p class="reasons-subtitle">{t.marketingSubtitle}</p>
         <div class="reasons-grid">
           {
             marketing.map(({ title, text }, i) => (
@@ -146,7 +107,7 @@ const uwtStats = [
     <section class="section uwt">
       <div class="container">
         <h2 class="uwt-title">Universal Wrapping Technology (UWT)</h2>
-        <p class="uwt-lead">Todo el Poder del Appselling. Sin las Complicaciones Técnicas de las Apps</p>
+        <p class="uwt-lead">{t.uwtLead}</p>
 
         <div class="uwt-features">
           {
@@ -174,8 +135,8 @@ const uwtStats = [
 
     <section class="section reasons">
       <div class="container">
-        <h2 class="reasons-title"><span class="red">Top 5</span> razones para el equipo de IT</h2>
-        <p class="reasons-subtitle">Una app de alto rendimiento, sin sobrecarga para IT</p>
+        <h2 class="reasons-title"><span class="red">{t.top5}</span>{t.itTitleEnd}</h2>
+        <p class="reasons-subtitle">{t.itSubtitle}</p>
         <div class="reasons-grid">
           {
             it.map(({ title, text }, i) => (
