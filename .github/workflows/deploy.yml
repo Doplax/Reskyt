@@ -29,6 +29,9 @@ jobs:
 
       - run: npm run build
 
+      # Suite E2E (Puppeteer) contra el build; si falla, no se despliega
+      - run: npm run test:e2e
+
       # GitHub Pages sirve el sitio bajo /Reskyt/; el proyecto usa rutas
       # absolutas desde la raiz, asi que se reescriben tras el build.
       - name: Reescribir rutas absolutas al subpath /Reskyt
