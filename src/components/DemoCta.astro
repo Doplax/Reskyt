@@ -1,24 +1,21 @@
 ---
-const features = [
-  {
-    title: '100% Personalizada',
-    text: 'Adaptada a tus necesidades y customizable sin necesidad de conocimientos técnicos.',
-  },
-  {
-    title: 'Siempre Actualizada',
-    text: 'Sincronizada con tu eCommerce para actualizaciones en tiempo real y siempre optimizada para iOS y Android',
-  },
-];
+import { localizeHref, isLocale, DEFAULT_LOCALE } from '../i18n';
+import { contentFor, sharedContent } from '../i18n/content';
+
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = contentFor(sharedContent, currentLocale);
 ---
 
 <section class="section demo-cta">
   <div class="container">
     <div class="cta-card">
       <div class="cta-content">
-        <h2 class="cta-title">Tu app lista en <span class="highlight">4 semanas</span> con Reskyt</h2>
+        <h2 class="cta-title">
+          {t.demoCtaTitleStart}<span class="highlight">{t.demoCtaTitleHighlight}</span>{t.demoCtaTitleEnd}
+        </h2>
         <div class="cta-features">
           {
-            features.map(({ title, text }) => (
+            t.demoCtaFeatures.map(({ title, text }) => (
               <div class="cta-feature">
                 <p class="cta-feature-title">{title}</p>
                 <p class="cta-feature-text">{text}</p>
@@ -26,7 +23,7 @@ const features = [
             ))
           }
         </div>
-        <a href="/solicitar-una-demo" class="btn-light">Pide tu demo</a>
+        <a href={localizeHref('/solicitar-una-demo', currentLocale)} class="btn-light">{t.demoCtaButton}</a>
       </div>
       <div class="cta-image-wrap">
         <img src="/images/demo-mbl.avif" alt="App móvil creada con Reskyt" loading="lazy" width="420" />

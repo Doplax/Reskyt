@@ -1,4 +1,8 @@
 ---
+import { contentFor, sharedContent } from '../i18n/content';
+
+const t = contentFor(sharedContent, Astro.currentLocale);
+
 const techs = [
   { src: '/images/tech/doofinder.webp', name: 'Doofinder' },
   { src: '/images/tech/bizum.webp', name: 'Bizum' },
@@ -14,13 +18,11 @@ const techs = [
   <div class="container">
     <div class="tech-heading">
       <h2>
-        <span class="red">Compatibilidad extendida</span> con las mejores tecnologías del mercado
+        {t.techTitleStart}<span class="red">{t.techTitleHighlight}</span>{t.techTitleEnd}
       </h2>
       <p>
-        Podemos crear la App de cualquier plataforma o CMS: Shopify, Magento, Prestashop, Vtex,
-        Logicommerce, Woocommerce, Salesforce, etc.<br />
-        Compatibilidad con los mejores buscadores avanzados, herramientas de Chat, tecnologías web,
-        checkouts, todas las tecnologías más punteras del mercado son compatibles con Reskyt.
+        {t.techText1}<br />
+        {t.techText2}
       </p>
     </div>
   </div>

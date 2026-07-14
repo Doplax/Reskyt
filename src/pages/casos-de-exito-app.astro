@@ -4,47 +4,40 @@ import Header from '../components/Header.astro';
 import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
 import { publishedApps } from '../data/published-apps';
+import { contentFor, casosContent } from '../i18n/content';
+
+const t = contentFor(casosContent, Astro.currentLocale);
 
 // Carrusel de mockups de apps reales, con las descripciones de la web oficial
-const mockups = [
-  { image: '/images/cases/mockups/tradeinn.webp', text: 'Página de Inicio personalizada por vertical del cliente' },
-  {
-    image: '/images/cases/mockups/estrella-galicia.webp',
-    text: 'Carrusel de productos destacados. Información del producto mediante escaneo de código de barras',
-  },
-  {
-    image: '/images/cases/mockups/pccomponentes.webp',
-    text: 'eCommerce marketplace integral, completamente sincronizado con las nuevas funcionalidades web',
-  },
-  { image: '/images/cases/mockups/munich.webp', text: 'Diseño totalmente personalizado, web a app eCommerce' },
-  {
-    image: '/images/cases/mockups/wurth.webp',
-    text: 'Catálogo personalizado de precios B2B. Lector inteligente de códigos EAN',
-  },
-  { image: '/images/cases/mockups/motocard.webp', text: 'Tarjeta de Fidelización en la App del cliente' },
-  {
-    image: '/images/cases/mockups/galileo.png',
-    text: 'Escaparate con galería de marcas destacadas. Buscador inteligente sincronizado y vídeos de TikTok con accesos a producto',
-  },
-  { image: '/images/cases/mockups/toys.png', text: 'Comunicación de eventos y registro de asistencia de clientes' },
+const mockupImages = [
+  '/images/cases/mockups/tradeinn.webp',
+  '/images/cases/mockups/estrella-galicia.webp',
+  '/images/cases/mockups/pccomponentes.webp',
+  '/images/cases/mockups/munich.webp',
+  '/images/cases/mockups/wurth.webp',
+  '/images/cases/mockups/motocard.webp',
+  '/images/cases/mockups/galileo.png',
+  '/images/cases/mockups/toys.png',
 ];
+
+const mockups = mockupImages.map((image, i) => ({ image, text: t.mockups[i] }));
 
 const cases = [
   {
     name: 'Bata',
-    sector: 'Moda',
+    sector: t.sectors.bata,
     href: '/casos-de-exito/bata',
     image: '/images/cases/bata-thumb.png',
   },
   {
     name: "Toys 'R' Us",
-    sector: 'Juguetes',
+    sector: t.sectors.toys,
     href: '/casos-de-exito/toys-rus',
     image: '/images/cases/toys-thumb.png',
   },
   {
     name: 'Galileo Farma',
-    sector: 'Parafarmacia',
+    sector: t.sectors.galileo,
     href: '/casos-de-exito/galileo-farma',
     image: '/images/cases/galileo-thumb.png',
   },
@@ -59,11 +52,8 @@ const cases = [
   <main>
     <section class="section hero">
       <div class="container">
-        <h1 class="hero-title">Casos de éxito en todos los sectores</h1>
-        <p class="hero-subtitle">
-          La plataforma de creación de Aplicaciones móviles más utilizada por las tiendas online en
-          España, Latam y Europa.
-        </p>
+        <h1 class="hero-title">{t.title}</h1>
+        <p class="hero-subtitle">{t.subtitle}</p>
       </div>
     </section>
 
@@ -107,7 +97,7 @@ const cases = [
 
     <section class="section apps">
       <div class="container">
-        <h2 class="apps-title">Apps publicadas en todo el mundo</h2>
+        <h2 class="apps-title">{t.appsTitle}</h2>
         <div class="apps-grid">
           {
             publishedApps.map(({ name, logo }) => (

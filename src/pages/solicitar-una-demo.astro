@@ -3,12 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import DemoForm from '../components/DemoForm.astro';
 import Footer from '../components/Footer.astro';
+import { contentFor, formsContent } from '../i18n/content';
 
-const benefits = [
-  { title: 'Demo personalizada', text: 'Te enseñamos la app con el catálogo de tu propio eCommerce.' },
-  { title: 'Sin compromiso', text: '30 minutos con nuestro equipo, sin permanencias ni letra pequeña.' },
-  { title: 'Lanzamiento en 4 semanas', text: 'Si te convence, tu app puede estar publicada en menos de un mes.' },
-];
+const t = contentFor(formsContent, Astro.currentLocale);
+const benefits = t.benefits;
 ---
 
 <Layout
@@ -20,10 +18,8 @@ const benefits = [
     <section class="section demo">
       <div class="container demo-grid">
         <div class="demo-intro">
-          <h1 class="demo-title">Agenda tu <span class="red">demo</span> ahora</h1>
-          <p class="demo-subtitle">
-            Introduce tus datos y en breve nos pondremos en contacto contigo.
-          </p>
+          <h1 class="demo-title">{t.demoTitleStart}<span class="red">{t.demoTitleHighlight}</span>{t.demoTitleEnd}</h1>
+          <p class="demo-subtitle">{t.demoSubtitle}</p>
 
           <ul class="demo-benefits">
             {
@@ -44,9 +40,9 @@ const benefits = [
           </ul>
 
           <div class="demo-contact">
-            <p>Envía un mail a <a href="mailto:appselling@reskyt.com" class="demo-link">appselling@reskyt.com</a></p>
+            <p>{t.mailLine} <a href="mailto:appselling@reskyt.com" class="demo-link">appselling@reskyt.com</a></p>
             <p>
-              Llámanos al <a href="tel:+34902731998" class="demo-link">+34 902 731 998</a> /
+              {t.phoneLine} <a href="tel:+34902731998" class="demo-link">+34 902 731 998</a> /
               <a href="tel:+34973949991" class="demo-link">+34 973 94 99 91</a>
             </p>
           </div>

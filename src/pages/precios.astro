@@ -3,76 +3,36 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import DemoCta from '../components/DemoCta.astro';
 import Footer from '../components/Footer.astro';
+import { localizeHref, isLocale, DEFAULT_LOCALE } from '../i18n';
+import { contentFor, preciosContent } from '../i18n/content';
+
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = contentFor(preciosContent, currentLocale);
 
 const plans = [
   {
     name: 'ESSENTIAL',
-    badge: '40K/mes Notificaciones',
     priceMonth: '499€',
     priceYear: '4.500€',
-    yearNote: 'Coste pago mensualizado 375€',
-    description:
-      'El plan perfecto para pequeños comercios que quieren dar el salto a vender a través de su propia App',
-    features: [
-      'Desarrollo de App nativa iOS + Android',
-      'Contenidos personalizados en la app',
-      'Personalización de la experiencia de usuario (UX)',
-      'Multi-idioma',
-      'Integración Google Analytics 4',
-      'Posibilidad de integraciones con SDKs de terceros (Kit de desarrollo básico para conectar con otras herramientas)',
-    ],
-    push: [
-      'Hasta 40.000 notificaciones push/mes. Paquetes extra disponibles bajo petición',
-      'Segmentación básica de BBDD para envíos masivos',
-      'Push de recordatorio de carrito abandonado y push bienvenida/onboarding',
-      'Envío de Notificaciones via API (integración con CRMs y/o ERPs)',
-    ],
     featured: false,
     dark: false,
+    ...t.plans.essential,
   },
   {
     name: 'PRO',
-    badge: '300K/mes Notificaciones',
     priceMonth: '999€',
     priceYear: '9.700€',
-    yearNote: 'Coste pago mensualizado 808€',
-    description:
-      'Ideal para empresas en expansión que necesitan fidelizar y crear un nuevo canal de ventas.',
-    featuresTitle: 'Todo en ESSENTIAL +',
-    features: [
-      'Búsqueda por código de barras (EAN) y/o QR',
-      'Deep links (Enlaces directos dentro de la App)',
-      'Banners y Popups configurables nativos en la App',
-      'Multi-país',
-      'Social login (Inicio de sesión via Google, Facebook, etc)',
-    ],
-    push: [
-      'Hasta 300.000 notificaciones push/mes. Paquetes extra disponibles bajo petición',
-      'Servicios Push incluidos en Essential',
-      'Segmentación de BBDD para envíos masivos y/o por tipología de clientes',
-      'Envío de Notificaciones por país',
-    ],
     featured: true,
     dark: false,
+    ...t.plans.pro,
   },
   {
     name: 'MASTER SUITE',
-    badge: 'Notificaciones Ilimitadas',
     priceMonth: 'Custom',
     priceYear: 'Custom',
-    yearNote: '',
-    description: 'Pensado para grandes compañías que quieren una solución a medida y soporte total.',
-    featuresTitle: 'Todo en PRO +',
-    features: [
-      'Account Manager dedicado',
-      'Entorno de pruebas para desarrolladores (App Developer Test)',
-      'Soporte Técnico y de Negocio prioritario',
-      'Migración de CMS incluida (trasladamos tu web o tienda online a la app)',
-      'Desarrollo a medida',
-    ],
-    push: ['Ilimitadas', 'Servicios Push incluidos en Pro'],
     featured: false,
     dark: true,
+    ...t.plans.master,
   },
 ];
 ---
@@ -85,15 +45,15 @@ const plans = [
   <main>
     <section class="section hero">
       <div class="container">
-        <h1 class="hero-title">Precios fijos y predecibles <span class="red">sin sorpresas</span></h1>
-        <p class="hero-subtitle">Crece sin enredos: simple, claro y enfocado en tus ingresos.</p>
+        <h1 class="hero-title">{t.heroStart}<span class="red">{t.heroHighlight}</span></h1>
+        <p class="hero-subtitle">{t.subtitle}</p>
       </div>
     </section>
 
     <section class="section pricing" id="pricing">
       <div class="container">
         <div class="toggle-wrapper">
-          <span class="toggle-label">Pago Mensual</span>
+          <span class="toggle-label">{t.monthly}</span>
           <button
             type="button"
             class="toggle"
@@ -103,9 +63,9 @@ const plans = [
             aria-label="Cambiar entre pago mensual y anual"
           >
             <span class="toggle-circle"></span>
-            <span class="toggle-badge">Ahorra hasta 25%</span>
+            <span class="toggle-badge">{t.saveBadge}</span>
           </button>
-          <span class="toggle-label">Pago Anual</span>
+          <span class="toggle-label">{t.yearly}</span>
         </div>
 
         <div class="plans">
@@ -120,14 +80,14 @@ const plans = [
                 <div class="plan-price">
                   <p class="price price-month">
                     <span class="price-number">{plan.priceMonth}</span>
-                    {plan.priceMonth !== 'Custom' && <span class="price-cadence">/mes</span>}
+                    {plan.priceMonth !== 'Custom' && <span class="price-cadence">{t.perMonth}</span>}
                   </p>
                   <p class="price price-year">
                     <span class="price-number">{plan.priceYear}</span>
-                    {plan.priceYear !== 'Custom' && <span class="price-cadence">/año</span>}
+                    {plan.priceYear !== 'Custom' && <span class="price-cadence">{t.perYear}</span>}
                   </p>
                   {plan.yearNote && <p class="price-note price-year">{plan.yearNote}</p>}
-                  {plan.priceYear !== 'Custom' && <p class="price-note">Imp. excl.</p>}
+                  {plan.priceYear !== 'Custom' && <p class="price-note">{t.taxNote}</p>}
                   <p class="plan-description">{plan.description}</p>
                 </div>
 
@@ -138,7 +98,7 @@ const plans = [
                       <li>{feature}</li>
                     ))}
                   </ul>
-                  <p class="features-title">Notificaciones Push</p>
+                  <p class="features-title">{t.pushTitle}</p>
                   <ul>
                     {plan.push.map((feature) => (
                       <li>{feature}</li>
@@ -147,10 +107,10 @@ const plans = [
                 </div>
 
                 <a
-                  href="/solicitar-una-demo"
+                  href={localizeHref('/solicitar-una-demo', currentLocale)}
                   class:list={[plan.featured ? 'btn-primary' : 'btn-plan-secondary']}
                 >
-                  Pide una demo
+                  {t.cta}
                 </a>
               </article>
             ))
@@ -158,8 +118,8 @@ const plans = [
         </div>
 
         <div class="out-control">
-          <p class="out-control-title">Suscripciones fuera del control de Reskyt</p>
-          <p>Apple ($99/año) + Google Play ($25 pago único)</p>
+          <p class="out-control-title">{t.outControlTitle}</p>
+          <p>{t.outControlText}</p>
         </div>
       </div>
     </section>

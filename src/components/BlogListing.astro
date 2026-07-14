@@ -1,6 +1,7 @@
 ---
 // Listado del blog con paginación (compartido por la portada del blog y /pagina/N).
 import type { BlogPost } from '../data/blog-posts';
+import { contentFor, sharedContent } from '../i18n/content';
 
 interface Props {
   posts: BlogPost[];
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const { posts, currentPage, lastPage } = Astro.props;
+const t = contentFor(sharedContent, Astro.currentLocale);
 
 // Los dos primeros posts se muestran destacados solo en la primera página.
 const featured = currentPage === 1 ? posts.slice(0, 2) : [];
@@ -34,11 +36,8 @@ const pages = pageList(currentPage, lastPage);
 
 <section class="section blog">
   <div class="container">
-    <h1 class="blog-title">Noticias - Apps para eCommerce</h1>
-    <p class="blog-subtitle">
-      Las últimas noticias del mundo de las Apps para eCommerce y desarrollo y diseño de
-      aplicaciones móviles.
-    </p>
+    <h1 class="blog-title">{t.blogTitle}</h1>
+    <p class="blog-subtitle">{t.blogSubtitle}</p>
 
     {
       featured.length > 0 && (
@@ -88,7 +87,7 @@ const pages = pageList(currentPage, lastPage);
       }
     </div>
 
-    <nav class="pagination" aria-label="Paginación del blog">
+    <nav class="pagination" aria-label={t.blogPaginationAria}>
       {
         pages.map((n) =>
           n === '…' ? (
@@ -106,7 +105,7 @@ const pages = pageList(currentPage, lastPage);
       }
       {
         currentPage < lastPage && (
-          <a href={pageUrl(currentPage + 1)} class="page-item page-next" aria-label="Página siguiente">
+          <a href={pageUrl(currentPage + 1)} class="page-item page-next" aria-label={t.blogNextAria}>
             →
           </a>
         )

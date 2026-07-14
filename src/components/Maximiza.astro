@@ -1,10 +1,12 @@
 ---
-const stats = [
-  { value: '88%', label: 'Incremento de la retención' },
-  { value: '3x', label: 'Incremento del ROI' },
-  { value: '+20%', label: 'Incremento del AOV' },
-  { value: '2x', label: 'Incremento de la recurrencia' },
-];
+import { contentFor, sharedContent } from '../i18n/content';
+
+const t = contentFor(sharedContent, Astro.currentLocale);
+
+const stats = ['88%', '3x', '+20%', '2x'].map((value, i) => ({
+  value,
+  label: t.maximizaStats[i],
+}));
 
 // Iconos SVG originales de la web (círculo claro + detalle rojo)
 const features = [
@@ -62,10 +64,10 @@ const features = [
 <section class="section maximiza">
   <div class="container">
     <h2 class="maximiza-title">
-      <span class="red">Maximiza tus oportunidades</span> de aumentar ingresos
+      <span class="red">{t.maximizaTitleHighlight}</span>{t.maximizaTitleEnd}
     </h2>
     <p class="maximiza-subtitle">
-      Las apps aumentan la <strong>conversión y la fidelidad</strong> de los clientes
+      {t.maximizaSubtitleStart}<strong>{t.maximizaSubtitleBold}</strong>{t.maximizaSubtitleEnd}
     </p>
 
     <div class="stats-grid">
@@ -81,10 +83,10 @@ const features = [
 
     <div class="features-row">
       {
-        features.map(({ label, icon }) => (
+        features.map(({ icon }, i) => (
           <div class="feature">
             <div class="feature-icon" set:html={icon} />
-            <p>{label}</p>
+            <p>{t.maximizaFeatures[i]}</p>
           </div>
         ))
       }
