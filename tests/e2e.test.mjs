@@ -25,11 +25,22 @@ async function waitForServer(url, timeoutMs = 30000) {
   throw new Error(`El servidor no respondió en ${url}`);
 }
 
-/** Página en contexto incógnito propio (localStorage limpio). */
-async function newPage(viewport = { width: 1440, height: 900 }) {
+/**
+ * Página en contexto incógnito propio (localStorage limpio). Salvo que se pida
+ * lo contrario, se presiembra el consentimiento de cookies para que el modal
+ * no intercepte los clics del resto de tests.
+ */
+async function newPage(viewport = { width: 1440, height: 900 }, { cookieBanner = false } = {}) {
   const context = await browser.createBrowserContext();
   const page = await context.newPage();
   await page.setViewport(viewport);
+  if (!cookieBanner) {
+    await page.evaluateOnNewDocument(() => {
+      try {
+        localStorage.setItem('reskyt-cookie-consent', 'accepted');
+      } catch {}
+    });
+  }
   return { context, page };
 }
 
@@ -245,6 +256,47 @@ test('la calculadora ROI pinta sus dos gráficas', async () => {
       },
       { timeout: 8000 }
     );
+  } finally {
+    await context.close();
+  }
+});
+
+// ------------------------------------------------------ modal de cookies
+
+test('el modal de cookies aparece en la primera visita y aceptar lo persiste', async () => {
+  const { context, page } = await newPage(undefined, { cookieBanner: true });
+  try {
+    await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('#cookie-banner:not([hidden])', { timeout: 3000 });
+
+    await page.click('#cookie-accept');
+    const hidden = await page.$eval('#cookie-banner', (el) => el.hidden);
+    assert.ok(hidden, 'aceptar oculta el modal');
+
+    // en la siguiente navegación ya no vuelve a aparecer
+    await page.goto(BASE + '/precios', { waitUntil: 'domcontentloaded' });
+    await new Promise((r) => setTimeout(r, 300));
+    const stillHidden = await page.$eval('#cookie-banner', (el) => el.hidden);
+    assert.ok(stillHidden, 'el modal no reaparece tras aceptar');
+  } finally {
+    await context.close();
+  }
+});
+
+test('rechazar las cookies también oculta y persiste la elección', async () => {
+  const { context, page } = await newPage(undefined, { cookieBanner: true });
+  try {
+    await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('#cookie-banner:not([hidden])', { timeout: 3000 });
+    await page.click('#cookie-reject');
+
+    const stored = await page.evaluate(() => localStorage.getItem('reskyt-cookie-consent'));
+    assert.equal(stored, 'rejected');
+
+    await page.goto(BASE + '/funcionalidades', { waitUntil: 'domcontentloaded' });
+    await new Promise((r) => setTimeout(r, 300));
+    const hidden = await page.$eval('#cookie-banner', (el) => el.hidden);
+    assert.ok(hidden, 'el modal no reaparece tras rechazar');
   } finally {
     await context.close();
   }

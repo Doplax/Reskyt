@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import CookieBanner from '../components/CookieBanner.astro';
 import { getDict, hasTranslation, localizePath, isLocale, DEFAULT_LOCALE, LOCALES } from '../i18n';
 
 interface Props {
@@ -109,5 +110,6 @@ const OG_LOCALES: Record<string, string> = {
   </head>
   <body>
     <slot />
+    <CookieBanner />
   </body>
 </html>

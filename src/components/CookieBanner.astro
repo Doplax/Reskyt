@@ -1,0 +1,195 @@
+---
+// Modal de consentimiento de cookies: aparece en la primera visita y guarda
+// la elección en localStorage (la réplica no instala cookies reales).
+import { localizeHref, isLocale, DEFAULT_LOCALE, type Locale } from '../i18n';
+import { contentFor } from '../i18n/content';
+
+interface CookieStrings {
+  title: string;
+  text: string;
+  link: string;
+  accept: string;
+  reject: string;
+}
+
+const cookieContent: Record<Locale, CookieStrings> = {
+  es: {
+    title: 'Esta web utiliza cookies',
+    text: 'Usamos cookies propias y de terceros para analizar la navegación y mejorar tu experiencia. Puedes aceptarlas todas o rechazarlas.',
+    link: 'Política de cookies',
+    accept: 'Aceptar todas',
+    reject: 'Rechazar',
+  },
+  ca: {
+    title: 'Aquesta web utilitza cookies',
+    text: "Fem servir cookies pròpies i de tercers per analitzar la navegació i millorar la teva experiència. Pots acceptar-les totes o rebutjar-les.",
+    link: 'Política de cookies',
+    accept: 'Acceptar-les totes',
+    reject: 'Rebutjar',
+  },
+  en: {
+    title: 'This website uses cookies',
+    text: 'We use our own and third-party cookies to analyse browsing and improve your experience. You can accept them all or reject them.',
+    link: 'Cookie policy',
+    accept: 'Accept all',
+    reject: 'Reject',
+  },
+  it: {
+    title: 'Questo sito utilizza i cookie',
+    text: 'Utilizziamo cookie propri e di terze parti per analizzare la navigazione e migliorare la tua esperienza. Puoi accettarli tutti o rifiutarli.',
+    link: 'Politica dei cookie',
+    accept: 'Accetta tutti',
+    reject: 'Rifiuta',
+  },
+  nl: {
+    title: 'Deze website gebruikt cookies',
+    text: 'We gebruiken eigen cookies en cookies van derden om het surfgedrag te analyseren en je ervaring te verbeteren. Je kunt ze allemaal accepteren of weigeren.',
+    link: 'Cookiebeleid',
+    accept: 'Alles accepteren',
+    reject: 'Weigeren',
+  },
+};
+
+const currentLocale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const t = contentFor(cookieContent, currentLocale);
+---
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-modal="false" aria-labelledby="cookie-title" hidden>
+  <p class="cookie-icon" aria-hidden="true">🍪</p>
+  <div class="cookie-body">
+    <p class="cookie-title" id="cookie-title">{t.title}</p>
+    <p class="cookie-text">
+      {t.text}
+      <a href={localizeHref('/legal/politica-de-cookies', currentLocale)} class="cookie-link">{t.link}</a>
+    </p>
+  </div>
+  <div class="cookie-actions">
+    <button type="button" class="btn-primary cookie-btn" id="cookie-accept">{t.accept}</button>
+    <button type="button" class="cookie-btn cookie-btn-ghost" id="cookie-reject">{t.reject}</button>
+  </div>
+</div>
+
+<style>
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-banner {
+    position: fixed;
+    z-index: 90;
+    inset-inline: 1rem;
+    bottom: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem 1rem;
+    align-items: start;
+    max-width: 26rem;
+    padding: 1.25rem;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) * 1.25);
+    box-shadow: 0 1.5rem 3rem rgba(22, 22, 26, 0.18);
+    animation: cookie-in 0.35s ease both;
+  }
+
+  @keyframes cookie-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .cookie-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .cookie-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .cookie-text {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .cookie-link {
+    color: var(--color-red);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .cookie-link:hover {
+    text-decoration: underline;
+  }
+
+  .cookie-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .cookie-btn {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.25rem;
+  }
+
+  .cookie-btn-ghost {
+    background: none;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .cookie-btn-ghost:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
+  }
+
+  @media (min-width: 40rem) {
+    .cookie-banner {
+      inset-inline: auto 1.5rem;
+      bottom: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  const KEY = 'reskyt-cookie-consent';
+  const banner = document.getElementById('cookie-banner');
+
+  function close(value: string) {
+    try {
+      localStorage.setItem(KEY, value);
+    } catch {
+      /* localStorage puede no estar disponible */
+    }
+    banner?.setAttribute('hidden', '');
+  }
+
+  let consent: string | null = null;
+  try {
+    consent = localStorage.getItem(KEY);
+  } catch {
+    /* localStorage puede no estar disponible */
+  }
+
+  if (!consent && banner) {
+    banner.removeAttribute('hidden');
+    document.getElementById('cookie-accept')?.addEventListener('click', () => close('accepted'));
+    document.getElementById('cookie-reject')?.addEventListener('click', () => close('rejected'));
+  }
+</script>
