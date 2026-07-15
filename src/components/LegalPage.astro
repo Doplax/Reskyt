@@ -36,14 +36,48 @@ const { title, description } = Astro.props;
     margin-bottom: 2rem;
   }
 
-  .legal-body :global(h2) {
+  .legal-body :global(h2),
+  .legal-body :global(h3) {
     font-size: 1.35rem;
     margin-top: 2.5rem;
     margin-bottom: 0.75rem;
   }
 
+  .legal-body :global(h4) {
+    font-size: 1.1rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
   .legal-body :global(p) {
     color: var(--color-text-muted);
     margin-bottom: 1rem;
+  }
+
+  .legal-body :global(ol),
+  .legal-body :global(ul) {
+    color: var(--color-text-muted);
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .legal-body :global(li > ul),
+  .legal-body :global(li > ol) {
+    margin: 0.5rem 0 0;
+  }
+
+  .legal-body :global(strong) {
+    color: var(--color-text);
+  }
+
+  .legal-body :global(a) {
+    color: var(--color-red);
+    font-weight: 600;
+  }
+
+  .legal-body :global(a:hover) {
+    text-decoration: underline;
   }
 </style>

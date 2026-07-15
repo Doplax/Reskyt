@@ -1,28 +1,8 @@
 ---
 import LegalPage from '../components/LegalPage.astro';
+import data from '../data/legal/condiciones-generales.json';
 ---
 
-<LegalPage
-  title="Condiciones Generales"
-  description="Condiciones generales de contratación de los servicios de Reskyt Online SL."
->
-  <p>
-    Réplica de maqueta: este texto es un marcador de posición. El contenido legal real está en
-    la web oficial de Reskyt.
-  </p>
-  <h2>1. Objeto</h2>
-  <p>
-    Las presentes condiciones regulan la contratación de los servicios de creación y
-    mantenimiento de aplicaciones móviles prestados por Reskyt Online SL.
-  </p>
-  <h2>2. Servicios</h2>
-  <p>
-    Reskyt proporciona una plataforma de creación de apps nativas sincronizadas con la tienda
-    online del cliente, bajo un modelo de suscripción con actualizaciones incluidas.
-  </p>
-  <h2>3. Duración y facturación</h2>
-  <p>
-    La suscripción se factura de forma mensual o anual según el plan contratado, sin
-    permanencias más allá del período facturado.
-  </p>
+<LegalPage title={data.title} description={data.description}>
+  <div set:html={data.html} />
 </LegalPage>

@@ -1,28 +1,8 @@
 ---
 import LegalPage from '../../components/LegalPage.astro';
+import data from '../../data/legal/politica-de-cookies.json';
 ---
 
-<LegalPage
-  title="Política de Cookies"
-  description="Información sobre el uso de cookies en la web de Reskyt."
->
-  <p>
-    Réplica de maqueta: este texto es un marcador de posición. El contenido legal real está en
-    la web oficial de Reskyt.
-  </p>
-  <h2>¿Qué son las cookies?</h2>
-  <p>
-    Una cookie es un pequeño fichero que se almacena en tu navegador cuando visitas una web y
-    que permite recordar información sobre tu visita.
-  </p>
-  <h2>Cookies que utilizamos</h2>
-  <p>
-    Esta réplica no instala cookies de análisis ni de marketing. La web oficial utiliza cookies
-    técnicas, de análisis y de marketing, gestionadas mediante un banner de consentimiento.
-  </p>
-  <h2>Cómo desactivarlas</h2>
-  <p>
-    Puedes configurar tu navegador para bloquear o eliminar las cookies desde sus preferencias
-    de privacidad.
-  </p>
+<LegalPage title={data.title} description={data.description}>
+  <div set:html={data.html} />
 </LegalPage>
